@@ -83,3 +83,7 @@ AI记录 ID／时间时区／实际使用者：
 ## AI-008 S5 提交与统计
 
 用户提示沿用“根据这几份文件，完成实验”及“继续”。Codex主agent实现submissions.py并集成API，内部agent生成statistics.py、原生JS提交/结果页与独立tests/test_submissions.py/test_statistics.py。模型版本未知。主agent发现最大有限数字均值溢出并要求修复/回归；修复Schema CLI不识别参数的问题，保留意外运行。真实MongoDB46项提交专项及245项全回归、页面和DB对账通过，见results/S5。未将代理完成的工作冒充学生本人贡献。
+
+## AI-009 S6 验收与复现
+
+原始用户提示“继续”；沿用完成第一阶段授权。Codex主agent真实浏览器关闭/DB对账与S6门禁，内部agent按“新conda环境、git archive干净副本、独立MongoDB/HTTP、全量测试与重启持久化”执行复现，另两agent按26组逐输入预期实际映射报告/只读代码复核。模型版本未知。生成results/acceptance及TEST_REPORT，更新TEST_PLAN；复现初始Windows编码/包装器错误和前三轮安装器失败均保留，未改依赖或屏蔽SSL/警告。最终245/43/23流程步骤及26组通过；仅清理补救而非重跑业务伪造结果。README初始化输出改为local路径以保护历史环境证据。未代填学生本人工作。

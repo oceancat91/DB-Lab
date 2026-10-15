@@ -1,0 +1,38 @@
+{
+  "case": "TC-E01",
+  "status": "PASS",
+  "time": "2026-10-15T22:06:36.658770+08:00",
+  "executor": "Codex browser tool; synthetic users only",
+  "database": "lab4_test_browser_c1c681babaaa4f6ea467e211959d4878",
+  "source_baseline": "e7255c3",
+  "staged_flow": true,
+  "steps": [
+    {
+      "step": "S4 页面注册、创建四类题和单选跳转、发布",
+      "evidence": "../S4/gates.md",
+      "actual": "4 types + forward jump + immutable published version1"
+    },
+    {
+      "step": "S4 其他用户登录，测试非法多选/短文本/超范围数字，修改首题重算",
+      "evidence": "../S4/browser-jump-path.txt",
+      "actual": "expected errors and cleared later answers"
+    },
+    {
+      "step": "S5 实际页面四题提交",
+      "evidence": "../S5/browser-receipt.jpg",
+      "actual": "receipt 4e44da8d-62e6-4ac2-b1ad-21f82d55b5b6; database1"
+    },
+    {
+      "step": "S5 创建者整卷、单题、匿名明细",
+      "evidence": "../S5/browser-single-statistics-visible.jpg",
+      "actual": "1 submission/1 respondent, numeric mean8, no respondent username in anonymous response"
+    },
+    {
+      "step": "S6 创建者关闭，另一个页面访问已发布链接",
+      "evidence": "browser-closed-share.txt",
+      "actual": "owner shows closed; share says closed or deadline; Mongo status closed and response count remains1"
+    }
+  ],
+  "console_errors_before_close": [],
+  "automation_note": "Close click tool returned CDP timeout; subsequent rendered DOM and MongoDB both confirm operation succeeded; no retry close command sent. This tool timeout is not hidden or treated as proof of failure."
+}

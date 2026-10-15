@@ -1,0 +1,353 @@
+{
+  "case": "TC-E02",
+  "status": "PASS",
+  "started_at": "2026-10-15T22:14:31.496158+08:00",
+  "timezone": "Asia/Shanghai",
+  "source_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
+  "fresh_environment": "lab4-survey-repro-be6b0d",
+  "source_project": ".runtime/reproduction/project",
+  "seed": 20261015,
+  "isolation": {
+    "mongodb_port": 27085,
+    "replica_set": "lab4repro",
+    "app_port": 8005,
+    "database": "lab4_reproduction",
+    "data_directory": ".runtime/mongo"
+  },
+  "commands": [
+    {
+      "command": "python scripts/check_workflow.py",
+      "cwd": "<clean-project>",
+      "started_at": "2026-10-15T22:14:31.560017+08:00",
+      "finished_at": "2026-10-15T22:14:31.739392+08:00",
+      "exit_code": 0,
+      "output": "reproduction-workflow-precheck.txt"
+    },
+    {
+      "command": "python scripts/configure_env.py",
+      "cwd": "<clean-project>",
+      "started_at": "2026-10-15T22:14:31.739996+08:00",
+      "finished_at": "2026-10-15T22:14:31.851454+08:00",
+      "exit_code": 0,
+      "output": "reproduction-configure.txt"
+    },
+    {
+      "command": "python scripts/init_mongo.py --port 27085 --replica-set lab4repro --output results/acceptance/reproduction-environment.json",
+      "cwd": "<clean-project>",
+      "started_at": "2026-10-15T22:14:31.853482+08:00",
+      "finished_at": "2026-10-15T22:14:33.016810+08:00",
+      "exit_code": 0,
+      "output": "reproduction-mongo-initialize.txt"
+    },
+    {
+      "command": "python scripts/init_db.py",
+      "cwd": "<clean-project>",
+      "started_at": "2026-10-15T22:14:33.017823+08:00",
+      "finished_at": "2026-10-15T22:14:34.048603+08:00",
+      "exit_code": 0,
+      "output": "reproduction-db-initialize.txt"
+    },
+    {
+      "command": "python scripts/check_schema.py --output results/acceptance/reproduction-schema.json",
+      "cwd": "<clean-project>",
+      "started_at": "2026-10-15T22:14:34.049721+08:00",
+      "finished_at": "2026-10-15T22:14:34.993716+08:00",
+      "exit_code": 0,
+      "output": "reproduction-schema.txt"
+    },
+    {
+      "command": "python -m pytest tests --evidence results/acceptance/reproduction-tests.json -q",
+      "cwd": "<clean-project>",
+      "started_at": "2026-10-15T22:14:34.993716+08:00",
+      "finished_at": "2026-10-15T22:15:10.848460+08:00",
+      "exit_code": 0,
+      "output": "reproduction-tests.txt"
+    },
+    {
+      "command": "python scripts/check_workflow.py",
+      "cwd": "<clean-project>",
+      "started_at": "2026-10-15T22:15:16.671634+08:00",
+      "finished_at": "2026-10-15T22:15:16.915936+08:00",
+      "exit_code": 0,
+      "output": "reproduction-workflow-final.txt"
+    }
+  ],
+  "http_steps": [
+    {
+      "step": "start_first",
+      "pid": 26896,
+      "status": 200
+    },
+    {
+      "step": "owner_register",
+      "method": "POST",
+      "path": "/api/auth/register",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "step": "owner_login",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "filler_register",
+      "method": "POST",
+      "path": "/api/auth/register",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "step": "filler_login",
+      "method": "POST",
+      "path": "/api/auth/login",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "create_four_type_survey",
+      "method": "POST",
+      "path": "/api/surveys",
+      "expected": 201,
+      "actual": 201
+    },
+    {
+      "step": "configure_four_types_and_rule",
+      "method": "PUT",
+      "path": "/api/surveys/9a566d50-7896-48c7-85b4-b749afd81030",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "publish",
+      "method": "POST",
+      "path": "/api/surveys/9a566d50-7896-48c7-85b4-b749afd81030/publish",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "read_published_fill",
+      "method": "GET",
+      "path": "/api/fill/8J21uhVqTiu8bjOy",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "answer_single",
+      "method": "POST",
+      "path": "/api/fill/8J21uhVqTiu8bjOy/next",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "answer_multi",
+      "method": "POST",
+      "path": "/api/fill/8J21uhVqTiu8bjOy/next",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "answer_text",
+      "method": "POST",
+      "path": "/api/fill/8J21uhVqTiu8bjOy/next",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "answer_number",
+      "method": "POST",
+      "path": "/api/fill/8J21uhVqTiu8bjOy/next",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "submit",
+      "method": "POST",
+      "path": "/api/fill/8J21uhVqTiu8bjOy/submit",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "statistics",
+      "method": "GET",
+      "path": "/api/surveys/9a566d50-7896-48c7-85b4-b749afd81030/statistics",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "single_question_statistics",
+      "method": "GET",
+      "path": "/api/surveys/9a566d50-7896-48c7-85b4-b749afd81030/statistics/number",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "response_details",
+      "method": "GET",
+      "path": "/api/surveys/9a566d50-7896-48c7-85b4-b749afd81030/responses",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "start_restarted",
+      "pid": 19376,
+      "status": 200
+    },
+    {
+      "step": "statistics_after_process_restart",
+      "method": "GET",
+      "path": "/api/surveys/9a566d50-7896-48c7-85b4-b749afd81030/statistics",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "details_after_process_restart",
+      "method": "GET",
+      "path": "/api/surveys/9a566d50-7896-48c7-85b4-b749afd81030/responses",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "idempotent_replay_after_restart",
+      "method": "POST",
+      "path": "/api/fill/8J21uhVqTiu8bjOy/submit",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "close",
+      "method": "POST",
+      "path": "/api/surveys/9a566d50-7896-48c7-85b4-b749afd81030/close",
+      "expected": 200,
+      "actual": 200
+    },
+    {
+      "step": "closed_link_rejected",
+      "method": "GET",
+      "path": "/api/fill/8J21uhVqTiu8bjOy",
+      "expected": 410,
+      "actual": 410
+    }
+  ],
+  "processes": [
+    {
+      "kind": "application",
+      "pid": 26896,
+      "ownership_verified_before_stop": true,
+      "port": 8005,
+      "command": "python -m uvicorn survey_app.main:app --host 127.0.0.1 --port 8005"
+    },
+    {
+      "kind": "application",
+      "pid": 19376,
+      "ownership_verified_before_stop": true,
+      "port": 8005,
+      "command": "python -m uvicorn survey_app.main:app --host 127.0.0.1 --port 8005"
+    }
+  ],
+  "environment": {
+    "python": "3.11.17",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "packages": {
+      "fastapi": "0.143.1",
+      "uvicorn": "0.54.0",
+      "pymongo": "4.19.0",
+      "pydantic": "2.14.1",
+      "jinja2": "3.1.6",
+      "httpx": "0.28.1",
+      "pytest": "9.1.1",
+      "python-dotenv": "1.2.4"
+    }
+  },
+  "limitations": [
+    "Same Windows host and installed MongoDB executable; new conda environment, source tree, processes and data path.",
+    "Starlette/httpx deprecation warnings are preserved in the full pytest log."
+  ],
+  "configuration": {
+    "generated_from_example": true,
+    "secret_not_logged": true,
+    "nondefault_port_replica_database_selected": true
+  },
+  "pytest": {
+    "summary": {
+      "collected": 245,
+      "passed": 245,
+      "failed": 0,
+      "skipped": 0,
+      "setup_teardown_errors": 0,
+      "session_tests_failed": 0,
+      "phase_outcomes": {
+        "setup:passed": 245,
+        "call:passed": 245,
+        "teardown:passed": 245
+      },
+      "collection_errors": 0
+    },
+    "cleanup": {
+      "status": "PASS",
+      "database": "lab4_test_api_28892b45ae924ab1ba96ffc675672cd1",
+      "counts_before_drop": {
+        "users": 125,
+        "sessions": 124,
+        "surveys": 95,
+        "survey_versions": 82,
+        "responses": 59
+      },
+      "remaining_collections": []
+    },
+    "evidence": "reproduction-tests.json"
+  },
+  "schema": {
+    "checks": 43,
+    "status": "PASS",
+    "cleanup": {
+      "status": "PASS",
+      "database": "lab4_test_schema_546e9a5f1f8444a3911ee4418230080f",
+      "remaining_collections": []
+    },
+    "evidence": "reproduction-schema.json"
+  },
+  "http_result": {
+    "status": "PASS",
+    "survey_id": "9a566d50-7896-48c7-85b4-b749afd81030",
+    "response_id": "f518d39e-34e1-478c-b03f-bb2d909ff592",
+    "submissions": 1,
+    "respondents": 1,
+    "number_mean": 10,
+    "first_pid": 26896,
+    "restarted_pid": 19376,
+    "persisted_statistics_equal": true,
+    "persisted_details_equal": true,
+    "persisted_session_and_receipt_replay": true,
+    "closed_link_status": 410
+  },
+  "application_cleanup": "PASS",
+  "mongodb_cleanup": {
+    "status": "PASS",
+    "evidence": "reproduction-cleanup-repair.json",
+    "ownership_verified": true,
+    "graceful_shutdown": true,
+    "process_exit_verified": true,
+    "data_retained": true
+  },
+  "finished_at": "2026-10-15T22:19:55.090853+08:00",
+  "exit_code": 0,
+  "environment_yml_sha256": "732700fedf030332bdb31e7acd06e8c6c6b9b33d33971da5d6b10c995c31467a",
+  "initial_runner": {
+    "status": "FAIL",
+    "exit_code": 1,
+    "evidence": "reproduction.json",
+    "stderr": "reproduction-runner-error.txt",
+    "failure": "Windows PowerShell GBK process-command output decoded as UTF-8; cleanup reader then raised AttributeError"
+  },
+  "finalization_scope": "Earlier 245 tests, 43 Schema checks and 23 HTTP steps are unchanged. Only separately evidenced cleanup was repaired.",
+  "evidence": {
+    "source": "reproduction-source.json",
+    "tests": "reproduction-tests.json",
+    "schema": "reproduction-schema.json",
+    "cleanup": "reproduction-cleanup-repair.json",
+    "initial_failure": "reproduction.json"
+  }
+}

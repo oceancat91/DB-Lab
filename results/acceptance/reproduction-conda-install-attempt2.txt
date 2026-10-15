@@ -1,0 +1,11 @@
+conda.exe : 
+所在位置 D:\HuaweiMoveData\Users\32002\Desktop\数据管理系统\Lab4\.runtime\reproduction\install-environment.ps1:10 字符: 5
++     & $condaPath env create --file (Join-Path $plan.project 'environm ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+
+EnvironmentFileNotFound: 'D:\HuaweiMoveData\Users\32002\Desktop\鏁版嵁绠＄悊绯荤粺\Lab4\.runtime\reproduction\project\environment.yml' file not found
+

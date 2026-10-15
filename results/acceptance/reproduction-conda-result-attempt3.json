@@ -1,0 +1,8 @@
+﻿{
+    "exit_code":  1,
+    "environment":  "lab4-survey-repro-be6b0d",
+    "error_type":  "DirectoryNotFoundException",
+    "command":  "conda env create --file environment.yml --name \u003cnew-reproduction-environment\u003e --yes",
+    "finished_at":  "2026-10-15T22:09:31.0438767+08:00",
+    "started_at":  "2026-10-15T22:09:30.9656357+08:00"
+}

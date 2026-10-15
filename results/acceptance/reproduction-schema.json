@@ -1,0 +1,781 @@
+{
+  "stage": "S2",
+  "requirements": [
+    "R01",
+    "R13"
+  ],
+  "timezone": "Asia/Shanghai",
+  "started_at": "2026-10-15T22:14:34.447845+08:00",
+  "seed": 20261015,
+  "command": "python scripts/check_schema.py",
+  "database": "lab4_test_schema_546e9a5f1f8444a3911ee4418230080f",
+  "scope": "field validators/indexes only; no account, rule or submission API acceptance",
+  "environment": {
+    "python": "3.11.17",
+    "pymongo": "4.19.0",
+    "mongodb": "6.0.29",
+    "replica_set": "lab4repro",
+    "writable_primary": true,
+    "read_preference": "primary",
+    "tz_aware": true
+  },
+  "checks": [
+    {
+      "id": "primary_replica_set",
+      "expected": "writable replica-set primary",
+      "actual": {
+        "replica_set": "lab4repro",
+        "primary": true
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "collection_names",
+      "expected": [
+        "responses",
+        "sessions",
+        "survey_versions",
+        "surveys",
+        "users"
+      ],
+      "actual": [
+        "responses",
+        "sessions",
+        "survey_versions",
+        "surveys",
+        "users"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "validator_users",
+      "expected": "exact strict/error field schema",
+      "actual": "matching",
+      "status": "PASS"
+    },
+    {
+      "id": "validator_sessions",
+      "expected": "exact strict/error field schema",
+      "actual": "matching",
+      "status": "PASS"
+    },
+    {
+      "id": "validator_surveys",
+      "expected": "exact strict/error field schema",
+      "actual": "matching",
+      "status": "PASS"
+    },
+    {
+      "id": "validator_survey_versions",
+      "expected": "exact strict/error field schema",
+      "actual": "matching",
+      "status": "PASS"
+    },
+    {
+      "id": "validator_responses",
+      "expected": "exact strict/error field schema",
+      "actual": "matching",
+      "status": "PASS"
+    },
+    {
+      "id": "index_uq_users_username_key",
+      "expected": {
+        "key": [
+          [
+            "username_key",
+            1
+          ]
+        ],
+        "name": "uq_users_username_key",
+        "unique": true
+      },
+      "actual": {
+        "v": 2,
+        "key": [
+          [
+            "username_key",
+            1
+          ]
+        ],
+        "unique": true
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "index_ttl_sessions_expires_at",
+      "expected": {
+        "key": [
+          [
+            "expires_at",
+            1
+          ]
+        ],
+        "name": "ttl_sessions_expires_at",
+        "expireAfterSeconds": 0
+      },
+      "actual": {
+        "v": 2,
+        "key": [
+          [
+            "expires_at",
+            1
+          ]
+        ],
+        "expireAfterSeconds": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "index_ix_sessions_user",
+      "expected": {
+        "key": [
+          [
+            "user_id",
+            1
+          ]
+        ],
+        "name": "ix_sessions_user"
+      },
+      "actual": {
+        "v": 2,
+        "key": [
+          [
+            "user_id",
+            1
+          ]
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "index_uq_surveys_share_code",
+      "expected": {
+        "key": [
+          [
+            "share_code",
+            1
+          ]
+        ],
+        "name": "uq_surveys_share_code",
+        "unique": true
+      },
+      "actual": {
+        "v": 2,
+        "key": [
+          [
+            "share_code",
+            1
+          ]
+        ],
+        "unique": true
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "index_ix_surveys_owner_created",
+      "expected": {
+        "key": [
+          [
+            "owner_id",
+            1
+          ],
+          [
+            "created_at",
+            -1
+          ]
+        ],
+        "name": "ix_surveys_owner_created"
+      },
+      "actual": {
+        "v": 2,
+        "key": [
+          [
+            "owner_id",
+            1
+          ],
+          [
+            "created_at",
+            -1
+          ]
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "index_uq_survey_versions_survey_version",
+      "expected": {
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "version",
+            1
+          ]
+        ],
+        "name": "uq_survey_versions_survey_version",
+        "unique": true
+      },
+      "actual": {
+        "v": 2,
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "version",
+            1
+          ]
+        ],
+        "unique": true
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "index_uq_responses_request",
+      "expected": {
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "respondent_id",
+            1
+          ],
+          [
+            "request_id",
+            1
+          ]
+        ],
+        "name": "uq_responses_request",
+        "unique": true
+      },
+      "actual": {
+        "v": 2,
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "respondent_id",
+            1
+          ],
+          [
+            "request_id",
+            1
+          ]
+        ],
+        "unique": true
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "index_uq_responses_single_submission",
+      "expected": {
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "respondent_id",
+            1
+          ]
+        ],
+        "name": "uq_responses_single_submission",
+        "unique": true,
+        "partialFilterExpression": {
+          "single_submission": true
+        }
+      },
+      "actual": {
+        "v": 2,
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "respondent_id",
+            1
+          ]
+        ],
+        "unique": true,
+        "partialFilterExpression": {
+          "single_submission": true
+        }
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "index_ix_responses_survey_version",
+      "expected": {
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "version",
+            1
+          ]
+        ],
+        "name": "ix_responses_survey_version"
+      },
+      "actual": {
+        "v": 2,
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "version",
+            1
+          ]
+        ]
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "valid_document_users",
+      "expected": "one valid fixture inserted/read back",
+      "actual": true,
+      "status": "PASS"
+    },
+    {
+      "id": "missing_schema_version_users",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "valid_document_sessions",
+      "expected": "one valid fixture inserted/read back",
+      "actual": true,
+      "status": "PASS"
+    },
+    {
+      "id": "missing_schema_version_sessions",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "valid_document_surveys",
+      "expected": "one valid fixture inserted/read back",
+      "actual": true,
+      "status": "PASS"
+    },
+    {
+      "id": "missing_schema_version_surveys",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "valid_document_survey_versions",
+      "expected": "one valid fixture inserted/read back",
+      "actual": true,
+      "status": "PASS"
+    },
+    {
+      "id": "missing_schema_version_survey_versions",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "valid_document_responses",
+      "expected": "one valid fixture inserted/read back",
+      "actual": true,
+      "status": "PASS"
+    },
+    {
+      "id": "missing_schema_version_responses",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "unknown_field_rejected",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "wrong_schema_version_rejected",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "boolean_is_not_integer",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "invalid_survey_status",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "invalid_survey_date",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "invalid_survey_boolean",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "invalid_survey_integer",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "invalid_survey_nested_draft",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "response_path_string_items",
+      "expected": {
+        "write_error_code": 121
+      },
+      "actual": {
+        "write_error_code": 121
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "unique_username_key",
+      "expected": {
+        "write_error_code": 11000
+      },
+      "actual": {
+        "write_error_code": 11000
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "unique_share_code",
+      "expected": {
+        "write_error_code": 11000
+      },
+      "actual": {
+        "write_error_code": 11000
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "unique_survey_version",
+      "expected": {
+        "write_error_code": 11000
+      },
+      "actual": {
+        "write_error_code": 11000
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "unique_request_idempotency",
+      "expected": {
+        "write_error_code": 11000
+      },
+      "actual": {
+        "write_error_code": 11000
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "single_submission_partial_unique",
+      "expected": {
+        "write_error_code": 11000
+      },
+      "actual": {
+        "write_error_code": 11000
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "repeat_mode_accepts_multiple",
+      "expected": 2,
+      "actual": 2,
+      "status": "PASS"
+    },
+    {
+      "id": "bson_long_integer_accepted",
+      "expected": "BSON long version/schema_version accepted",
+      "actual": 1,
+      "status": "PASS"
+    },
+    {
+      "id": "reinitialize_preserves_documents",
+      "expected": {
+        "users": 1,
+        "sessions": 1,
+        "surveys": 1,
+        "survey_versions": 2,
+        "responses": 4
+      },
+      "actual": {
+        "users": 1,
+        "sessions": 1,
+        "surveys": 1,
+        "survey_versions": 2,
+        "responses": 4
+      },
+      "status": "PASS"
+    }
+  ],
+  "cleanup": {
+    "status": "PASS",
+    "database": "lab4_test_schema_546e9a5f1f8444a3911ee4418230080f",
+    "remaining_collections": []
+  },
+  "indexes": {
+    "users": {
+      "_id_": {
+        "v": 2,
+        "key": [
+          [
+            "_id",
+            1
+          ]
+        ]
+      },
+      "uq_users_username_key": {
+        "v": 2,
+        "key": [
+          [
+            "username_key",
+            1
+          ]
+        ],
+        "unique": true
+      }
+    },
+    "sessions": {
+      "_id_": {
+        "v": 2,
+        "key": [
+          [
+            "_id",
+            1
+          ]
+        ]
+      },
+      "ttl_sessions_expires_at": {
+        "v": 2,
+        "key": [
+          [
+            "expires_at",
+            1
+          ]
+        ],
+        "expireAfterSeconds": 0
+      },
+      "ix_sessions_user": {
+        "v": 2,
+        "key": [
+          [
+            "user_id",
+            1
+          ]
+        ]
+      }
+    },
+    "surveys": {
+      "_id_": {
+        "v": 2,
+        "key": [
+          [
+            "_id",
+            1
+          ]
+        ]
+      },
+      "uq_surveys_share_code": {
+        "v": 2,
+        "key": [
+          [
+            "share_code",
+            1
+          ]
+        ],
+        "unique": true
+      },
+      "ix_surveys_owner_created": {
+        "v": 2,
+        "key": [
+          [
+            "owner_id",
+            1
+          ],
+          [
+            "created_at",
+            -1
+          ]
+        ]
+      }
+    },
+    "survey_versions": {
+      "_id_": {
+        "v": 2,
+        "key": [
+          [
+            "_id",
+            1
+          ]
+        ]
+      },
+      "uq_survey_versions_survey_version": {
+        "v": 2,
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "version",
+            1
+          ]
+        ],
+        "unique": true
+      }
+    },
+    "responses": {
+      "_id_": {
+        "v": 2,
+        "key": [
+          [
+            "_id",
+            1
+          ]
+        ]
+      },
+      "uq_responses_request": {
+        "v": 2,
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "respondent_id",
+            1
+          ],
+          [
+            "request_id",
+            1
+          ]
+        ],
+        "unique": true
+      },
+      "uq_responses_single_submission": {
+        "v": 2,
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "respondent_id",
+            1
+          ]
+        ],
+        "unique": true,
+        "partialFilterExpression": {
+          "single_submission": true
+        }
+      },
+      "ix_responses_survey_version": {
+        "v": 2,
+        "key": [
+          [
+            "survey_id",
+            1
+          ],
+          [
+            "version",
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "ttl_scope": "expires_at TTL index definition verified; asynchronous expiration timing is not claimed",
+  "status": "PASS",
+  "exit_code": 0,
+  "finished_at": "2026-10-15T22:14:34.798251+08:00",
+  "source_sha256": {
+    "survey_app/config.py": "342b03246efdf5c946a1744eaedd5090c5716284dbe8b4d9485879307b80a449",
+    "survey_app/db.py": "0d51f67fa903fb9ca4605b8e9de030888ae4d273cbca3ce437f1a001abcdad6b",
+    "scripts/init_db.py": "2361a49f44e5f85d99c862a2884ea1c2a030ee5b688ddc16faa0b70e4b7b0d0a",
+    "scripts/check_schema.py": "00b3229b254854afe12abb1a3d6b2465e0f9c4c100f2d57dfc9928d15a2deded"
+  }
+}

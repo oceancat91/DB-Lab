@@ -1,0 +1,23 @@
+{
+  "recorded_at": "2026-10-15T14:14:32.532560+00:00",
+  "python": "3.11.17",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "mongodb": "6.0.29",
+  "replica_set": "lab4repro",
+  "is_primary": true,
+  "port": 27085,
+  "data_directory": ".runtime/mongo",
+  "probe_database": "lab4_environment",
+  "transaction_probe": "PASS",
+  "packages": {
+    "fastapi": "0.143.1",
+    "uvicorn": "0.54.0",
+    "pymongo": "4.19.0",
+    "pydantic": "2.14.1",
+    "jinja2": "3.1.6",
+    "httpx": "0.28.1",
+    "pytest": "9.1.1",
+    "python-dotenv": "1.2.4"
+  },
+  "scope": "Environment capability only; no application business tests run."
+}

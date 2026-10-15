@@ -1,0 +1,19 @@
+- link "跳到主要内容":
+  - /url: "#main"
+- banner:
+  - link "问卷工作台首页":
+    - /url: /
+    - text: 问卷工作台
+  - generic: lab4_browser_owner
+  - button "退出登录"
+- main:
+  - alert: 问卷已关闭或超过截止时间
+  - region:
+    - link "返回我的问卷":
+      - /url: /
+    - heading "暂时无法打开问卷" [level=1]
+    - paragraph: 问卷已关闭或超过截止时间
+- generic: ×
+- generic: 拖拽到此处完成下载
+- generic: 图片将完成下载
+- generic: AIX智能下载器

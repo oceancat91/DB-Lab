@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "archive_files_rechecked_after_run": 105,
+  "changed_archived_files": [],
+  "artifacts_scanned": 26,
+  "secret_matches": [],
+  "connection_string_matches": [],
+  "module_provenance": {
+    "fastapi": {
+      "inside_fresh_environment": true,
+      "location": "Lib/site-packages/fastapi/__init__.py"
+    },
+    "httpx": {
+      "inside_fresh_environment": true,
+      "location": "Lib/site-packages/httpx/__init__.py"
+    },
+    "pymongo": {
+      "inside_fresh_environment": true,
+      "location": "Lib/site-packages/pymongo/__init__.py"
+    },
+    "pytest": {
+      "inside_fresh_environment": true,
+      "location": "Lib/site-packages/pytest/__init__.py"
+    }
+  },
+  "environment": "lab4-survey-repro-be6b0d"
+}

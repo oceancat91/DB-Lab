@@ -129,3 +129,19 @@ S5收尾：提交专项46/46、全量245/245及Schema CLI43/43 PASS；浏览器�
 ## EXP-010 S6 集成与干净复现
 
 2026-10-15 Asia/Shanghai，事前登记。前置S5真实门禁通过。计划按README在新conda环境和干净源码副本、独立MongoDB数据目录/端口27085及UUID库完成配置、初始化、启动、真实HTTP和全量回归；重启应用验证持久化。根agent完成浏览器E01关闭环节及页面复核，汇总26组实际结果。TC-S02按已采纳一次发布version1范围检验当前版本筛选和跨问卷同题号隔离，不虚构可公开生成第二发布版本；原计划措辞保留并作明确修订。不改任何原验收断言或既有失败记录。
+
+### EXP-010-REPRO 干净环境具体验证计划（事前）
+
+日期：2026-10-15，Asia/Shanghai。执行者：Codex复现子agent；需求TC-E02/R01/R12/R13。从提交e7255c3332b3492691eff27a0a5ce7e395127422通过git archive导出到.runtime/reproduction/project；新建conda环境lab4-survey-repro-be6b0d，严格从归档environment.yml安装，不使用pip。副本独立MongoDB端口27085、副本集lab4repro、应用端口8005，均只绑定127.0.0.1。先验证归档摘要与副本流程，再配置随机秘密、不输出.env；完成副本Mongo初始化、Schema43项、全量245项测试、真实HTTP四类问卷发布/填写/提交/统计。仅在核验PID命令行指向副本后停止自己的应用，重新启动读取旧会话/答卷和统计以验证持久化。新UUID测试库仅按测试夹具精确清理；不触碰27084/8004或旧Lab。实际命令、版本、退出码、源码摘要、原始失败/警告及结果保存到副本并复制脱敏证据至主results/acceptance；不改根进度/README/报告，不提交Git。
+S6复现安装首轮包装器故障（实际失败保留）：Windows PowerShell将conda原生stderr输出视为RemoteException，尚无新环境python。现改为隐藏Start-Process单独收集stdout/stderr、WaitForExit按真实退出码判断；仍从原environment.yml创建同一新环境，不更改SSL，不使用pip。原始conda-install-attempt1.txt及conda-result-attempt1.json保留。
+S6复现安装第二轮实际失败：conda报告EnvironmentFileNotFound，但PowerShell核验归档environment.yml存在。改为将工作目录设为干净项目，传相对environment.yml，避免绝对Unicode路径经原生参数转义；同时以Start-Process -Wait -PassThru收集真实退出码。第二轮日志已另存，不改依赖定义。
+S6复现包装器根因已定位：PowerShell7生成UTF-8无BOM计划文件，Windows PowerShell5默认按ANSI读取，中文项目路径因此损坏，第三轮报DirectoryNotFoundException。现显式按UTF-8读取计划，并从PSScriptRoot构建项目路径；前三轮真实失败日志保留。依赖内容与校验规则未变。
+
+S6文档审阅修正：README的init_mongo命令增加--output results/local-environment.json，避免普通复现覆盖历史S1环境证据；参数原已支持，复现也采用显式输出文件。统计区域加载时可能改变滚动位置、手工畸形百分号分享URL缺少友好提示作为非阻塞已知限制记录于final-code-review.md；正常生成的分享链接与完整链路均已实际通过，不冒称全部浏览器/异常输入均验证。
+S6 TC-E02收尾实测：新conda环境lab4-survey-repro-be6b0d安装退出0；归档105个文件运行前后摘要不变；新环境模块来源已核对。独立27085/lab4repro上Schema43/43、全量245/245、真实HTTP23步及不同PID应用重启后会话/答卷/统计/幂等回执持久化全部PASS。原清理包装器exit1与GBK解码stderr保留；仅UTF-8输出修正后补救核验PID17332命令和精确dbPath，PyMongo优雅关闭并确认PID退出。最终事实results/acceptance/reproduction-final.json，原失败reproduction.json，补救reproduction-cleanup-repair.json，说明reproduction.md。未重跑或覆盖245测试原证据；复现数据保留，主27084/8004未动。证据秘密/连接串扫描0匹配。
+
+S6收尾：26/26组PASS；新conda、干净归档副本、独立MongoDB与HTTP进程，245/245、Schema43/43及23HTTP流程步骤、重启持久化均通过。清理包装器原exit1保留；单独补救后自有进程退出，最终reproduction-final.json PASS。仅同主机隔离复现，不称新OS。见results/acceptance/gates.md及TEST_REPORT。
+
+## EXP-011 S7 第一阶段交付与基线
+
+2026-10-15 Asia/Shanghai，前置S6已通过；事前登记。范围R01/R12/R13/R14、DOC01/DOC02。计划新增SYSTEM、REPORT_STAGE1、BASELINE_STAGE1和合成统计夹具，补备份恢复方法并在新UUID合成测试库演示；保留受验业务代码e7255c3及文件摘要。根agent核对README/需求状态、四类交付物、文件清单及打包排除.env/.runtime/.git/缓存/旧嵌套results/Lab4；实际解压校验哈希和秘密不入包。S7门禁全部满足后才标complete。

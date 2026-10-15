@@ -1,0 +1,19 @@
+conda.exe : 
+所在位置 D:\HuaweiMoveData\Users\32002\Desktop\数据管理系统\Lab4\.runtime\reproduction\install-environment.ps1:10 字符: 5
++     & $condaPath env create --file (Join-Path $plan.project 'environm ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+
+EnvironmentFileNotFound: 'D:\HuaweiMoveData\Users\32002\Desktop\鏁版嵁绠＄悊绯荤粺\Lab4\.runtime\reproduction\project\environment.yml' file not found
+
+Start-Process : 无法运行此命令，因为参数“WorkingDirectory”具有无效的值或不适用于此命令。请指定一个有效输入，然后再次运行此命令。
+所在位置 D:\HuaweiMoveData\Users\32002\Desktop\数据管理系统\Lab4\.runtime\reproduction\install-environment.ps1:13 字符: 16
++ ...  $process = Start-Process -FilePath $condaPath -ArgumentList $argumen ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [Start-Process]，DirectoryNotFoundException
+    + FullyQualifiedErrorId : DirectoryNotFoundException,Microsoft.PowerShell.Commands.StartProcessCommand
+ 
+

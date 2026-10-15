@@ -1,0 +1,155 @@
+﻿Channels:
+ - conda-forge
+ - nodefaults
+Platform: win-64
+Collecting package metadata (repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: C:\Users\32002\miniconda3\envs\lab4-survey-repro-be6b0d
+
+  added / updated specs:
+    - fastapi=0.143.1
+    - httpx=0.28.1
+    - jinja2=3.1.6
+    - pydantic=2.14.1
+    - pymongo=4.19.0
+    - pytest=9.1.1
+    - python-dotenv=1.2.4
+    - python=3.11.17
+    - uvicorn=0.54.0
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    pluggy-1.7.0               |     pyh5ded981_0          29 KB  conda-forge
+    ------------------------------------------------------------
+                                           Total:          29 KB
+
+The following NEW packages will be INSTALLED:
+
+  _python_abi3_supp~ conda-forge/noarch::_python_abi3_support-1.0-hd8ed1ab_3 
+  annotated-doc      conda-forge/noarch::annotated-doc-0.0.5-pyhcf101f3_0 
+  annotated-types    conda-forge/noarch::annotated-types-0.8.0-pyhd8ed1ab_0 
+  anyio              conda-forge/noarch::anyio-4.15.1-pyh5ded981_1 
+  backoff            conda-forge/noarch::backoff-2.2.1-pyhd8ed1ab_1 
+  backports.zstd     conda-forge/win-64::backports.zstd-1.8.0-py311h71c1bcc_0 
+  brotli-python      conda-forge/win-64::brotli-python-1.2.0-py311h7862a2f_4 
+  bzip2              conda-forge/win-64::bzip2-1.0.8-h0ad9c76_10 
+  ca-certificates    conda-forge/noarch::ca-certificates-2026.7.22-h4c7d964_0 
+  certifi            conda-forge/noarch::certifi-2026.7.22-pyhd8ed1ab_0 
+  charset-normalizer conda-forge/win-64::charset-normalizer-3.5.2-h308a848_0 
+  click              conda-forge/noarch::click-8.5.0-pyh5ded981_0 
+  colorama           conda-forge/noarch::colorama-0.4.6-pyhd8ed1ab_1 
+  cpython            conda-forge/noarch::cpython-3.11.17-py311hd8ed1ab_2 
+  deprecated         conda-forge/noarch::deprecated-1.3.1-pyhd8ed1ab_1 
+  dnspython          conda-forge/noarch::dnspython-2.8.0-pyhcf101f3_0 
+  email-validator    conda-forge/noarch::email-validator-2.3.0-pyhd8ed1ab_0 
+  email_validator    conda-forge/noarch::email_validator-2.3.0-hd8ed1ab_0 
+  exceptiongroup     conda-forge/noarch::exceptiongroup-1.3.1-pyhd8ed1ab_0 
+  fastapi            conda-forge/noarch::fastapi-0.143.1-h8120917_0 
+  fastapi-cli        conda-forge/noarch::fastapi-cli-0.0.32-pyhcf101f3_0 
+  fastapi-core       conda-forge/noarch::fastapi-core-0.143.1-pyh5ded981_0 
+  fastar             conda-forge/win-64::fastar-0.12.0-py311h8a1b207_0 
+  googleapis-common~ conda-forge/noarch::googleapis-common-protos-1.75.5-pyh5ded981_0 
+  h11                conda-forge/noarch::h11-0.16.0-pyhcf101f3_1 
+  h2                 conda-forge/noarch::h2-4.4.1-pyhcf101f3_0 
+  hpack              conda-forge/noarch::hpack-4.2.0-pyhd8ed1ab_0 
+  httpcore           conda-forge/noarch::httpcore-1.0.9-pyh29332c3_0 
+  httptools          conda-forge/win-64::httptools-0.9.0-py311h3485c13_0 
+  httpx              conda-forge/noarch::httpx-0.28.1-pyhd8ed1ab_0 
+  hyperframe         conda-forge/noarch::hyperframe-6.1.0-pyhd8ed1ab_0 
+  idna               conda-forge/noarch::idna-3.20-pyh5ded981_0 
+  importlib-metadata conda-forge/noarch::importlib-metadata-8.7.1-pyhcf101f3_0 
+  iniconfig          conda-forge/noarch::iniconfig-2.3.1-pyhd8ed1ab_0 
+  jinja2             conda-forge/noarch::jinja2-3.1.6-pyhcf101f3_1 
+  libexpat           conda-forge/win-64::libexpat-2.8.5-hac47afa_0 
+  libffi             conda-forge/win-64::libffi-3.7.0-h3d046cb_1 
+  liblzma            conda-forge/win-64::liblzma-5.8.3-hfd05255_1 
+  libpython          conda-forge/win-64::libpython-3.11.17-hfb4101e_2_cpython 
+  libsqlite          conda-forge/win-64::libsqlite-3.54.0-hf5d6505_101 
+  libzlib            conda-forge/win-64::libzlib-1.3.2-hfd05255_3 
+  markdown-it-py     conda-forge/noarch::markdown-it-py-4.2.0-pyhd8ed1ab_0 
+  markupsafe         conda-forge/win-64::markupsafe-3.0.4-py311h5b24874_1 
+  mdurl              conda-forge/noarch::mdurl-0.1.2-pyhd8ed1ab_1 
+  openssl            conda-forge/win-64::openssl-3.6.5-hf411b9b_0 
+  opentelemetry-api  conda-forge/noarch::opentelemetry-api-1.45.1-pyhd8ed1ab_0 
+  opentelemetry-exp~ conda-forge/noarch::opentelemetry-exporter-http-transport-0.66b1-pyh5ded981_0 
+  opentelemetry-exp~ conda-forge/noarch::opentelemetry-exporter-otlp-common-0.66b1-pyh5ded981_0 
+  opentelemetry-exp~ conda-forge/noarch::opentelemetry-exporter-otlp-proto-common-1.45.1-pyhd8ed1ab_0 
+  opentelemetry-exp~ conda-forge/noarch::opentelemetry-exporter-otlp-proto-http-1.45.1-pyhd8ed1ab_0 
+  opentelemetry-pro~ conda-forge/noarch::opentelemetry-proto-1.45.1-pyhd8ed1ab_0 
+  opentelemetry-sdk  conda-forge/noarch::opentelemetry-sdk-1.45.1-pyhd8ed1ab_0 
+  opentelemetry-sem~ conda-forge/noarch::opentelemetry-semantic-conventions-0.66b1-pyhd8ed1ab_0 
+  packaging          conda-forge/noarch::packaging-26.3-pyhc364b38_0 
+  pip                conda-forge/noarch::pip-26.2.1-pyh8b19718_0 
+  pluggy             conda-forge/noarch::pluggy-1.7.0-pyh5ded981_0 
+  protobuf           conda-forge/win-64::protobuf-7.35.1-py311heb191ad_3 
+  pydantic           conda-forge/noarch::pydantic-2.14.1-pyh5ded981_0 
+  pydantic-core      conda-forge/win-64::pydantic-core-2.50.1-py311hf51aa87_0 
+  pydantic-extra-ty~ conda-forge/noarch::pydantic-extra-types-2.11.1-pyhcf101f3_0 
+  pydantic-settings  conda-forge/noarch::pydantic-settings-2.16.0-pyh5ded981_0 
+  pygments           conda-forge/noarch::pygments-2.21.0-pyhcf101f3_0 
+  pymongo            conda-forge/win-64::pymongo-4.19.0-py311h5dfdfe8_0 
+  pysocks            conda-forge/noarch::pysocks-1.7.1-pyh09c184e_7 
+  pytest             conda-forge/noarch::pytest-9.1.1-pyhc364b38_2 
+  python             conda-forge/win-64::python-3.11.17-hb12b558_2_cpython 
+  python-abi3        conda-forge/noarch::python-abi3-3.11-hac436b5_3 
+  python-dotenv      conda-forge/noarch::python-dotenv-1.2.4-pyh5ded981_0 
+  python-gil         conda-forge/noarch::python-gil-3.11.17-hd8ed1ab_2 
+  python-multipart   conda-forge/noarch::python-multipart-0.0.32-pyhcf101f3_0 
+  python_abi         conda-forge/noarch::python_abi-3.11-9_cp311 
+  pyyaml             conda-forge/win-64::pyyaml-6.0.3-py311h3f79411_1 
+  requests           conda-forge/noarch::requests-2.34.2-pyhcf101f3_0 
+  rich               conda-forge/noarch::rich-15.0.0-pyhcf101f3_0 
+  rich-toolkit       conda-forge/noarch::rich-toolkit-0.20.6-pyh5ded981_0 
+  setuptools         conda-forge/noarch::setuptools-84.0.0-pyh332efcf_0 
+  shellingham        conda-forge/noarch::shellingham-1.5.4-pyhd8ed1ab_2 
+  sniffio            conda-forge/noarch::sniffio-1.3.1-pyhd8ed1ab_2 
+  starlette          conda-forge/noarch::starlette-1.8.0-pyh5ded981_0 
+  tk                 conda-forge/win-64::tk-8.6.13-h967ab96_4 
+  tomli              conda-forge/noarch::tomli-2.5.0-pyh5ded981_0 
+  typer              conda-forge/noarch::typer-0.27.3-pyh5ded981_0 
+  typing-extensions  conda-forge/noarch::typing-extensions-4.16.0-h69aa097_0 
+  typing-inspection  conda-forge/noarch::typing-inspection-0.4.4-pyhcf101f3_0 
+  typing_extensions  conda-forge/noarch::typing_extensions-4.16.0-pyhcf101f3_0 
+  tzdata             conda-forge/noarch::tzdata-2026c-h151e31d_0 
+  ucrt               conda-forge/win-64::ucrt-10.0.26100.0-h57928b3_0 
+  urllib3            conda-forge/noarch::urllib3-2.8.0-pyhd8ed1ab_0 
+  uvicorn            conda-forge/noarch::uvicorn-0.54.0-pyhe2676ad_0 
+  uvicorn-standard   conda-forge/noarch::uvicorn-standard-0.54.0-h5abea94_0 
+  vc                 conda-forge/win-64::vc-14.5-ha367084_41 
+  vc14_runtime       conda-forge/win-64::vc14_runtime-14.51.36247-habf1de7_41 
+  vcomp14            conda-forge/win-64::vcomp14-14.51.36247-habf1de7_41 
+  watchfiles         conda-forge/win-64::watchfiles-1.3.0-py311h10a29cd_0 
+  websockets         conda-forge/win-64::websockets-17.2-py311h4ea48c9_0 
+  wheel              conda-forge/noarch::wheel-0.48.0-pyhd8ed1ab_0 
+  win_inet_pton      conda-forge/noarch::win_inet_pton-1.1.0-pyh7428d3b_8 
+  wrapt              conda-forge/win-64::wrapt-2.5.1-py311hf893f09_0 
+  yaml               conda-forge/win-64::yaml-0.2.5-h6a83c73_3 
+  zipp               conda-forge/noarch::zipp-4.1.1-pyh5ded981_0 
+  zstd               conda-forge/win-64::zstd-1.5.7-h534d264_7 
+
+
+
+Downloading and Extracting Packages: ...working... done
+Preparing transaction: ...working... done
+Verifying transaction: ...working... done
+Executing transaction: ...working... done
+#
+# To activate this environment, use
+#
+#     $ conda activate lab4-survey-repro-be6b0d
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+
+WARNING conda.conda_pypi.main:notify_externally_managed_future(156): 
+  Did you know? You can install many PyPI packages with conda
+  using the conda-pypi beta. Get started:
+    https://docs.conda.io/projects/conda/en/stable/new-features.html
+

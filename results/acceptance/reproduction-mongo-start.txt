@@ -1,0 +1,1 @@
+Started project MongoDB PID=17332, port=27085. Initialize with python scripts/init_mongo.py.

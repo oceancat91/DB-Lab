@@ -1,0 +1,39 @@
+{
+  "started_at": "2026-10-15T22:19:53.646189+08:00",
+  "timezone": "Asia/Shanghai",
+  "status": "PASS",
+  "port": 27085,
+  "pid": 17332,
+  "scope": "cleanup only; no business tests rerun",
+  "original_runner_exit_code": 1,
+  "checks": [
+    {
+      "name": "pid_command_ownership",
+      "status": "PASS",
+      "pid": 17332,
+      "port": 27085,
+      "replica_set": "lab4repro",
+      "data_path": "<clean-project>/.runtime/mongo"
+    },
+    {
+      "name": "dbpath_and_topology_ownership",
+      "status": "PASS",
+      "replica_set": "lab4repro"
+    },
+    {
+      "name": "graceful_shutdown_and_process_exit",
+      "status": "PASS",
+      "pid": 17332
+    }
+  ],
+  "database_counts_retained": {
+    "users": 2,
+    "sessions": 2,
+    "surveys": 1,
+    "survey_versions": 1,
+    "responses": 1
+  },
+  "data_retained": true,
+  "finished_at": "2026-10-15T22:19:55.090853+08:00",
+  "exit_code": 0
+}

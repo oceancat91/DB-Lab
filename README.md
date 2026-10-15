@@ -1,6 +1,6 @@
 # MongoDB 在线问卷系统 · Lab4 第一阶段
 
-Lab4 是项目根目录。本项目按 [WORKFLOW.md](WORKFLOW.md) 和 [AGENTS.md](AGENTS.md) 顺序实施，只覆盖《大作业一第一阶段》。当前 S0–S5 已验收，S6 正在进行全链路与干净环境复现；完整验收结果随后写入测试报告，实际状态见 [progress.json](progress.json)。
+Lab4 是项目根目录。本项目按 [WORKFLOW.md](WORKFLOW.md) 和 [AGENTS.md](AGENTS.md) 顺序实施，只覆盖《大作业一第一阶段》。当前 S0–S6 已验收，S7 正在整理完整报告与交付基线；完整验收结果随后写入测试报告，实际状态见 [progress.json](progress.json)。
 
 ## 功能与语义
 
@@ -19,7 +19,7 @@ conda env create --file environment.yml --yes
 conda activate lab4-survey
 python scripts/configure_env.py
 .\scripts\start_mongo.ps1
-python scripts/init_mongo.py
+python scripts/init_mongo.py --output results/local-environment.json
 python scripts/init_db.py
 python -m uvicorn survey_app.main:app --host 127.0.0.1 --port 8004
 ```
