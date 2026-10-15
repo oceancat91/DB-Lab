@@ -1,0 +1,155 @@
+- link "跳到主要内容":
+  - /url: "#main"
+- banner:
+  - link "问卷工作台首页":
+    - /url: /
+    - text: 问卷工作台
+  - generic: lab4_browser_owner
+  - button "退出登录"
+- main:
+  - region "我的问卷工作台":
+    - complementary:
+      - heading "我的问卷" [level=1]
+      - button "新建问卷"
+      - paragraph: 这里只显示你创建的问卷。
+      - button "第一阶段浏览器验收问卷 已发布 未设置截止" [pressed]:
+        - generic: 第一阶段浏览器验收问卷
+        - generic: 已发布
+        - generic: 未设置截止
+      - button "刷新列表"
+    - article "第一阶段浏览器验收问卷":
+      - generic: 已发布
+      - generic: 发布版本 1
+      - heading "第一阶段浏览器验收问卷" [level=2]
+      - paragraph: 已发布内容只读；你可以调整截止时间或关闭问卷。
+      - region "问卷信息":
+        - heading "问卷信息" [level=3]
+        - text: 问卷标题
+        - textbox "问卷标题" [disabled]: 第一阶段浏览器验收问卷
+        - text: 填写说明
+        - textbox "填写说明" [disabled]:
+          - /placeholder: 告诉填写者这份问卷的用途和注意事项。
+          - text: 合成数据：验证四类题目、跳转与返回修改。
+        - checkbox "对创建者匿名 仍须登录，结果中不显示填写者账号。" [checked] [disabled]
+        - text: 对创建者匿名
+        - generic: 仍须登录，结果中不显示填写者账号。
+        - checkbox "允许多次填写 关闭时，同一账号只能成功提交一次。" [disabled]
+        - text: 允许多次填写
+        - generic: 关闭时，同一账号只能成功提交一次。
+      - region "题目":
+        - heading "题目" [level=3]
+        - paragraph: 按显示顺序排列；发布后不能修改。
+        - generic: 4 / 100 题
+        - heading "1. 单选题" [level=4]
+        - generic: q8c3130237985be54
+        - text: 题目内容
+        - textbox "题目内容" [disabled]: 是否填写完整问卷？
+        - checkbox "必答题" [checked] [disabled]
+        - generic: 必答题
+        - textbox "选项内容 o5711557ba1f6b0c9" [disabled]: 完整填写
+        - generic: o5711557ba1f6b0c9
+        - textbox "选项内容 o8a5b8af69e0f5269" [disabled]: 跳到数字题
+        - generic: o8a5b8af69e0f5269
+        - heading "2. 多选题" [level=4]
+        - generic: q5253dbb1c5c59661
+        - text: 题目内容
+        - textbox "题目内容" [disabled]: 使用过哪些功能？
+        - checkbox "必答题" [checked] [disabled]
+        - generic: 必答题
+        - textbox "选项内容 o2ffdf8e7bfa9ed49" [disabled]: 校验
+        - generic: o2ffdf8e7bfa9ed49
+        - textbox "选项内容 o1ffe9a927227566d" [disabled]: 跳转
+        - generic: o1ffe9a927227566d
+        - paragraph: 回答校验（留空表示不限制）
+        - text: 最少选几项
+        - spinbutton "最少选几项" [disabled]: "1"
+        - text: 最多选几项
+        - spinbutton "最多选几项" [disabled]: "2"
+        - text: 必须选几项
+        - spinbutton "必须选几项" [disabled]
+        - heading "3. 文本题" [level=4]
+        - generic: q96fdb7a1e340f4c7
+        - text: 题目内容
+        - textbox "题目内容" [disabled]: 请写两到十个字
+        - checkbox "必答题" [checked] [disabled]
+        - generic: 必答题
+        - paragraph: 回答校验（留空表示不限制）
+        - text: 最少字数
+        - spinbutton "最少字数" [disabled]: "2"
+        - text: 最多字数
+        - spinbutton "最多字数" [disabled]: "10"
+        - heading "4. 数字题" [level=4]
+        - generic: qbda6968181f46905
+        - text: 题目内容
+        - textbox "题目内容" [disabled]: 满意度（0至10整数）
+        - checkbox "必答题" [checked] [disabled]
+        - generic: 必答题
+        - paragraph: 回答校验（留空表示不限制）
+        - text: 最小值
+        - spinbutton "最小值" [disabled]: "0"
+        - text: 最大值
+        - spinbutton "最大值" [disabled]: "10"
+        - checkbox "仅允许整数" [checked] [disabled]
+        - generic: 仅允许整数
+      - region "条件跳转":
+        - heading "条件跳转" [level=3]
+        - paragraph: 仅跳到后面的题目。数字越小优先级越高；未命中时按顺序继续。
+        - heading "规则 1" [level=4]
+        - text: 当这道题
+        - combobox "当这道题" [disabled]:
+          - option "是否填写完整问卷？ [q8c3130237985be54]" [selected]
+          - option "使用过哪些功能？ [q5253dbb1c5c59661]"
+        - text: 条件
+        - combobox "条件" [disabled]:
+          - option "选择了" [selected]
+        - text: 选项
+        - combobox "选项" [disabled]:
+          - option "完整填写 [o5711557ba1f6b0c9]"
+          - option "跳到数字题 [o8a5b8af69e0f5269]" [selected]
+        - text: 跳到
+        - combobox "跳到" [disabled]:
+          - option "使用过哪些功能？ [q5253dbb1c5c59661]"
+          - option "请写两到十个字 [q96fdb7a1e340f4c7]"
+          - option "满意度（0至10整数） [qbda6968181f46905]" [selected]
+        - text: 优先级（同一来源不能重复）
+        - spinbutton "优先级（同一来源不能重复）" [disabled]: "10"
+      - region "截止与开放状态":
+        - heading "截止与开放状态" [level=3]
+        - paragraph: 时间均为北京时间（UTC+08:00）。留空表示不设截止。
+        - text: 截止时间
+        - textbox "截止时间"
+        - button "保存截止时间"
+        - button "关闭问卷"
+      - region "分享给填写者":
+        - heading "分享给填写者" [level=3]
+        - paragraph: 填写者打开链接后需先登录。
+        - textbox "问卷分享链接": http://127.0.0.1:8004/survey/2Yb2yMHHquRXKeJN
+        - button "复制链接"
+        - link "打开分享页":
+          - /url: http://127.0.0.1:8004/survey/2Yb2yMHHquRXKeJN
+      - region "回答与统计":
+        - heading "回答与统计" [level=3]
+        - paragraph: 仅统计成功提交的答卷；提交次数与去重人数分别计算。
+        - button "刷新结果"
+        - group "查看问卷结果":
+          - button "统计"
+          - button "答卷明细" [pressed]
+        - paragraph: 共 1 份成功答卷。匿名答卷不显示填写者账号。
+        - generic "收起 答卷 1 匿名填写 2026/10/15 21:49:35（北京时间）" [active]:
+          - text: 收起
+          - strong: 答卷 1
+          - generic: 匿名填写
+          - generic: 2026/10/15 21:49:35（北京时间）
+        - paragraph: 发布版本 1
+        - term: 是否填写完整问卷？
+        - definition: 完整填写
+        - term: 使用过哪些功能？
+        - definition: 校验
+        - term: 请写两到十个字
+        - definition: 页面提交
+        - term: 满意度（0至10整数）
+        - definition: "8"
+- generic: ×
+- generic: 拖拽到此处完成下载
+- generic: 图片将完成下载
+- generic: AIX智能下载器

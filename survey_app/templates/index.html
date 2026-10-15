@@ -33,6 +33,12 @@
         </form>
         <section class="editor-section lifecycle" aria-labelledby="deadline-heading"><div class="section-heading"><div><h3 id="deadline-heading">截止与开放状态</h3><p class="muted">时间均为北京时间（UTC+08:00）。留空表示不设截止。</p></div></div><div class="deadline-row"><label class="field">截止时间<input id="survey-deadline" type="datetime-local" data-testid="survey-deadline"></label><button id="save-deadline" class="button secondary" type="button" data-testid="save-deadline">保存截止时间</button><button id="close-survey" class="button danger" type="button" data-testid="close-survey" hidden>关闭问卷</button></div><p id="closed-note" class="muted" hidden>问卷已关闭，本阶段不支持重新开放。</p></section>
         <section id="share-section" class="editor-section share-section" hidden aria-labelledby="share-heading"><h3 id="share-heading">分享给填写者</h3><p class="muted">填写者打开链接后需先登录。</p><div class="share-row"><input id="share-url" aria-label="问卷分享链接" readonly data-testid="share-url"><button id="copy-share" class="button secondary" type="button" data-testid="copy-share">复制链接</button><a id="open-share" class="button primary" target="_blank" rel="noopener noreferrer" data-testid="open-share">打开分享页</a></div></section>
+        <section id="results-section" class="editor-section results-section" hidden aria-labelledby="results-heading" data-testid="results-section">
+          <div class="section-heading"><div><h3 id="results-heading">回答与统计</h3><p class="muted">仅统计成功提交的答卷；提交次数与去重人数分别计算。</p></div><button id="refresh-results" class="button secondary" type="button" data-testid="refresh-results">刷新结果</button></div>
+          <div class="results-tabs" role="group" aria-label="查看问卷结果"><button id="statistics-tab" class="tab active" type="button" aria-pressed="true" data-testid="statistics-tab">统计</button><button id="responses-tab" class="tab" type="button" aria-pressed="false" data-testid="responses-tab">答卷明细</button></div>
+          <label id="statistics-filter" class="field statistics-filter">统计范围<select id="statistics-question" data-testid="statistics-question"><option value="">整卷所有题目</option></select></label>
+          <div id="results-content" aria-live="polite" data-testid="results-content"></div>
+        </section>
       </article>
     </section>
     <section id="fill-view" class="fill-view" hidden aria-labelledby="fill-title" data-testid="fill-view"><a href="/" class="back-link">返回我的问卷</a><div id="fill-content"></div></section>

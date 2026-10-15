@@ -4,7 +4,7 @@
   const $ = (id) => document.getElementById(id);
   const TYPES = { single: "单选题", multi: "多选题", text: "文本题", number: "数字题" };
   const STATUS = { draft: "草稿", published: "已发布", closed: "已关闭" };
-  const state = { user: null, surveys: [], current: null, dirty: false, busy: false, authMode: "login", fill: null };
+  const state = { user: null, surveys: [], current: null, dirty: false, busy: false, authMode: "login", fill: null, results: null };
   const path = window.location.pathname.match(/^\/survey\/([^/]+)\/?$/);
   const shareCode = path ? decodeURIComponent(path[1]) : null;
 
@@ -215,9 +215,11 @@
     state.current = await api(`/api/surveys/${encodeURIComponent(id)}`);
     state.current.questions ||= [];
     state.current.rules ||= [];
+    state.results = { surveyId: state.current.id, mode: "statistics", questionId: "" };
     state.dirty = false;
     renderEditor();
     renderList();
+    if (!isDraft()) await loadResults();
   }
 
   function renderEditor() {
@@ -240,6 +242,8 @@
     $("close-survey").hidden = survey.status !== "published";
     $("closed-note").hidden = survey.status !== "closed";
     $("share-section").hidden = survey.status === "draft";
+    $("results-section").hidden = survey.status === "draft";
+    if (!isDraft()) renderResultsControls();
     const url = safeShareUrl(survey);
     $("share-url").value = url;
     $("open-share").href = url || "/";
@@ -461,7 +465,7 @@
     $("fill-content").replaceChildren(el("p", "muted", "正在读取问卷…"));
     try {
       const survey = await api(`/api/fill/${encodeURIComponent(shareCode)}`);
-      state.fill = { survey, answers: {}, path: [], currentId: null, complete: false, changed: false, reviewId: null, reviewValue: null };
+      state.fill = newFill(survey);
       const header = el("div", "fill-header");
       const title = el("h1", "", survey.title); title.id = "fill-title";
       header.append(title);
@@ -470,6 +474,7 @@
       policies.append(el("span", "", survey.allow_anonymous ? "对创建者匿名（仍需登录）" : "创建者可查看你的账号"), el("span", "", survey.allow_repeat ? "允许多次填写" : "每个账号限提交一次"));
       header.append(policies);
       const notice = el("p", "fill-notice", "回答仅保留在当前页面，提交前不会自动保存。返回改答会清除后续回答，并重新确定填写顺序。");
+      notice.id = "fill-save-note";
       const session = el("div"); session.id = "fill-session";
       $("fill-content").replaceChildren(header, notice, session);
       document.title = `${survey.title} · 问卷工作台`;
@@ -483,6 +488,12 @@
 
   async function nextFill(answers) {
     return api(`/api/fill/${encodeURIComponent(shareCode)}/next`, { method: "POST", body: { version: state.fill.survey.version, answers } });
+  }
+
+  function newFill(survey) {
+    return { survey, answers: {}, path: [], currentId: null, complete: false, changed: false,
+      reviewId: null, reviewValue: null, requestId: stableId("r"), submitBody: null,
+      submitState: "idle", submitError: "", receipt: null, userId: state.user?.id };
   }
 
   function applyFillResult(result) {
@@ -540,6 +551,7 @@
 
   async function goToFillQuestion(id) {
     const fill = state.fill;
+    if (["pending", "uncertain", "success"].includes(fill.submitState)) throw new Error("请先确认本次提交结果，再开始新的填写。");
     const index = fill.path.indexOf(id);
     if (index < 0) throw new Error("该题不在当前填写路径中，请从上一题重新继续。");
     const earlier = fill.path.slice(0, index);
@@ -549,6 +561,8 @@
     try {
       const result = await nextFill(prefix);
       applyFillResult(result);
+      if (fill.submitBody) fill.requestId = stableId("r");
+      fill.submitBody = null; fill.submitState = "idle"; fill.submitError = "";
       // Preserve only the target's old value for convenient editing; later answers are discarded.
       if (result.next_question_id === id) {
         fill.reviewId = id;
@@ -564,6 +578,7 @@
     const fill = state.fill;
     const session = $("fill-session");
     session.replaceChildren();
+    if (fill.receipt) { renderFillReceipt(session); return; }
     if (fill.complete) {
       renderFillReview(session);
       return;
@@ -675,8 +690,9 @@
     const panel = el("section", "fill-review"); panel.dataset.testid = "fill-review";
     const heading = el("h2", "", "核对你的回答"); heading.id = "fill-review-heading"; heading.tabIndex = -1;
     panel.append(heading, el("p", "muted", `已按实际路径完成 ${fill.path.length} 道题。以下为当前页面中的回答预览。`));
-    const notice = el("p", "fill-notice", "回答校验已完成，尚未提交。提交功能暂未开放，离开或刷新页面会丢失回答。");
-    notice.dataset.testid = "fill-submit-unavailable"; panel.append(notice);
+    const locked = ["pending", "uncertain"].includes(fill.submitState);
+    const notice = el("p", "fill-notice", locked ? "尚未收到明确的提交回执。请保持本页，点击重试确认结果；确认前暂时不能修改回答。" : "请核对回答，确认后点击提交。成功提交后将显示回执。");
+    notice.dataset.testid = "fill-submit-note"; panel.append(notice);
     const list = el("ol", "fill-review-list");
     for (const id of fill.path) {
       const question = fillQuestion(id);
@@ -684,13 +700,199 @@
       const row = el("div", "fill-review-row");
       row.append(el("h3", "", question.title));
       const edit = button("修改", "quiet", () => action(edit, () => goToFillQuestion(id)), `fill-edit-${id}`);
+      edit.disabled = locked;
       row.append(edit);
       item.append(row, el("p", "fill-review-answer", answerText(question, fill.answers[id]))); list.append(item);
     }
     panel.append(list);
+    const error = el("p", "fill-error", fill.submitError);
+    error.id = "fill-error"; error.hidden = !fill.submitError;
+    error.setAttribute("role", "alert"); error.dataset.testid = "fill-error"; panel.append(error);
+    const actions = el("div", "fill-actions");
     const back = button("返回上一题", "secondary", () => action(back, () => goToFillQuestion(fill.path[fill.path.length - 1])), "fill-back");
-    back.id = "fill-back"; back.disabled = !fill.path.length;
-    panel.append(back); session.append(panel);
+    back.id = "fill-back"; back.disabled = !fill.path.length || locked;
+    const submit = button(fill.submitState === "pending" ? "正在提交…" : fill.submitBody ? "重试提交" : "确认提交", "primary", () => action(submit, submitFill), fill.submitBody ? "fill-retry" : "fill-submit");
+    submit.id = "fill-submit"; submit.disabled = fill.submitState === "pending";
+    actions.append(back, submit); panel.append(actions); session.append(panel);
+  }
+
+  async function submitFill() {
+    const fill = state.fill;
+    if (!fill.complete || fill.receipt) return;
+    const wasUncertain = fill.submitState === "uncertain";
+    if (!fill.submitBody) {
+      // A detached snapshot is retained unchanged until an explicit server response resolves it.
+      fill.submitBody = JSON.parse(JSON.stringify({ version: fill.survey.version, request_id: fill.requestId, answers: fill.answers }));
+    }
+    fill.submitState = "pending"; fill.submitError = "";
+    renderFillSession();
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 20000);
+    try {
+      const currentUser = await api("/api/auth/me", { signal: controller.signal });
+      if (currentUser.id !== fill.userId) {
+        const changed = new Error("当前登录账号已变化，本次未发送。请回到原账号后重试，或退出后重新填写。");
+        changed.status = 409; throw changed;
+      }
+      const receipt = await api(`/api/fill/${encodeURIComponent(shareCode)}/submit`, { method: "POST", body: fill.submitBody, signal: controller.signal });
+      if (!receipt || typeof receipt.id !== "string" || !receipt.submitted_at || typeof receipt.replayed !== "boolean") throw new Error("未收到完整回执，请重试确认本次提交结果。");
+      fill.receipt = receipt; fill.submitState = "success"; fill.changed = false;
+      $("fill-save-note").textContent = "回答已成功提交并保存。下方回执用于确认本次提交结果。";
+      renderFillSession(); state.focusId = "fill-receipt-heading";
+      feedback(receipt.replayed ? "已确认先前提交成功，没有重复保存。" : "提交成功，回答已保存。");
+    } catch (error) {
+      // Transport failures and server failures cannot prove that the write did not commit.
+      const uncertain = !error.status || error.status >= 500 || wasUncertain;
+      fill.submitState = uncertain ? "uncertain" : "rejected";
+      fill.submitError = error.status === 401 ? "登录已过期。请在另一个工作台页面登录后，返回本页重试确认提交。" : error.message;
+      renderFillSession();
+      feedback(uncertain ? "提交结果尚未确认，请重试。重试会确认同一次提交，不会另存一份。" : fill.submitError, true);
+    } finally { window.clearTimeout(timeout); }
+  }
+
+  function submittedTime(value) {
+    const date = new Date(value);
+    if (!Number.isFinite(date.getTime())) return "时间不可用";
+    return new Intl.DateTimeFormat("zh-CN", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }).format(date) + "（北京时间）";
+  }
+
+  function renderFillReceipt(session) {
+    const fill = state.fill;
+    const panel = el("section", "fill-receipt"); panel.dataset.testid = "fill-receipt";
+    const heading = el("h2", "", "提交成功"); heading.id = "fill-receipt-heading"; heading.tabIndex = -1;
+    panel.append(heading, el("p", "", "你的回答已保存，谢谢参与。"));
+    const details = el("dl", "receipt-details");
+    details.append(el("dt", "", "回执编号"), el("dd", "", fill.receipt.id), el("dt", "", "提交时间"), el("dd", "", submittedTime(fill.receipt.submitted_at)));
+    panel.append(details);
+    if (fill.receipt.replayed) panel.append(el("p", "muted", "已确认先前提交成功，本次重试没有新增答卷。"));
+    if (fill.survey.allow_repeat) {
+      const restart = button("重新填写", "primary", () => action(restart, restartFill), "fill-restart");
+      panel.append(el("p", "muted", "此问卷允许多次填写。重新填写会从第一题开始，并单独保存一份答卷。"), restart);
+    } else panel.append(el("p", "muted", "此问卷每个账号限提交一次。"));
+    session.append(panel);
+  }
+
+  async function restartFill() {
+    const survey = await api(`/api/fill/${encodeURIComponent(shareCode)}`);
+    const result = await api(`/api/fill/${encodeURIComponent(shareCode)}/next`, { method: "POST", body: { version: survey.version, answers: {} } });
+    state.fill = newFill(survey);
+    applyFillResult(result);
+    $("fill-save-note").textContent = "本次填写尚未提交。回答仅保留在当前页面，提交前不会自动保存。";
+    renderFillSession(); state.focusId = "fill-question-heading";
+  }
+
+  function renderResultsControls() {
+    if (!state.results || state.results.surveyId !== state.current.id) state.results = { surveyId: state.current.id, mode: "statistics", questionId: "" };
+    const statistics = state.results.mode === "statistics";
+    $("statistics-tab").classList.toggle("active", statistics);
+    $("responses-tab").classList.toggle("active", !statistics);
+    $("statistics-tab").setAttribute("aria-pressed", String(statistics));
+    $("responses-tab").setAttribute("aria-pressed", String(!statistics));
+    $("statistics-filter").hidden = !statistics;
+    const scope = $("statistics-question");
+    scope.replaceChildren();
+    const all = el("option", "", "整卷所有题目"); all.value = ""; scope.append(all);
+    for (const question of state.current.questions) {
+      const option = el("option", "", question.title); option.value = question.id; scope.append(option);
+    }
+    scope.value = state.results.questionId;
+  }
+
+  async function loadResults() {
+    if (!state.current || isDraft()) return;
+    const results = state.results;
+    const base = `/api/surveys/${encodeURIComponent(results.surveyId)}`;
+    $("results-content").replaceChildren(el("p", "muted", "正在读取结果…"));
+    try {
+      if (results.mode === "responses") {
+        const data = await api(base + "/responses");
+        renderResponses(Array.isArray(data) ? data : []);
+      } else {
+        const suffix = results.questionId ? "/" + encodeURIComponent(results.questionId) : "";
+        const data = await api(base + "/statistics" + suffix);
+        renderStatistics(data, Boolean(results.questionId));
+      }
+    } catch (error) {
+      const message = el("p", "fill-error", `结果读取失败：${error.message} 可点击“刷新结果”重试。`);
+      message.setAttribute("role", "alert"); $("results-content").replaceChildren(message); throw error;
+    }
+  }
+
+  function metric(label, value, testId) {
+    const node = el("div", "result-metric");
+    node.append(el("span", "", label));
+    const number = el("strong", "", value ?? "暂无");
+    if (testId) number.dataset.testid = testId;
+    node.append(number); return node;
+  }
+
+  function renderStatistics(data, single) {
+    const content = $("results-content"); content.replaceChildren();
+    const container = el("div", "statistics-content"); container.dataset.testid = "statistics-content";
+    if (!single) {
+      const summary = el("div", "result-metrics");
+      summary.append(metric("成功提交", data.submissions, "statistics-submissions"), metric("去重填写人数", data.respondents, "statistics-respondents"), metric("发布版本", data.version, "statistics-version"));
+      container.append(summary);
+      if (data.submissions === 0) container.append(el("p", "inline-empty", "暂时没有成功提交的答卷。分享问卷后，可刷新查看结果。"));
+    } else container.append(el("p", "muted", "当前显示所选题目的统计；空答与跳过不计入有效回答数。"));
+    const questions = single ? [data] : data.questions;
+    for (const question of questions || []) container.append(statisticsQuestion(question));
+    content.append(container);
+  }
+
+  function statisticsQuestion(question) {
+    const section = el("section", "stat-question"); section.dataset.testid = `statistics-question-${question.id}`;
+    section.append(el("p", "question-type", TYPES[question.type] || question.type), el("h4", "", question.title));
+    section.append(el("p", "muted", `有效回答 ${question.answered_submissions ?? "暂无"} 份，去重 ${question.answered_people ?? "暂无"} 人。`));
+    if (question.type === "single" || question.type === "multi") {
+      const table = el("table", "statistics-table");
+      const caption = el("caption", "sr-only", `${question.title} 各选项回答统计`); table.append(caption);
+      const head = el("thead"), header = el("tr");
+      for (const title of ["选项", "选择次数", "去重人数"]) { const cell = el("th", "", title); cell.scope = "col"; header.append(cell); }
+      head.append(header); table.append(head);
+      const body = el("tbody");
+      for (const option of question.options || []) {
+        const row = el("tr"); row.dataset.testid = `statistics-option-${question.id}-${option.id}`;
+        row.append(el("td", "", option.label), el("td", "", option.count ?? "暂无"), el("td", "", option.people ?? "暂无")); body.append(row);
+      }
+      table.append(body); section.append(table);
+    } else {
+      if (question.type === "number") section.append(metric("有效数字均值", question.mean === null || question.mean === undefined ? "暂无" : question.mean, `statistics-mean-${question.id}`));
+      const values = Array.isArray(question.values) ? question.values : [];
+      if (!values.length) section.append(el("p", "muted", "暂无有效回答。"));
+      else {
+        const details = el("details", "raw-values");
+        details.append(el("summary", "", `查看 ${values.length} 条原始回答`));
+        const list = el("ol");
+        for (const entry of values) {
+          const value = entry && typeof entry === "object" && Object.hasOwn(entry, "value") ? entry.value : entry;
+          list.append(el("li", "", ["string", "number"].includes(typeof value) ? value : "回答格式不可用"));
+        }
+        details.append(list); section.append(details);
+      }
+    }
+    return section;
+  }
+
+  function renderResponses(responses) {
+    const content = $("results-content"); content.replaceChildren();
+    const container = el("div", "responses-content"); container.dataset.testid = "responses-content";
+    container.append(el("p", "muted", `共 ${responses.length} 份成功答卷。匿名答卷不显示填写者账号。`));
+    if (!responses.length) container.append(el("p", "inline-empty", "暂时没有答卷。"));
+    responses.forEach((response, index) => {
+      const details = el("details", "response-details"); details.dataset.testid = `response-${response.id}`;
+      const summary = el("summary");
+      summary.append(el("strong", "", `答卷 ${index + 1}`), el("span", "response-identity", response.anonymous ? "匿名填写" : (typeof response.username === "string" ? response.username : "未提供账号")), el("span", "response-time", submittedTime(response.submitted_at)));
+      details.append(summary, el("p", "muted", `发布版本 ${response.version}`));
+      const answers = el("dl", "response-answers");
+      for (const id of response.path || []) {
+        const question = state.current.questions.find((item) => item.id === id);
+        if (!question) continue;
+        answers.append(el("dt", "", question.title), el("dd", "", answerText(question, response.answers?.[id])));
+      }
+      details.append(answers); container.append(details);
+    });
+    content.append(container);
   }
 
   $("login-tab").addEventListener("click", () => switchAuth("login"));
@@ -698,11 +900,13 @@
   $("auth-form").addEventListener("submit", (event) => {
     event.preventDefault();
     action($("auth-submit"), async () => {
+      if (state.fill?.changed && !window.confirm("登录后将开始新的填写，当前尚未提交的回答会丢弃。继续登录？")) return;
       const body = { username: $("username").value.trim(), password: $("password").value };
       if (state.authMode === "register") await api("/api/auth/register", { method: "POST", body });
       state.user = await api("/api/auth/login", { method: "POST", body });
       $("password").value = "";
       state.current = null;
+      state.fill = null; state.results = null;
       state.dirty = false;
       await showSignedIn();
       feedback(state.authMode === "register" ? "账号已创建，登录成功。" : "登录成功。");
@@ -713,7 +917,7 @@
     if (state.dirty && !window.confirm("退出会丢失未保存的修改。继续退出？")) return;
     if (state.fill?.changed && !window.confirm("当前回答尚未提交，退出会丢失这些回答。继续退出？")) return;
     await api("/api/auth/logout", { method: "POST" });
-    state.current = null; state.surveys = []; state.dirty = false; state.fill = null;
+    state.current = null; state.surveys = []; state.dirty = false; state.fill = null; state.results = null;
     $("editor").hidden = true; $("empty-editor").hidden = false;
     showAuth(); feedback("已退出登录。");
   }));
@@ -740,6 +944,16 @@
     });
   });
   $("refresh-surveys").addEventListener("click", () => action($("refresh-surveys"), reloadList));
+  $("statistics-tab").addEventListener("click", () => action($("statistics-tab"), async () => {
+    state.results.mode = "statistics"; renderResultsControls(); await loadResults();
+  }));
+  $("responses-tab").addEventListener("click", () => action($("responses-tab"), async () => {
+    state.results.mode = "responses"; renderResultsControls(); await loadResults();
+  }));
+  $("statistics-question").addEventListener("change", () => action($("statistics-question"), async () => {
+    state.results.questionId = $("statistics-question").value; await loadResults();
+  }));
+  $("refresh-results").addEventListener("click", () => action($("refresh-results"), loadResults));
 
   $("survey-title").addEventListener("input", () => { state.current.title = $("survey-title").value; dirty(); });
   $("survey-description").addEventListener("input", () => { state.current.description = $("survey-description").value; dirty(); });

@@ -79,3 +79,7 @@ AI记录 ID／时间时区／实际使用者：
 ## AI-007 S4 求值与页面
 
 沿用当前用户完成实验授权，Codex及内部agent分别生成questions.py运行期逻辑、独立tests/test_rules.py、原生JS逐题页面；主agent集成/next并执行190项自动化与真实浏览器。采纳统一服务端路径、显式null跳过、回改清除后续答案；D06补充必答配置可满足性。原测试服务器未重载导致一次导入500，已记录并重启复核。results/S4保留实际结果和失败日志，不把页面预览当提交保存。模型具体版本未知，未代填学生本人设计/理解。
+
+## AI-008 S5 提交与统计
+
+用户提示沿用“根据这几份文件，完成实验”及“继续”。Codex主agent实现submissions.py并集成API，内部agent生成statistics.py、原生JS提交/结果页与独立tests/test_submissions.py/test_statistics.py。模型版本未知。主agent发现最大有限数字均值溢出并要求修复/回归；修复Schema CLI不识别参数的问题，保留意外运行。真实MongoDB46项提交专项及245项全回归、页面和DB对账通过，见results/S5。未将代理完成的工作冒充学生本人贡献。

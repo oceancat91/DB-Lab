@@ -12,7 +12,7 @@ from pymongo.errors import PyMongoError
 from .config import Settings
 from .db import create_client, initialize_schema
 from .errors import DomainError
-from .models import Credentials, DeadlineInput, DraftInput, Metadata, PublishInput, NextInput
+from .models import Credentials, DeadlineInput, DraftInput, Metadata, PublishInput, NextInput, SubmitInput
 from .security import COOKIE_NAME, new_session, public_user, session_user, token_digest
 from .service import SurveyService
 
@@ -160,6 +160,23 @@ def create_app(settings: Settings | None = None):
     def next_question(code: str, body: NextInput, request: Request):
         user(request)
         return service(request).next_question(code, body.version, body.answers)
+
+    @app.post('/api/fill/{code}/submit')
+    def submit(code: str, body: SubmitInput, request: Request):
+        account = user(request)
+        return service(request).submit(code, account['_id'], body.version, body.request_id, body.answers)
+
+    @app.get('/api/surveys/{survey_id}/statistics')
+    def statistics(survey_id: str, request: Request):
+        return service(request).statistics(survey_id, user(request)['_id'])
+
+    @app.get('/api/surveys/{survey_id}/statistics/{question_id}')
+    def question_statistics(survey_id: str, question_id: str, request: Request):
+        return service(request).statistics(survey_id, user(request)['_id'], question_id)
+
+    @app.get('/api/surveys/{survey_id}/responses')
+    def responses(survey_id: str, request: Request):
+        return service(request).responses(survey_id, user(request)['_id'])
 
     return app
 

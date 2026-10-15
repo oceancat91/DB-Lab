@@ -1,0 +1,2106 @@
+{
+  "started_at": "2026-10-15T21:46:34.090746+08:00",
+  "timezone": "Asia/Shanghai",
+  "seed": 20261015,
+  "selection": [
+    "tests/test_submissions.py"
+  ],
+  "records": [
+    {
+      "nodeid": "tests/test_submissions.py::test_success_is_a_complete_persistent_document_readable_by_new_application_instance",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.32106479999492876,
+      "cases": [
+        "TC-R01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_success_is_a_complete_persistent_document_readable_by_new_application_instance",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.31649349999497645,
+      "cases": [
+        "TC-R01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_success_is_a_complete_persistent_document_readable_by_new_application_instance",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002668000088306144,
+      "cases": [
+        "TC-R01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[single-None]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.000800199995865114,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[single-None]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.1759713999927044,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[single-None]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002708999963942915,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[single-value1]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006790000043110922,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[single-value1]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17582419999234844,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[single-value1]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002601000014692545,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[single-unknown]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006290000019362196,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[single-unknown]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.18836499999451917,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[single-unknown]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00045249999675434083,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value3]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0010734000097727403,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value3]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17558599999756552,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value3]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00025260000256821513,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value4]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006206000107340515,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value4]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17567799999960698,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value4]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002722000062931329,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value5]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.000641100006760098,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value5]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.16935599999851547,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value5]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00023929998860694468,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value6]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006146000087028369,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value6]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.1709121000021696,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[multi-value6]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002778000052785501,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.000876799997058697,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17908520001219586,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00022729999909643084,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-a]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.000566099988645874,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-a]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17543069999373984,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-a]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00024850000045262277,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-xxxxxxxxxxxxxxxxxxxxx]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005985000025248155,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-xxxxxxxxxxxxxxxxxxxxx]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.173721300001489,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-xxxxxxxxxxxxxxxxxxxxx]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002710999979171902,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-12]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.000593700009630993,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-12]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.174372499997844,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[text-12]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00023139998666010797,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-True]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005913000059081241,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-True]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.1716275999933714,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-True]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00022760000138077885,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-1.5]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005651999963447452,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-1.5]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17067550000501797,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-1.5]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00024140000459738076,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number--1]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005892000044696033,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number--1]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.1742814999888651,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number--1]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00022879999596625566,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-121]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005765999958384782,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-121]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17328819999238476,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-121]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002972000074805692,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-10]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006342000124277547,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-10]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17590489999565762,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_invalid_values_for_all_four_types_do_not_write_response_or_gate[number-10]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002268999960506335,
+      "cases": [
+        "TC-R02",
+        "TC-V01",
+        "TC-V02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_non_bson_or_nonfinite_json_answers_are_422_without_writes[lone-surrogate]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.000519299996085465,
+      "cases": [
+        "TC-R02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_non_bson_or_nonfinite_json_answers_are_422_without_writes[lone-surrogate]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17603220000455622,
+      "cases": [
+        "TC-R02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_non_bson_or_nonfinite_json_answers_are_422_without_writes[lone-surrogate]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00022729999909643084,
+      "cases": [
+        "TC-R02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_non_bson_or_nonfinite_json_answers_are_422_without_writes[oversized-integer]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.000535300001502037,
+      "cases": [
+        "TC-R02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_non_bson_or_nonfinite_json_answers_are_422_without_writes[oversized-integer]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17157210000732448,
+      "cases": [
+        "TC-R02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_non_bson_or_nonfinite_json_answers_are_422_without_writes[oversized-integer]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002246999938506633,
+      "cases": [
+        "TC-R02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_non_bson_or_nonfinite_json_answers_are_422_without_writes[nonfinite-json-number]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005165999900782481,
+      "cases": [
+        "TC-R02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_non_bson_or_nonfinite_json_answers_are_422_without_writes[nonfinite-json-number]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17457410000497475,
+      "cases": [
+        "TC-R02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_non_bson_or_nonfinite_json_answers_are_422_without_writes[nonfinite-json-number]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002826999989338219,
+      "cases": [
+        "TC-R02",
+        "TC-V03",
+        "TC-V04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[missing-required]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005258000019239262,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[missing-required]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17722099999082275,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[missing-required]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002567999908933416,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[outside-path]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005735000013373792,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[outside-path]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17398750000575092,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[outside-path]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0003063999902224168,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[unknown-question]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005347999976947904,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[unknown-question]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17545010001049377,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[unknown-question]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00022780000290367752,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[client-path]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005366000114008784,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[client-path]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.1697038000129396,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[client-path]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00026339999749325216,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[client-owner]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005461000109789893,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[client-owner]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17285319999791682,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[client-owner]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00023219999275170267,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[client-rules]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005431999888969585,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[client-rules]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17046570000820793,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[client-rules]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002575999969849363,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[old-version]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005671999970218167,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[old-version]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.1730909000034444,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_recomputes_path_and_rejects_tampering_without_write[old-version]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002275000006193295,
+      "cases": [
+        "TC-J05",
+        "TC-R02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_accepts_skipped_required_questions_on_recomputed_valid_branch",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.00046889999066479504,
+      "cases": [
+        "TC-J05",
+        "TC-R01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_accepts_skipped_required_questions_on_recomputed_valid_branch",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.17663820000598207,
+      "cases": [
+        "TC-J05",
+        "TC-R01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_submit_accepts_skipped_required_questions_on_recomputed_valid_branch",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00021850000484846532,
+      "cases": [
+        "TC-J05",
+        "TC-R01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_repeat_switch_applies_to_new_requests[False-409-1]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0008087000023806468,
+      "cases": [
+        "TC-R03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_repeat_switch_applies_to_new_requests[False-409-1]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.1872873999964213,
+      "cases": [
+        "TC-R03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_repeat_switch_applies_to_new_requests[False-409-1]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00023540000256616622,
+      "cases": [
+        "TC-R03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_repeat_switch_applies_to_new_requests[True-200-2]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006063000037102029,
+      "cases": [
+        "TC-R03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_repeat_switch_applies_to_new_requests[True-200-2]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.18722100000013597,
+      "cases": [
+        "TC-R03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_repeat_switch_applies_to_new_requests[True-200-2]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00025439998717047274,
+      "cases": [
+        "TC-R03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_canonical_retry_replays_same_receipt_and_conflicting_payload_rejected_even_after_close",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005256000004010275,
+      "cases": [
+        "TC-R03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_canonical_retry_replays_same_receipt_and_conflicting_payload_rejected_even_after_close",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.22783450000861194,
+      "cases": [
+        "TC-R03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_canonical_retry_replays_same_receipt_and_conflicting_payload_rejected_even_after_close",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00021779999951831996,
+      "cases": [
+        "TC-R03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_authenticated_filler_can_submit_but_only_owner_can_read_statistics_and_details",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0004920000064885244,
+      "cases": [
+        "TC-A02",
+        "TC-A03",
+        "TC-R04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_authenticated_filler_can_submit_but_only_owner_can_read_statistics_and_details",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.4247995999903651,
+      "cases": [
+        "TC-A02",
+        "TC-A03",
+        "TC-R04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_authenticated_filler_can_submit_but_only_owner_can_read_statistics_and_details",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00026870000874623656,
+      "cases": [
+        "TC-A02",
+        "TC-A03",
+        "TC-R04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_anonymous_projection_and_private_duplicate_identity[True]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006094999989727512,
+      "cases": [
+        "TC-R04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_anonymous_projection_and_private_duplicate_identity[True]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.36037550000764895,
+      "cases": [
+        "TC-R04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_anonymous_projection_and_private_duplicate_identity[True]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002649999951245263,
+      "cases": [
+        "TC-R04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_anonymous_projection_and_private_duplicate_identity[False]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005750999989686534,
+      "cases": [
+        "TC-R04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_anonymous_projection_and_private_duplicate_identity[False]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.3538196000008611,
+      "cases": [
+        "TC-R04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_anonymous_projection_and_private_duplicate_identity[False]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002471000043442473,
+      "cases": [
+        "TC-R04"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[independent-users]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.000759599992306903,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[independent-users]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 1.6840120999986539,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[independent-users]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00026190000062342733,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[same-user-new-ids]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006357000092975795,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[same-user-new-ids]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.2566134999942733,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[same-user-new-ids]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00026109999453183264,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[same-request-id]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005444999987957999,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[same-request-id]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.2187067000049865,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[same-request-id]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00022529999841935933,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[allow-repeat-new-ids]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005225000058999285,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[allow-repeat-new-ids]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.26540980000572745,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_ten_synchronized_submissions_reconcile_receipts_and_database[allow-repeat-new-ids]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00027150000096298754,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_lifecycle_write_before_actual_gate_rejects_submission[close]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006988999957684427,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_lifecycle_write_before_actual_gate_rejects_submission[close]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.19418509998649824,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_lifecycle_write_before_actual_gate_rejects_submission[close]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0003443000023253262,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_lifecycle_write_before_actual_gate_rejects_submission[deadline]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006623999943258241,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_lifecycle_write_before_actual_gate_rejects_submission[deadline]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.1913541000103578,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_lifecycle_write_before_actual_gate_rejects_submission[deadline]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002482999989297241,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_actual_gate_before_lifecycle_write_commits_accepted_response[close]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006204999954206869,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_actual_gate_before_lifecycle_write_commits_accepted_response[close]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.19355729999369942,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_actual_gate_before_lifecycle_write_commits_accepted_response[close]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00025070000265259296,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_actual_gate_before_lifecycle_write_commits_accepted_response[deadline]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005543000006582588,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_actual_gate_before_lifecycle_write_commits_accepted_response[deadline]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.2206770999910077,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_actual_gate_before_lifecycle_write_commits_accepted_response[deadline]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00026220000290777534,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_deadline_before_and_after_server_time_rechecks_already_opened_link[60-200]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005870000022696331,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_deadline_before_and_after_server_time_rechecks_already_opened_link[60-200]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.19050189999688882,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_deadline_before_and_after_server_time_rechecks_already_opened_link[60-200]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00026590000197757035,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_deadline_before_and_after_server_time_rechecks_already_opened_link[-5-410]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006139000033726916,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_deadline_before_and_after_server_time_rechecks_already_opened_link[-5-410]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.1855387000105111,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_deadline_before_and_after_server_time_rechecks_already_opened_link[-5-410]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002275000006193295,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_exact_deadline_equality_is_rejected_by_real_gate_comparison_expression",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0005220000020926818,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_exact_deadline_equality_is_rejected_by_real_gate_comparison_expression",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.1743680000072345,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_exact_deadline_equality_is_rejected_by_real_gate_comparison_expression",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0002865999995265156,
+      "cases": [
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_actual_mongodb_validation_failure_rolls_back_gate_and_retry_can_succeed",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0006158000032883137,
+      "cases": [
+        "TC-R02",
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_actual_mongodb_validation_failure_rolls_back_gate_and_retry_can_succeed",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.18307050000294112,
+      "cases": [
+        "TC-R02",
+        "TC-R05"
+      ]
+    },
+    {
+      "nodeid": "tests/test_submissions.py::test_actual_mongodb_validation_failure_rolls_back_gate_and_retry_can_succeed",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.10257000000274274,
+      "cases": [
+        "TC-R02",
+        "TC-R05"
+      ]
+    }
+  ],
+  "collection_errors": [],
+  "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+  "cleanup": {
+    "status": "PASS",
+    "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+    "counts_before_drop": {
+      "users": 59,
+      "sessions": 59,
+      "surveys": 46,
+      "survey_versions": 46,
+      "responses": 35
+    },
+    "remaining_collections": []
+  },
+  "environment": {
+    "python": "3.11.17",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "pytest": "9.1.1",
+    "fastapi": "0.143.1",
+    "pymongo": "4.19.0",
+    "httpx": "0.28.1",
+    "mongodb": "6.0.29",
+    "replica_set": "lab4rs",
+    "writable_primary": true,
+    "read_preference": "primary",
+    "tz_aware": true
+  },
+  "submission_experiments": [
+    {
+      "name": "persistent_complete_response",
+      "survey_id": "6a1894b9-fc35-45be-bd95-e1f288285be6",
+      "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+      "reconciliation": {
+        "responses": 1,
+        "response_ids": [
+          "ad9c70b6-88d9-4004-9736-a78845e29b6f"
+        ],
+        "distinct_respondents": 1,
+        "request_ids": [
+          "2624cbb91b094323b9cff477bb4d7008"
+        ],
+        "gate_seq": 1,
+        "survey_status": "published"
+      },
+      "receipt": {
+        "status": 200,
+        "id": "ad9c70b6-88d9-4004-9736-a78845e29b6f",
+        "submitted_at": "2026-10-15T13:46:34.759000+00:00",
+        "replayed": false
+      },
+      "fresh_app_read": true
+    },
+    {
+      "name": "independent-users",
+      "survey_id": "0a5fa5a0-fcaf-4cc7-bb28-83da88a7bc5b",
+      "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+      "reconciliation": {
+        "responses": 10,
+        "response_ids": [
+          "188a1395-6b03-48f9-8a02-755fc90fec30",
+          "6ab29ea5-3ba2-45ab-8b9e-dacebcd3a4ae",
+          "7e57457a-3e6a-48e7-81fb-d590eb957e6f",
+          "8e7c9aa1-b53d-431c-bda4-6b5bed907ee8",
+          "9a32a466-59d4-44cf-970e-78c5c78868f2",
+          "9d01d80a-62ed-493b-b1ca-a0fb4e3171d7",
+          "ba0d72ab-a0d5-4a94-b767-50e620cfe2ba",
+          "c0e347ed-0597-4b64-bbc0-e3d1000bb5d7",
+          "ec9aee69-8e22-4f0b-966d-4930f231b831",
+          "ff634450-87bc-495a-90e4-384794e909ac"
+        ],
+        "distinct_respondents": 10,
+        "request_ids": [
+          "039d0cc0e3424333aeaf8996a342ea8d",
+          "11a71eacbda14dce9a2e5166fda726fd",
+          "23bed4259bfd464da423c99faa67b06c",
+          "249e0b35abdd4516a74cade89679269f",
+          "24e6e47cce574367a8454f1fef19a140",
+          "4e083374d8484ed981d1753115728754",
+          "73d4c0748e6c41b2afb7b8de2d0328b6",
+          "9ab2314af6eb41e48ee2243073cc93eb",
+          "c58f2eecc8ba49c48ddd12bd923bbd52",
+          "fa40c6066a174e66ba12fc64d05a4410"
+        ],
+        "gate_seq": 10,
+        "survey_status": "published"
+      },
+      "n": 10,
+      "synchronization": "Barrier(10)",
+      "outcomes": [
+        {
+          "status": 200,
+          "id": "ec9aee69-8e22-4f0b-966d-4930f231b831",
+          "submitted_at": "2026-10-15T13:46:43.045000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "c0e347ed-0597-4b64-bbc0-e3d1000bb5d7",
+          "submitted_at": "2026-10-15T13:46:43.005000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "6ab29ea5-3ba2-45ab-8b9e-dacebcd3a4ae",
+          "submitted_at": "2026-10-15T13:46:42.991000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "8e7c9aa1-b53d-431c-bda4-6b5bed907ee8",
+          "submitted_at": "2026-10-15T13:46:43.023000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "9d01d80a-62ed-493b-b1ca-a0fb4e3171d7",
+          "submitted_at": "2026-10-15T13:46:43.042000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "7e57457a-3e6a-48e7-81fb-d590eb957e6f",
+          "submitted_at": "2026-10-15T13:46:43.012000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "ff634450-87bc-495a-90e4-384794e909ac",
+          "submitted_at": "2026-10-15T13:46:42.996000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "9a32a466-59d4-44cf-970e-78c5c78868f2",
+          "submitted_at": "2026-10-15T13:46:43.028000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "ba0d72ab-a0d5-4a94-b767-50e620cfe2ba",
+          "submitted_at": "2026-10-15T13:46:42.983000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "188a1395-6b03-48f9-8a02-755fc90fec30",
+          "submitted_at": "2026-10-15T13:46:43.017000+00:00",
+          "replayed": false
+        }
+      ],
+      "status_counts": {
+        "200": 10
+      }
+    },
+    {
+      "name": "same-user-new-ids",
+      "survey_id": "18f9f278-dc4e-4af9-b3c6-dfdf531f189d",
+      "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+      "reconciliation": {
+        "responses": 1,
+        "response_ids": [
+          "618ecbb5-af63-4869-ac12-48ac480c18cc"
+        ],
+        "distinct_respondents": 1,
+        "request_ids": [
+          "dd282cb0326240319dffcf0e546c6dde"
+        ],
+        "gate_seq": 1,
+        "survey_status": "published"
+      },
+      "n": 10,
+      "synchronization": "Barrier(10)",
+      "outcomes": [
+        {
+          "status": 409,
+          "error_code": "already_submitted"
+        },
+        {
+          "status": 409,
+          "error_code": "already_submitted"
+        },
+        {
+          "status": 409,
+          "error_code": "already_submitted"
+        },
+        {
+          "status": 409,
+          "error_code": "already_submitted"
+        },
+        {
+          "status": 409,
+          "error_code": "already_submitted"
+        },
+        {
+          "status": 409,
+          "error_code": "already_submitted"
+        },
+        {
+          "status": 200,
+          "id": "618ecbb5-af63-4869-ac12-48ac480c18cc",
+          "submitted_at": "2026-10-15T13:46:43.249000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 409,
+          "error_code": "already_submitted"
+        },
+        {
+          "status": 409,
+          "error_code": "already_submitted"
+        },
+        {
+          "status": 409,
+          "error_code": "already_submitted"
+        }
+      ],
+      "status_counts": {
+        "409": 9,
+        "200": 1
+      }
+    },
+    {
+      "name": "same-request-id",
+      "survey_id": "00af50f9-7808-476f-acc7-7f02093e3b28",
+      "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+      "reconciliation": {
+        "responses": 1,
+        "response_ids": [
+          "e0cd8eb8-9c0a-46c6-9150-918162a2e774"
+        ],
+        "distinct_respondents": 1,
+        "request_ids": [
+          "efe8cfc0af254fb4bab26b16f974d56b"
+        ],
+        "gate_seq": 1,
+        "survey_status": "published"
+      },
+      "n": 10,
+      "synchronization": "Barrier(10)",
+      "outcomes": [
+        {
+          "status": 200,
+          "id": "e0cd8eb8-9c0a-46c6-9150-918162a2e774",
+          "submitted_at": "2026-10-15T13:46:43.507000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "e0cd8eb8-9c0a-46c6-9150-918162a2e774",
+          "submitted_at": "2026-10-15T13:46:43.507000+00:00",
+          "replayed": true
+        },
+        {
+          "status": 200,
+          "id": "e0cd8eb8-9c0a-46c6-9150-918162a2e774",
+          "submitted_at": "2026-10-15T13:46:43.507000+00:00",
+          "replayed": true
+        },
+        {
+          "status": 200,
+          "id": "e0cd8eb8-9c0a-46c6-9150-918162a2e774",
+          "submitted_at": "2026-10-15T13:46:43.507000+00:00",
+          "replayed": true
+        },
+        {
+          "status": 200,
+          "id": "e0cd8eb8-9c0a-46c6-9150-918162a2e774",
+          "submitted_at": "2026-10-15T13:46:43.507000+00:00",
+          "replayed": true
+        },
+        {
+          "status": 200,
+          "id": "e0cd8eb8-9c0a-46c6-9150-918162a2e774",
+          "submitted_at": "2026-10-15T13:46:43.507000+00:00",
+          "replayed": true
+        },
+        {
+          "status": 200,
+          "id": "e0cd8eb8-9c0a-46c6-9150-918162a2e774",
+          "submitted_at": "2026-10-15T13:46:43.507000+00:00",
+          "replayed": true
+        },
+        {
+          "status": 200,
+          "id": "e0cd8eb8-9c0a-46c6-9150-918162a2e774",
+          "submitted_at": "2026-10-15T13:46:43.507000+00:00",
+          "replayed": true
+        },
+        {
+          "status": 200,
+          "id": "e0cd8eb8-9c0a-46c6-9150-918162a2e774",
+          "submitted_at": "2026-10-15T13:46:43.507000+00:00",
+          "replayed": true
+        },
+        {
+          "status": 200,
+          "id": "e0cd8eb8-9c0a-46c6-9150-918162a2e774",
+          "submitted_at": "2026-10-15T13:46:43.507000+00:00",
+          "replayed": true
+        }
+      ],
+      "status_counts": {
+        "200": 10
+      }
+    },
+    {
+      "name": "allow-repeat-new-ids",
+      "survey_id": "ed52cbc6-b2e1-4c72-9bd4-176b3abbf6b5",
+      "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+      "reconciliation": {
+        "responses": 10,
+        "response_ids": [
+          "013a145e-5604-4fa4-850c-3478782bb10a",
+          "55339d76-5381-41e7-b621-a14bc35bb251",
+          "60964543-08a1-483c-b490-5c317a8acc93",
+          "6349e11c-edf8-448c-a172-88bd7b959e0e",
+          "662d3ef1-a8a4-4585-bb7b-9ce0d1d89962",
+          "7152bc1c-8024-4d8b-a757-6563fc5bc17c",
+          "b4c42cb9-39bf-45f4-b88e-dc111288f0bd",
+          "b8dce093-2ddc-485c-80b8-8314b7258952",
+          "e15d9d87-5f47-4369-aac7-667c875fe063",
+          "ffacb66b-1625-42a2-939f-2df18dd1cfa7"
+        ],
+        "distinct_respondents": 1,
+        "request_ids": [
+          "06a11ad1dd814b24b3dff1e437765cbd",
+          "28e3dd1c23f049b199f01b06c499daaf",
+          "7c6b0186a3504ba0a5829b1a6b14257e",
+          "8341b2992ae246a7899ed78fc58c8ed0",
+          "8853051cc7a04930808269aae4112551",
+          "9eca536f6a814cf29c5879f41b301694",
+          "ad403ab9c81d4b1091753fda7ceb3678",
+          "c17b60d28ed048288652e46f08f330a9",
+          "f69d6d2fa4854255a676d527cdc33eb2",
+          "f8ab9cc381bd46f0b30325c3d14b2e7a"
+        ],
+        "gate_seq": 10,
+        "survey_status": "published"
+      },
+      "n": 10,
+      "synchronization": "Barrier(10)",
+      "outcomes": [
+        {
+          "status": 200,
+          "id": "013a145e-5604-4fa4-850c-3478782bb10a",
+          "submitted_at": "2026-10-15T13:46:43.764000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "7152bc1c-8024-4d8b-a757-6563fc5bc17c",
+          "submitted_at": "2026-10-15T13:46:43.746000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "6349e11c-edf8-448c-a172-88bd7b959e0e",
+          "submitted_at": "2026-10-15T13:46:43.790000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "ffacb66b-1625-42a2-939f-2df18dd1cfa7",
+          "submitted_at": "2026-10-15T13:46:43.768000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "e15d9d87-5f47-4369-aac7-667c875fe063",
+          "submitted_at": "2026-10-15T13:46:43.734000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "b4c42cb9-39bf-45f4-b88e-dc111288f0bd",
+          "submitted_at": "2026-10-15T13:46:43.742000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "55339d76-5381-41e7-b621-a14bc35bb251",
+          "submitted_at": "2026-10-15T13:46:43.725000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "60964543-08a1-483c-b490-5c317a8acc93",
+          "submitted_at": "2026-10-15T13:46:43.738000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "662d3ef1-a8a4-4585-bb7b-9ce0d1d89962",
+          "submitted_at": "2026-10-15T13:46:43.756000+00:00",
+          "replayed": false
+        },
+        {
+          "status": 200,
+          "id": "b8dce093-2ddc-485c-80b8-8314b7258952",
+          "submitted_at": "2026-10-15T13:46:43.782000+00:00",
+          "replayed": false
+        }
+      ],
+      "status_counts": {
+        "200": 10
+      }
+    },
+    {
+      "name": "close_before_gate",
+      "survey_id": "1650b35b-a5fe-4956-8e2c-d8393e529564",
+      "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+      "reconciliation": {
+        "responses": 0,
+        "response_ids": [],
+        "distinct_respondents": 0,
+        "request_ids": [],
+        "gate_seq": 0,
+        "survey_status": "closed"
+      },
+      "submission": {
+        "status": 410,
+        "error_code": "closed"
+      },
+      "schedule": "real lifecycle write commits before real conditional gate command"
+    },
+    {
+      "name": "deadline_before_gate",
+      "survey_id": "33b5a0ae-aa8d-4d58-897b-7c019a4a5faa",
+      "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+      "reconciliation": {
+        "responses": 0,
+        "response_ids": [],
+        "distinct_respondents": 0,
+        "request_ids": [],
+        "gate_seq": 0,
+        "survey_status": "published"
+      },
+      "submission": {
+        "status": 410,
+        "error_code": "closed"
+      },
+      "schedule": "real lifecycle write commits before real conditional gate command"
+    },
+    {
+      "name": "gate_before_close",
+      "survey_id": "1ca4a256-fa8d-44c2-b0aa-754d0227bbe9",
+      "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+      "reconciliation": {
+        "responses": 1,
+        "response_ids": [
+          "e5582811-d31f-437b-a113-601f392f5d7c"
+        ],
+        "distinct_respondents": 1,
+        "request_ids": [
+          "f74e3f841c754d43b535b12da5177caf"
+        ],
+        "gate_seq": 1,
+        "survey_status": "closed"
+      },
+      "submission": {
+        "status": 200,
+        "id": "e5582811-d31f-437b-a113-601f392f5d7c",
+        "submitted_at": "2026-10-15T13:46:44.362000+00:00",
+        "replayed": false
+      },
+      "lifecycle_status": 200,
+      "schedule": "real gate write; lifecycle write attempted; real insert/transaction commits; lifecycle finishes"
+    },
+    {
+      "name": "gate_before_deadline",
+      "survey_id": "5e8629de-35eb-44f4-9e87-28f84f17e118",
+      "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+      "reconciliation": {
+        "responses": 1,
+        "response_ids": [
+          "cadbb104-6ff9-4c0c-be1e-ab72da710a21"
+        ],
+        "distinct_respondents": 1,
+        "request_ids": [
+          "dfa4ccaf124d446883dfcfcb1ab0e650"
+        ],
+        "gate_seq": 1,
+        "survey_status": "published"
+      },
+      "submission": {
+        "status": 200,
+        "id": "cadbb104-6ff9-4c0c-be1e-ab72da710a21",
+        "submitted_at": "2026-10-15T13:46:44.587000+00:00",
+        "replayed": false
+      },
+      "lifecycle_status": 200,
+      "schedule": "real gate write; lifecycle write attempted; real insert/transaction commits; lifecycle finishes"
+    },
+    {
+      "name": "exact_equality_db_expression",
+      "survey_id": "687181e5-b742-49bc-a1e9-9cb117b5cf5f",
+      "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+      "reconciliation": {
+        "responses": 0,
+        "response_ids": [],
+        "distinct_respondents": 0,
+        "request_ids": [],
+        "gate_seq": 0,
+        "survey_status": "published"
+      },
+      "submission": {
+        "status": 410,
+        "error_code": "closed"
+      },
+      "original_expression": {
+        "$or": [
+          {
+            "$eq": [
+              "$closes_at",
+              null
+            ]
+          },
+          {
+            "$gt": [
+              "$closes_at",
+              "$$NOW"
+            ]
+          }
+        ]
+      },
+      "equality_expression": {
+        "$or": [
+          {
+            "$eq": [
+              "$$NOW",
+              null
+            ]
+          },
+          {
+            "$gt": [
+              "$$NOW",
+              "$$NOW"
+            ]
+          }
+        ]
+      },
+      "scope": "real MongoDB expression probe substitutes deadline operand with same-command $$NOW; not a cross-command clock equality claim"
+    },
+    {
+      "name": "real_validation_failure_transaction_rollback",
+      "survey_id": "33a9ad89-ba34-4767-913b-7ff2d9a7e0b1",
+      "database": "lab4_test_api_d34ce63d16fb409c9889f02c4c9931c5",
+      "reconciliation": {
+        "responses": 1,
+        "response_ids": [
+          "e909293c-c57b-4b92-9855-c7df9545095c"
+        ],
+        "distinct_respondents": 1,
+        "request_ids": [
+          "1cb167f6f4914d9aabd0a8e0003bbc34"
+        ],
+        "gate_seq": 1,
+        "survey_status": "published"
+      },
+      "injected_error_code": 121,
+      "before_retry": {
+        "responses": 0,
+        "response_ids": [],
+        "distinct_respondents": 0,
+        "request_ids": [],
+        "gate_seq": 0,
+        "survey_status": "published"
+      },
+      "retry": {
+        "status": 200,
+        "id": "e909293c-c57b-4b92-9855-c7df9545095c",
+        "submitted_at": "2026-10-15T13:46:45.338000+00:00",
+        "replayed": false
+      }
+    }
+  ],
+  "finished_at": "2026-10-15T21:46:45.448779+08:00",
+  "exit_code": 0,
+  "summary": {
+    "collected": 46,
+    "passed": 46,
+    "failed": 0,
+    "skipped": 0,
+    "setup_teardown_errors": 0,
+    "session_tests_failed": 0,
+    "phase_outcomes": {
+      "setup:passed": 46,
+      "call:passed": 46,
+      "teardown:passed": 46
+    },
+    "collection_errors": 0
+  },
+  "source_sha256": {
+    "survey_app/__init__.py": "531d81b3cd3ee8dd145a7c6c6a04a55aaf9a633f2ada655ca6b92cef2f71db4d",
+    "survey_app/config.py": "342b03246efdf5c946a1744eaedd5090c5716284dbe8b4d9485879307b80a449",
+    "survey_app/db.py": "0d51f67fa903fb9ca4605b8e9de030888ae4d273cbca3ce437f1a001abcdad6b",
+    "survey_app/errors.py": "85076d718ce7694f3f0d8dff90d12206f67e4145d10da14168b40abcc1b07357",
+    "survey_app/main.py": "c35f234d56b4acc0e5a9b9b7e39f9babc94917b5bece92732d9edcd113f7ece9",
+    "survey_app/models.py": "81cea0c6e39687a6655e23b00c9dcf49d9093444b1b07ec6f9b8b07883a2dc42",
+    "survey_app/questions.py": "c05c5c299dd650c26b2305f43009f02283acb1579adb6880abd8198f54d308ef",
+    "survey_app/security.py": "fd2028e334933944184f85bfc6ac6eca2b3d18ca139d4b4d90f00a8283c95ebc",
+    "survey_app/service.py": "b93d4724afc806ead612611598e03ff58010a1dd6b80ef4af7fd31445b159bd4",
+    "survey_app/statistics.py": "f3ae350e5db2c4f14991f9d8f3c6f30b54d8a8349cf6d14cb9a06a07678fbf19",
+    "survey_app/submissions.py": "79d220010278a2bcdc548f92f7dc8f6ffe820d66de7fb13e09ea80df5508a595",
+    "tests/conftest.py": "35a138a6b241df29c30571c61a02f4b4ebfed59eb5e8259912b3e5329dddebb5",
+    "tests/test_admin.py": "513db43a96ef94f9e18dbc515c012c275b449cc5609cd21dba6dbf111037f129",
+    "tests/test_rules.py": "2e60531f0c8d79c8a8e057ef25c1a4902643e19f23ed5005ff5579b02104bdbc",
+    "tests/test_statistics.py": "ef693c3fb92974e1beac395742f05c0ba43744721ba45363bde8c52cf1b65550",
+    "tests/test_submissions.py": "4404761ba9252e48c71a326088783e40a2114affcca6b2dbbb238a9724c94a29",
+    "pytest.ini": "d1c882395311f60d983895b72a26257c1dca6e99d21e59b652c6be99b236fdb8"
+  }
+}

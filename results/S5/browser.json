@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "time": "2026-10-15T22:02:41.989222+08:00",
+  "database": "lab4_test_browser_c1c681babaaa4f6ea467e211959d4878",
+  "receipt": "4e44da8d-62e6-4ac2-b1ad-21f82d55b5b6",
+  "response_count": 1,
+  "gate_seq": 1,
+  "answers": {
+    "q8c3130237985be54": "o5711557ba1f6b0c9",
+    "q5253dbb1c5c59661": [
+      "o2ffdf8e7bfa9ed49"
+    ],
+    "q96fdb7a1e340f4c7": "页面提交",
+    "qbda6968181f46905": 8
+  },
+  "path": [
+    "q8c3130237985be54",
+    "q5253dbb1c5c59661",
+    "q96fdb7a1e340f4c7",
+    "qbda6968181f46905"
+  ],
+  "anonymous": true,
+  "browser_console_errors": [],
+  "screenshots": [
+    "browser-receipt.jpg",
+    "browser-anonymous-response.jpg",
+    "browser-single-statistics-visible.jpg"
+  ],
+  "steps": "Reader submitted four valid answers via browser; owner inspected whole/single statistics and anonymous response; database independently read back."
+}

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import platform
@@ -30,6 +31,9 @@ def fixture_id(label: str) -> str:
 
 
 def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', default='results/S2/schema-check.json')
+    args = parser.parse_args()
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     started = datetime.now(LOCAL_TIMEZONE)
@@ -200,15 +204,17 @@ def main() -> int:
         path: hashlib.sha256((PROJECT_ROOT / path).read_bytes()).hexdigest()
         for path in ("survey_app/config.py", "survey_app/db.py", "scripts/init_db.py", "scripts/check_schema.py")
     }
-    output_directory = PROJECT_ROOT / "results" / "S2"
+    output = Path(args.output)
+    if not output.is_absolute():
+        output = PROJECT_ROOT / output
+    output_directory = output.parent
     output_directory.mkdir(parents=True, exist_ok=True)
-    output = output_directory / "schema-check.json"
     if output.exists():
-        archive = output_directory / f"schema-check-{started.strftime('%Y%m%dT%H%M%S%f')}.json"
+        archive = output.with_name(f"{output.stem}-{started.strftime('%Y%m%dT%H%M%S%f')}{output.suffix}")
         archive.write_bytes(output.read_bytes())
     output.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"status": report["status"], "checks": len(checks), "failed": sum(item["status"] == "FAIL" for item in checks),
-                      "cleanup": report["cleanup"]["status"], "evidence": "results/S2/schema-check.json"}, ensure_ascii=False))
+                      "cleanup": report["cleanup"]["status"], "evidence": str(output.relative_to(PROJECT_ROOT)) if output.is_relative_to(PROJECT_ROOT) else str(output)}, ensure_ascii=False))
     return report["exit_code"]
 
 

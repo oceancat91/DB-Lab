@@ -1,0 +1,29 @@
+{
+  "scope": "pure Python numeric diagnosis, not MongoDB acceptance",
+  "value": 1.7976931348623157e+308,
+  "observations": [
+    {
+      "n": 2,
+      "legacy_mean": 1.7976931348623157e+308,
+      "legacy_status": "finite"
+    },
+    {
+      "n": 3,
+      "legacy_status": "OverflowError"
+    },
+    {
+      "n": 5,
+      "legacy_mean": 1.7976931348623157e+308,
+      "legacy_status": "finite"
+    },
+    {
+      "n": 7,
+      "legacy_status": "OverflowError"
+    },
+    {
+      "n": 10,
+      "legacy_mean": 1.7976931348623157e+308,
+      "legacy_status": "finite"
+    }
+  ]
+}

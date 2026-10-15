@@ -1,0 +1,26 @@
+{
+  "at": "2026-10-15T13:31:04.394962+00:00",
+  "database": "lab4_test_submit_9e41fe17860c4f45beaee829282ec829",
+  "results": [
+    {
+      "step": "/api/auth/register",
+      "status": 201
+    },
+    {
+      "step": "/api/auth/login",
+      "status": 200
+    },
+    {
+      "step": "/api/surveys",
+      "status": 201
+    },
+    {
+      "step": "transaction/replay/duplicate",
+      "status": "PASS",
+      "responses": 1,
+      "gate_seq": 1
+    }
+  ],
+  "cleanup": [],
+  "status": "PASS"
+}

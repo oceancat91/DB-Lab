@@ -1,4 +1,4 @@
-"""Survey lifecycle and ownership. Submission is added after S4 acceptance."""
+"""Survey lifecycle, ownership and dispatch to submission/statistics services."""
 from copy import deepcopy
 import secrets
 from uuid import uuid4
@@ -153,3 +153,15 @@ class SurveyService:
             raise DomainError(409, 'version', '问卷版本不匹配，请重新打开链接')
         version = self.version(doc)
         return evaluate_path(version['questions'], version['rules'], answers, partial=True)
+
+    def submit(self, code, user_id, version_number, request_id, answers):
+        from .submissions import submit
+        return submit(self, code, user_id, version_number, request_id, answers)
+
+    def statistics(self, survey_id, user_id, question_id=None):
+        from .statistics import statistics
+        return statistics(self, survey_id, user_id, question_id)
+
+    def responses(self, survey_id, user_id):
+        from .statistics import responses
+        return responses(self, survey_id, user_id)

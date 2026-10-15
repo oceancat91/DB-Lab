@@ -1,65 +1,54 @@
-# 基于 MongoDB 的在线问卷系统第一阶段
+# MongoDB 在线问卷系统 · Lab4 第一阶段
 
-本文件所在的 Lab4 即项目根目录，所有命令在本目录执行。`results/Lab4/` 是历史包，不能作为当前项目入口，也不纳入本阶段交付。
+Lab4 是项目根目录。本项目按 [WORKFLOW.md](WORKFLOW.md) 和 [AGENTS.md](AGENTS.md) 顺序实施，只覆盖《大作业一第一阶段》。当前 S0–S5 已验收，S6 正在进行全链路与干净环境复现；完整验收结果随后写入测试报告，实际状态见 [progress.json](progress.json)。
 
-本项目依据《大作业一第一阶段》设计一个简化在线问卷系统：注册用户创建并发布问卷，通过链接收集填写结果，系统执行可配置校验与跳转，并生成统计。重点是 MongoDB 数据建模、后端逻辑、可复现测试与真实 AI 使用记录。
+## 功能与语义
 
-**当前范围仅为第一阶段，按 S0–S7 推进，完成第一阶段交付即结束。** 第二阶段开发、数据迁移、回归任务及报告不列入当前计划。
+注册和登录后，用户创建自己的问卷，配置单选、多选、文本、数字题及校验和条件跳转，再发布分享链接。发布后题目及匿名/重复策略固定，仍可调整截止时间或关闭。填写者必须登录；匿名表示向创建者隐藏账号，服务端保留私有判重身份。
 
-**当前正在按阶段实施：S0、S1 已完成，S2 设计与 Schema 验证进行中。** 环境和真实 MongoDB 事务能力已验证，业务功能仍待后续实现与验收。实际状态与证据见 [progress.json](progress.json)，执行要求见 [WORKFLOW.md](WORKFLOW.md) 和 [AGENTS.md](AGENTS.md)。
+多选支持最少/最多/精确数量，文本按 Unicode 码点计长度，数字检查有限值、范围和整数。跳转来自问卷配置，服务端按唯一优先级选择首条命中规则，只允许向后跳。返回修改早期答案会清除后续回答；最终提交重新校验全部路径。提交前不自动保存草稿。
 
-## 计划实现的功能
+允许重复填写与网络重试分别处理：新一轮填写使用新请求编号，网络重试复用原编号。MongoDB 事务将问卷受理条件写入与答卷插入绑定，数据库唯一索引处理并发判重。统计区分成功提交次数和去重人数，空答/跳过不补零，匿名结果不返回账号或私有身份。设计细节见 [DECISIONS](docs/DECISIONS.md)。
 
-- 账号注册、登录，创建者只能管理自己的问卷和查看统计。
-- 问卷标题、说明、匿名开关、重复填写策略、发布、截止时间、关闭及分享链接。
-- 单选、多选、文本填空、数字填空，以及必答、选择数量、长度、范围与整数校验。
-- 从单选、多选和数字答案驱动的可配置跳转；服务端重新验证完整填写路径。
-- 多人同时填写、成功提交保存、匿名身份隐藏、允许时多次填写与重试幂等。
-- 整卷/单题统计：选项人数或次数、有效回答数、填空内容和数字平均值。
+## 运行
 
-Word 同时提出“填写者先登录”与“匿名填写”。S1 已采纳“登录后对问卷创建者匿名”，并单独处理判重身份；这是项目解释，不是教师后续确认。规则优先级、统计人数口径、截止边界等见 [docs/DECISIONS.md](docs/DECISIONS.md)。
-
-## 技术与数据设计方向
-
-数据库必须使用 MongoDB，所有持久业务数据进入 MongoDB；禁止关系数据库和现成问卷系统框架。已采纳 Python、FastAPI、PyMongo 及简单页面，Python 环境用 conda；版本与实际环境命令见 [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md)。
-
-拟按职责分离账号、问卷、不可变发布版本和答卷。题目配置嵌入发布版本，每次成功提交形成独立答卷，保留版本和路径，避免把不断增长的所有回答塞进一个问卷文档。具体 Schema、索引、并发一致性与取舍在 S2 完成。S7 留存本阶段可复现的代码、Schema、数据样例和验收基线。
-
-## 从哪里开始
-
-1. 完整阅读 [AGENTS.md](AGENTS.md) 与 [WORKFLOW.md](WORKFLOW.md)，确认 [progress.json](progress.json) 中当前待执行阶段。
-2. 阅读 [需求清单](docs/REQUIREMENTS.md)、[决策清单](docs/DECISIONS.md) 和 [测试计划](docs/TEST_PLAN.md)。
-3. 先在 [实验日志](docs/EXPERIMENT_LOG.md) 登记本次范围和验收方式，再执行阶段任务；使用 AI 后同步更新 [AI 使用日志](docs/AI_USAGE.md)。
-4. 保存真实证据，逐条完成阶段门禁，更新状态并运行流程检查。未通过则修复或记录阻塞，不能越级。
-
-## 现在可以运行的检查
-
-在项目根目录，用 Python 3.10 或更高版本运行：
+需要 conda、MongoDB 6.0或兼容版本，且 mongod 在 PATH。全部命令在本文件所在目录的 PowerShell 执行。Python依赖由 conda 管理，不使用 pip。已验证版本见 [环境说明](docs/ENVIRONMENT.md)。
 
 ```powershell
+conda env create --file environment.yml --yes
+conda activate lab4-survey
+python scripts/configure_env.py
+.\scripts\start_mongo.ps1
+python scripts/init_mongo.py
+python scripts/init_db.py
+python -m uvicorn survey_app.main:app --host 127.0.0.1 --port 8004
+```
+
+打开 http://127.0.0.1:8004/ ，注册新账号后创建问卷。密码至少8字符。mongod独立绑定127.0.0.1:27084，副本集lab4rs，数据在本目录.runtime/mongo，业务库lab4_survey；没有使用旧Lab的27017服务。初始化会校验实际数据目录归属，不会清空既有数据库。应用在启动时也会检查Schema及索引。
+
+`.env` 由脚本生成随机会话密钥，已有文件不覆盖。配置变量为 MONGODB_URI、MONGODB_DATABASE、SESSION_SECRET、COOKIE_SECURE；环境变量优先于.env。使用其他端口或副本集时，启动及初始化分别传入 `-Port / -ReplicaSet` 和 `--port / --replica-set`，并同步连接串。本地实验使用HTTP与回环无认证实例，公网部署需要另行配置认证、TLS和访问控制。
+
+停止应用按Ctrl+C。数据库仅在确认是本项目进程后停止；数据保留在.runtime。若已有同名conda环境，使用 `conda env update --file environment.yml`，不要盲目重建环境。
+
+## 验证
+
+另开已激活相同conda环境的PowerShell：
+
+```powershell
+python -m pytest tests --evidence results/local-run.json -q
+python scripts/check_schema.py --output results/local-schema.json
 python scripts/check_workflow.py
 ```
 
-检查器只用 Python 标准库，核对文档链接、需求/用例映射、源 Word 摘要、阶段顺序、门禁与证据字段。退出码 0 表示流程结构检查无 ERROR，1 表示存在 ERROR。它不会安装依赖、启动应用或连接数据库，也不能证明问卷功能通过。
+pytest自动新建lab4_test_api_UUID测试库，结束只清理该精确新库。业务数据和会话全部持久化到真实MongoDB，不使用关系数据库或文件替代。流程检查器只核对文档/状态/证据结构，不能代替业务测试。Starlette在固定版本中提示TestClient/httpx兼容路径未来弃用，当前实测正常；浏览器与真实HTTP另行验证。
 
-目前没有可执行的应用启动命令。S1 完成后补齐实际验证的环境创建和 MongoDB 配置；S6 补齐 Schema 初始化、启动、页面入口及测试命令。禁止把尚不存在的命令写成已经可用。
+## 项目文件
 
-## 文档与目录
+- `survey_app/`：FastAPI应用、MongoDBSchema、认证、问卷/校验/跳转、提交/统计和原生HTML/CSS/JS页面。
+- `tests/`：独立合成数据、真实数据库与并发验收；`scripts/`：环境、MongoDB、Schema及流程工具。
+- [需求映射](docs/REQUIREMENTS.md)、[业务决策](docs/DECISIONS.md)、[测试计划](docs/TEST_PLAN.md)。
+- [数据库设计](docs/DATABASE.md)、[API](docs/API.md)、[关键逻辑](docs/LOGIC.md)、[环境](docs/ENVIRONMENT.md)。
+- [实验日志](docs/EXPERIMENT_LOG.md)、[AI使用记录](docs/AI_USAGE.md)及`results/S1`至`results/S5`实际阶段证据。
+- [源作业Word](大作业一第一阶段.docx)和`references/`来源副本。
 
-- [WORKFLOW.md](WORKFLOW.md)：第一阶段 S0–S7 的步骤、产物和验收门禁。
-- [AGENTS.md](AGENTS.md)：每次工作必须遵守的行为规范。
-- [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md)：Word 章节、需求编号、实现阶段、测试映射与提交清单。
-- [docs/DECISIONS.md](docs/DECISIONS.md)：原文未定义语义的暂定方案及采纳方式。
-- [docs/TEST_PLAN.md](docs/TEST_PLAN.md)：测试步骤、输入和预期；业务用例当前均未执行。
-- [docs/EXPERIMENT_LOG.md](docs/EXPERIMENT_LOG.md)、[docs/AI_USAGE.md](docs/AI_USAGE.md)：真实工作记录及后续模板。
-- [progress.json](progress.json)、[scripts/check_workflow.py](scripts/check_workflow.py)：阶段记录和只读结构检查。
-- [results/planning/scope-review.md](results/planning/scope-review.md)：当前第一阶段范围的规划复核结果；首次规划审查作为历史留存。
-- [大作业一第一阶段.docx](大作业一第一阶段.docx)：原始作业说明。
-
-现有 `Lab1/`、`Lab2/`、`Lab3/` 是独立实验材料，本次未改动。未来实现目录、环境文件、数据库设计、API 文档、测试报告和第一阶段完成报告只在相应步骤实际产出后加入文档导航。
-
-## 交付标准
-
-第一阶段须交付可运行代码（含 Schema 与配置）、系统/数据库/API/关键逻辑文档、有步骤/输入/输出/结果的 26 组测试用例，以及完整第一阶段报告。报告说明 AI 帮助、AI 错误、实际修改和本人设计，并留存本阶段代码、数据和验收基线。26 组用例是项目验收计划，不是教师规定的用例数量。
-
-本次尚未产生上述应用交付物或课程实测成绩。当前可交付范围是 workflow、行为规范、项目说明及配套计划与流程检查工具。
+`.env`、`.runtime/`、环境、Git内部文件及缓存不属于提交内容。`results/Lab4/`是历史重复包，不作为入口或当前交付物；Lab1–Lab3是独立实验，本项目未修改。最终提交四类材料为可运行代码/配置、设计说明、测试用例与真实结果、完整报告；仅S7全部门禁通过后才标为第一阶段完成。

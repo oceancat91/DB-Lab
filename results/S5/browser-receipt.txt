@@ -1,0 +1,29 @@
+- link "跳到主要内容":
+  - /url: "#main"
+- banner:
+  - link "问卷工作台首页":
+    - /url: /
+    - text: 问卷工作台
+  - generic: lab4_browser_reader
+  - button "退出登录"
+- main:
+  - status: 提交成功，回答已保存。
+  - region "第一阶段浏览器验收问卷":
+    - link "返回我的问卷":
+      - /url: /
+    - heading "第一阶段浏览器验收问卷" [level=1]
+    - paragraph: 合成数据：验证四类题目、跳转与返回修改。
+    - generic: 对创建者匿名（仍需登录）
+    - generic: 每个账号限提交一次
+    - paragraph: 回答已成功提交并保存。下方回执用于确认本次提交结果。
+    - heading "提交成功" [active] [level=2]
+    - paragraph: 你的回答已保存，谢谢参与。
+    - term: 回执编号
+    - definition: 4e44da8d-62e6-4ac2-b1ad-21f82d55b5b6
+    - term: 提交时间
+    - definition: 2026/10/15 21:49:35（北京时间）
+    - paragraph: 此问卷每个账号限提交一次。
+- generic: ×
+- generic: 拖拽到此处完成下载
+- generic: 图片将完成下载
+- generic: AIX智能下载器
