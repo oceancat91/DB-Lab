@@ -1,0 +1,47 @@
+{
+  "scope": "First-stage structure only. Completion case uses synthetic records in a temporary copy; no business tests run.",
+  "fixture_fix": "Included linked planning evidence files; original failed run retained.",
+  "all_passed": true,
+  "cases": [
+    {
+      "case": "baseline",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\n结构检查结束：ERROR=0，WARN=0。WARN 须在实验日志逐条解释。\n结构检查通过；业务测试与逐条门禁仍需真实证据和人工审阅。\n",
+      "stderr": ""
+    },
+    {
+      "case": "extra_second_stage",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: progress.json：stages 必须按顺序完整包含 S0–S7，共 8 项\n结构检查结束：ERROR=1，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "skip_stage",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: S2：不能跳过尚未通过的 S0\nERROR: S2 gate_review：需要非空相对路径\nERROR: S2：passed 缺少证据类别 design_review\nERROR: S2：passed 缺少证据类别 real_mongodb\n结构检查结束：ERROR=4，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "missing_evidence",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: S0：passed 缺少证据类别 planning_review\n结构检查结束：ERROR=1，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "first_stage_complete",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\n结构检查结束：ERROR=0，WARN=0。WARN 须在实验日志逐条解释。\n结构检查通过；业务测试与逐条门禁仍需真实证据和人工审阅。\n",
+      "stderr": ""
+    }
+  ]
+}

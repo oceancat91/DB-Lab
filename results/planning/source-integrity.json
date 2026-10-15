@@ -1,0 +1,18 @@
+{
+  "recorded_at": "2026-10-15T14:24:17.168118+08:00",
+  "checks": [
+    {
+      "source": "source_word",
+      "expected_sha256": "88AF590B01A4265C31B5DA1F2D44F0BB833F4D8FA8C0852478963420B9D685EC",
+      "actual_sha256": "88AF590B01A4265C31B5DA1F2D44F0BB833F4D8FA8C0852478963420B9D685EC",
+      "unchanged": true
+    },
+    {
+      "source": "reference_agents",
+      "expected_sha256": "9AB02E4ADCCAEF0F57CFF764532B10A35F5A5D34F90037625E8A5EC17F09AB45",
+      "actual_sha256": "9AB02E4ADCCAEF0F57CFF764532B10A35F5A5D34F90037625E8A5EC17F09AB45",
+      "unchanged": true
+    }
+  ],
+  "all_unchanged": true
+}

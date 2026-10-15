@@ -1,0 +1,224 @@
+{
+  "recorded_at": "2026-10-15T15:50:00.507528+08:00",
+  "scope": "Only first-stage assignment; evidence is the current Lab4 contents, including nested old package. No application or MongoDB tests executed.",
+  "source_file": "大作业一第一阶段.docx",
+  "source_sha256": "88af590b01a4265c31b5da1f2d44f0bb833f4d8fa8c0852478963420b9d685ec",
+  "conclusion": "First-stage assignment not complete. Planning documents and workflow-checking code exist; questionnaire application, executable schema, business-test execution and final report are absent from inspected files.",
+  "current_stage": "S1",
+  "stage_statuses": {
+    "S0": "passed",
+    "S1": "pending",
+    "S2": "pending",
+    "S3": "pending",
+    "S4": "pending",
+    "S5": "pending",
+    "S6": "pending",
+    "S7": "pending"
+  },
+  "files_inspected": [
+    "AGENTS.md",
+    "docs/AI_USAGE.md",
+    "docs/DECISIONS.md",
+    "docs/EXPERIMENT_LOG.md",
+    "docs/REQUIREMENTS.md",
+    "docs/TEST_PLAN.md",
+    "progress.json",
+    "README.md",
+    "results/Lab4/AGENTS.md",
+    "results/Lab4/docs/AI_USAGE.md",
+    "results/Lab4/docs/DECISIONS.md",
+    "results/Lab4/docs/EXPERIMENT_LOG.md",
+    "results/Lab4/docs/REQUIREMENTS.md",
+    "results/Lab4/docs/TEST_PLAN.md",
+    "results/Lab4/PACKAGE_MANIFEST.json",
+    "results/Lab4/progress.json",
+    "results/Lab4/README.md",
+    "results/Lab4/references/AGENTS.reference.md",
+    "results/Lab4/results/packaging/cleanup-blocked.json",
+    "results/Lab4/results/packaging/cleanup-check.txt",
+    "results/Lab4/results/packaging/duplicate-audit.json",
+    "results/Lab4/results/packaging/review.md",
+    "results/Lab4/results/packaging/structure-check.txt",
+    "results/Lab4/results/planning/checker-validation.json",
+    "results/Lab4/results/planning/review.md",
+    "results/Lab4/results/planning/scope-check-final.txt",
+    "results/Lab4/results/planning/scope-check-initial.txt",
+    "results/Lab4/results/planning/scope-checker-validation-incomplete-fixture.json",
+    "results/Lab4/results/planning/scope-checker-validation.json",
+    "results/Lab4/results/planning/scope-review.md",
+    "results/Lab4/results/planning/source-integrity.json",
+    "results/Lab4/results/planning/structure-check-final.txt",
+    "results/Lab4/results/planning/structure-check-initial.txt",
+    "results/Lab4/results/planning/structure-check-reviewed.txt",
+    "results/Lab4/scripts/check_workflow.py",
+    "results/Lab4/WORKFLOW.md",
+    "results/Lab4/大作业一第一阶段.docx",
+    "results/planning/checker-validation.json",
+    "results/planning/review.md",
+    "results/planning/scope-check-final.txt",
+    "results/planning/scope-check-initial.txt",
+    "results/planning/scope-checker-validation-incomplete-fixture.json",
+    "results/planning/scope-checker-validation.json",
+    "results/planning/scope-review.md",
+    "results/planning/source-integrity.json",
+    "results/planning/structure-check-final.txt",
+    "results/planning/structure-check-initial.txt",
+    "results/planning/structure-check-reviewed.txt",
+    "scripts/check_workflow.py",
+    "WORKFLOW.md",
+    "大作业一第一阶段.docx"
+  ],
+  "file_count_before_this_audit_outputs": 51,
+  "extension_counts": {
+    ".md": 22,
+    ".json": 13,
+    ".txt": 12,
+    ".py": 2,
+    ".docx": 2
+  },
+  "source_files": [
+    {
+      "path": "results/Lab4/scripts/check_workflow.py",
+      "sha256": "7f9dad0e232f0038b9ecc58909c6d9b5c9a1776219f7f7f93ec40862327744be",
+      "functions": [
+        "error",
+        "warn",
+        "safe_path",
+        "nonempty_file",
+        "read_text",
+        "without_fences",
+        "link_targets",
+        "check_links",
+        "check_source",
+        "check_stages",
+        "check_traceability",
+        "main"
+      ],
+      "imports": [
+        "from __future__ import annotations",
+        "import hashlib",
+        "import json",
+        "import re",
+        "import sys",
+        "from collections import Counter",
+        "from pathlib import Path",
+        "from urllib.parse import unquote, urlsplit"
+      ]
+    },
+    {
+      "path": "scripts/check_workflow.py",
+      "sha256": "7f9dad0e232f0038b9ecc58909c6d9b5c9a1776219f7f7f93ec40862327744be",
+      "functions": [
+        "error",
+        "warn",
+        "safe_path",
+        "nonempty_file",
+        "read_text",
+        "without_fences",
+        "link_targets",
+        "check_links",
+        "check_source",
+        "check_stages",
+        "check_traceability",
+        "main"
+      ],
+      "imports": [
+        "from __future__ import annotations",
+        "import hashlib",
+        "import json",
+        "import re",
+        "import sys",
+        "from collections import Counter",
+        "from pathlib import Path",
+        "from urllib.parse import unquote, urlsplit"
+      ]
+    }
+  ],
+  "missing_planned_deliverables": [
+    "environment.yml",
+    ".env.example",
+    "docs/ENVIRONMENT.md",
+    "docs/DATABASE.md",
+    "docs/API.md",
+    "docs/LOGIC.md",
+    "docs/TEST_REPORT.md",
+    "docs/REPORT_STAGE1.md",
+    "docs/BASELINE_STAGE1.md"
+  ],
+  "test_plan_groups": [
+    "TC-A01",
+    "TC-A02",
+    "TC-A03",
+    "TC-Q01",
+    "TC-Q02",
+    "TC-Q03",
+    "TC-V01",
+    "TC-V02",
+    "TC-V03",
+    "TC-V04",
+    "TC-V05",
+    "TC-J01",
+    "TC-J02",
+    "TC-J03",
+    "TC-J04",
+    "TC-J05",
+    "TC-R01",
+    "TC-R02",
+    "TC-R03",
+    "TC-R04",
+    "TC-R05",
+    "TC-S01",
+    "TC-S02",
+    "TC-S03",
+    "TC-E01",
+    "TC-E02"
+  ],
+  "test_execution_statement": "All business cases explicitly marked NOT_RUN by TEST_PLAN.md; no application or business test results found.",
+  "workflow_check": {
+    "exit_code": 0,
+    "evidence": "results/audit/workflow-check.txt",
+    "limitation": "Governance structure only; does not certify application features."
+  },
+  "requirements_assessment": [
+    {
+      "word_section": "二 第一阶段、七 代码",
+      "status": "not_implemented",
+      "finding": "No questionnaire backend/frontend; the two Python files are copies of check_workflow.py. No executable MongoDB schema or application configuration."
+    },
+    {
+      "word_section": "三 技术要求、四 MongoDB设计",
+      "status": "planned_only",
+      "finding": "MongoDB and collection boundaries are proposed in workflow; actual schema, indexes, initialization, data persistence and design validation are absent."
+    },
+    {
+      "word_section": "初始用户需求 一至六",
+      "status": "not_implemented",
+      "finding": "Accounts, ownership, survey management, question validation, configured branching, submissions, concurrency/anonymity/repeats and statistics have plans but no application implementation."
+    },
+    {
+      "word_section": "六 测试要求、七 测试用例",
+      "status": "planned_not_run",
+      "finding": "26 case groups define steps/inputs/expectations. Actual questionnaire outputs, pass/fail results and real MongoDB execution evidence are absent. No requirement for automated testing alone is inferred."
+    },
+    {
+      "word_section": "七 文档",
+      "status": "partial",
+      "finding": "README, requirements, decisions, workflow and agent rules exist; full database/API/key-logic implementation documents are not produced."
+    },
+    {
+      "word_section": "五 AI使用、七 项目完成报告",
+      "status": "partial",
+      "finding": "AI logs cover planning and scope revision; implementation prompts/code revisions, student-confirmed work and final-report AI summary are incomplete. Final first-stage report not found."
+    }
+  ],
+  "secondary_packaging_findings": [
+    "Nested old package at results/Lab4",
+    "Outer README/AGENTS retain an extra Lab4/ entry prefix",
+    "Outer workflow reference ../AGENTS.md is absent; original reference exists only inside nested package"
+  ],
+  "not_assessed": [
+    "No grade or percentage inferred",
+    "No database connection, runtime startup, business test or performance test attempted",
+    "No second-stage implementation checked"
+  ]
+}

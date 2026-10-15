@@ -1,0 +1,14 @@
+name: lab4-survey
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python=3.11.17
+  - fastapi=0.143.1
+  - uvicorn=0.54.0
+  - pymongo=4.19.0
+  - pydantic=2.14.1
+  - jinja2=3.1.6
+  - httpx=0.28.1
+  - pytest=9.1.1
+  - python-dotenv=1.2.4

@@ -1,0 +1,47 @@
+{
+  "recorded_at": "2026-10-15T14:53:42.247565+08:00",
+  "scope": "First-stage workflow structure only; completion case is synthetic in a temporary copy, not real business evidence.",
+  "all_passed": false,
+  "cases": [
+    {
+      "case": "baseline",
+      "expected_exit": 0,
+      "actual_exit": 1,
+      "passed": false,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: results/planning/review.md：本地链接目标不存在：structure-check-initial.txt\nERROR: results/planning/review.md：本地链接目标不存在：structure-check-reviewed.txt\nERROR: results/planning/review.md：本地链接目标不存在：checker-validation.json\nERROR: results/planning/review.md：本地链接目标不存在：source-integrity.json\n结构检查结束：ERROR=4，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "extra_second_stage",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: results/planning/review.md：本地链接目标不存在：structure-check-initial.txt\nERROR: results/planning/review.md：本地链接目标不存在：structure-check-reviewed.txt\nERROR: results/planning/review.md：本地链接目标不存在：checker-validation.json\nERROR: results/planning/review.md：本地链接目标不存在：source-integrity.json\nERROR: progress.json：stages 必须按顺序完整包含 S0–S7，共 8 项\n结构检查结束：ERROR=5，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "skip_stage",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: results/planning/review.md：本地链接目标不存在：structure-check-initial.txt\nERROR: results/planning/review.md：本地链接目标不存在：structure-check-reviewed.txt\nERROR: results/planning/review.md：本地链接目标不存在：checker-validation.json\nERROR: results/planning/review.md：本地链接目标不存在：source-integrity.json\nERROR: S2：不能跳过尚未通过的 S0\nERROR: S2 gate_review：需要非空相对路径\nERROR: S2：passed 缺少证据类别 design_review\nERROR: S2：passed 缺少证据类别 real_mongodb\n结构检查结束：ERROR=8，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "missing_evidence",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: results/planning/review.md：本地链接目标不存在：structure-check-initial.txt\nERROR: results/planning/review.md：本地链接目标不存在：structure-check-reviewed.txt\nERROR: results/planning/review.md：本地链接目标不存在：checker-validation.json\nERROR: results/planning/review.md：本地链接目标不存在：source-integrity.json\nERROR: S0：passed 缺少证据类别 planning_review\n结构检查结束：ERROR=5，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "first_stage_complete",
+      "expected_exit": 0,
+      "actual_exit": 1,
+      "passed": false,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: results/planning/review.md：本地链接目标不存在：structure-check-initial.txt\nERROR: results/planning/review.md：本地链接目标不存在：structure-check-reviewed.txt\nERROR: results/planning/review.md：本地链接目标不存在：checker-validation.json\nERROR: results/planning/review.md：本地链接目标不存在：source-integrity.json\n结构检查结束：ERROR=4，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    }
+  ]
+}

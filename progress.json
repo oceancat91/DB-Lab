@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "source": {
+    "file": "大作业一第一阶段.docx",
+    "sha256": "88AF590B01A4265C31B5DA1F2D44F0BB833F4D8FA8C0852478963420B9D685EC"
+  },
+  "current_stage": "S2",
+  "stages": [
+    {
+      "id": "S0",
+      "title": "阅读与规划",
+      "status": "passed",
+      "gate_review": "results/planning/scope-review.md",
+      "evidence": [
+        {
+          "kind": "planning_review",
+          "path": "results/planning/scope-review.md"
+        }
+      ]
+    },
+    {
+      "id": "S1",
+      "title": "需求语义与环境基线",
+      "status": "passed",
+      "gate_review": "results/S1/gates.md",
+      "evidence": [
+        {
+          "kind": "environment_check",
+          "path": "results/S1/environment.json"
+        },
+        {
+          "kind": "decision_review",
+          "path": "docs/DECISIONS.md"
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "title": "MongoDB与接口设计",
+      "status": "pending",
+      "gate_review": null,
+      "evidence": []
+    },
+    {
+      "id": "S3",
+      "title": "账号与问卷管理基线",
+      "status": "pending",
+      "gate_review": null,
+      "evidence": []
+    },
+    {
+      "id": "S4",
+      "title": "校验与可配置跳转",
+      "status": "pending",
+      "gate_review": null,
+      "evidence": []
+    },
+    {
+      "id": "S5",
+      "title": "提交、并发与统计",
+      "status": "pending",
+      "gate_review": null,
+      "evidence": []
+    },
+    {
+      "id": "S6",
+      "title": "集成与复现验收",
+      "status": "pending",
+      "gate_review": null,
+      "evidence": []
+    },
+    {
+      "id": "S7",
+      "title": "第一阶段报告与基线",
+      "status": "pending",
+      "gate_review": null,
+      "evidence": []
+    }
+  ]
+}

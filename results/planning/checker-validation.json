@@ -1,0 +1,104 @@
+{
+  "recorded_at": "2026-10-15T14:21:07.224597+08:00",
+  "scope": "Workflow checker behavior only; no application, MongoDB, or business tests executed.",
+  "checker_sha256": "55939d4c40646aa70f8ee080b15c7efa079f5c94ad425a37d79bd47bf826cb12",
+  "all_passed": true,
+  "cases": [
+    {
+      "case": "baseline_active",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\n结构检查结束：ERROR=0，WARN=0。WARN 须在实验日志逐条解释。\n结构检查通过；业务测试与逐条门禁仍需真实证据和人工审阅。\n",
+      "stderr": ""
+    },
+    {
+      "case": "baseline_passed",
+      "expected_exit": 0,
+      "actual_exit": 0,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\n结构检查结束：ERROR=0，WARN=0。WARN 须在实验日志逐条解释。\n结构检查通过；业务测试与逐条门禁仍需真实证据和人工审阅。\n",
+      "stderr": ""
+    },
+    {
+      "case": "skip_stage",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: S2：不能跳过尚未通过的 S0\nERROR: S2 gate_review：需要非空相对路径\nERROR: S2：passed 缺少证据类别 design_review\nERROR: S2：passed 缺少证据类别 real_mongodb\n结构检查结束：ERROR=4，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "missing_evidence",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: S0：passed 缺少证据类别 planning_review\n结构检查结束：ERROR=1，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "missing_gate",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: S0：gate_review 缺少门禁 G0.2\nERROR: S0：gate_review 缺少门禁 G0.3\n结构检查结束：ERROR=2，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "bad_link",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: README.md：本地链接目标不存在：missing.txt\n结构检查结束：ERROR=1，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "outside_evidence",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: S0 evidence[1]：路径无效或越出项目目录：../../outside.txt\n结构检查结束：ERROR=1，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "changed_source",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: 原始 Word SHA-256 已变化；先核验来源并记录需求差异\n结构检查结束：ERROR=1，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "unknown_test",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: REQUIREMENTS.md：引用的 TC-Z99 在 TEST_PLAN.md 中未定义\n结构检查结束：ERROR=1，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "multiple_active",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: S1：只能在第一个未通过阶段 active/blocked\nERROR: progress.json：最多允许一个 active 或 blocked 阶段\n结构检查结束：ERROR=2，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "malformed_json",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: progress.json：JSON 格式错误：Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\n结构检查结束：ERROR=1，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    },
+    {
+      "case": "invalid_status_type",
+      "expected_exit": 1,
+      "actual_exit": 1,
+      "passed": true,
+      "stdout": "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。\nERROR: S0：status 必须是 pending/active/passed/blocked\n结构检查结束：ERROR=1，WARN=0。WARN 须在实验日志逐条解释。\n",
+      "stderr": ""
+    }
+  ]
+}
