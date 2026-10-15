@@ -69,6 +69,14 @@
 - 计划产物：已采纳决策、environment.yml、.env.example、docs/ENVIRONMENT.md、真实环境连通证据及 S1 门禁记录。S1 未通过前不开始应用实现。
 - 验证：conda 环境与依赖可导入、MongoDB 版本/副本集拓扑及隔离数据库连通；记录实际命令和输出，不把已有规划检查当环境验证。
 
+## EXP-006 S2 数据库与接口契约
+
+- 日期：2026-10-15，Asia/Shanghai；S1 真实环境与语义门禁已通过，证据为 results/S1。
+- S1 实测摘要：conda 新环境安装成功、MongoDB 6.0.29 独立 27084 端口副本集 primary、事务探针 PASS；流程检查 0 ERROR/0 WARN，本项目独立 Git 已建立（87bd45a）。
+- 本步目标：冻结集合/索引/校验、API、发布状态、跳转及提交并发协议，创建可执行 Schema 初始化并在新测试库验证非法文档和唯一约束。不得提前将后续业务功能标记完成。
+- 拟改动：survey_app/config.py、db.py、scripts/init_db.py、Schema 探针及 docs/DATABASE.md、API.md、LOGIC.md；根目录入口与参考来源按已发现事实修正，不改变门禁。
+- 验证：隔离真实 MongoDB 新库的 Schema/索引测试；字段/图/权限/匿名/统计契约审阅；保存 S2 证据后才能进入 S3。
+
 ## 后续每次工作先复制本模板
 
 ```text

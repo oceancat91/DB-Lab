@@ -1,0 +1,40 @@
+{
+  "note": "设计样例，非实测数据；$date 为 MongoDB Extended JSON 日期表示。",
+  "users": {
+    "_id": "10000000-0000-4000-8000-000000000001",
+    "username": "demo_user", "username_key": "demo_user",
+    "password_hash": "scrypt$示例盐$示例哈希（非可登录凭据）",
+    "created_at": {"$date": "2026-10-15T08:00:00Z"}, "schema_version": 1
+  },
+  "sessions": {
+    "_id": "0000000000000000000000000000000000000000000000000000000000000000",
+    "user_id": "10000000-0000-4000-8000-000000000001",
+    "created_at": {"$date": "2026-10-15T08:00:00Z"},
+    "expires_at": {"$date": "2026-10-16T08:00:00Z"}, "schema_version": 1
+  },
+  "surveys": {
+    "_id": "20000000-0000-4000-8000-000000000001",
+    "owner_id": "10000000-0000-4000-8000-000000000001", "share_code": "example_share",
+    "title": "课程反馈", "description": "设计样例",
+    "allow_anonymous": true, "allow_repeat": false, "status": "published",
+    "closes_at": null, "created_at": {"$date": "2026-10-15T08:00:00Z"},
+    "updated_at": {"$date": "2026-10-15T08:00:00Z"},
+    "published_version": 1, "revision": 1, "gate_seq": 1,
+    "last_accepted_at": {"$date": "2026-10-15T08:05:00Z"}, "schema_version": 1
+  },
+  "survey_versions": {
+    "_id": "30000000-0000-4000-8000-000000000001",
+    "survey_id": "20000000-0000-4000-8000-000000000001", "version": 1,
+    "questions": [{"id": "q1", "type": "single", "title": "是否满意", "required": true,
+      "options": [{"id": "yes", "label": "满意"}, {"id": "no", "label": "不满意"}], "validation": {}}],
+    "rules": [], "created_at": {"$date": "2026-10-15T08:00:00Z"}, "schema_version": 1
+  },
+  "responses": {
+    "_id": "40000000-0000-4000-8000-000000000001",
+    "survey_id": "20000000-0000-4000-8000-000000000001", "version": 1,
+    "respondent_id": "10000000-0000-4000-8000-000000000001",
+    "request_id": "example_request", "payload_hash": "1111111111111111111111111111111111111111111111111111111111111111",
+    "answers": {"q1": "yes"}, "path": ["q1"], "single_submission": true,
+    "anonymous": true, "submitted_at": {"$date": "2026-10-15T08:05:00Z"}, "schema_version": 1
+  }
+}

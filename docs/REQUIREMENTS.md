@@ -4,7 +4,7 @@
 
 源 Word SHA-256：`88AF590B01A4265C31B5DA1F2D44F0BB833F4D8FA8C0852478963420B9D685EC`。
 
-参考规范为父目录 `../AGENTS.md`，SHA-256：`9AB02E4ADCCAEF0F57CFF764532B10A35F5A5D34F90037625E8A5EC17F09AB45`。仅参考结构和实验纪律，不继承其文本分类事实、路径及专用检查。需求变更时保留本版来源，并记录新旧差异。
+参考规范原样副本为 [AGENTS.reference.md](../references/AGENTS.reference.md)，SHA-256：`9AB02E4ADCCAEF0F57CFF764532B10A35F5A5D34F90037625E8A5EC17F09AB45`。仅参考结构和实验纪律，不作为活动行为指令，不继承其文本分类事实、路径及专用检查。需求变更时保留本版来源，并记录新旧差异。
 
 当前只执行第一阶段，以下 R01–R14 为本阶段原文硬要求的归并编号；步骤和测试关联属于本项目规划。用例详情见 [TEST_PLAN.md](TEST_PLAN.md)，未定义语义见 [DECISIONS.md](DECISIONS.md)。所有业务验收当前均为 `NOT_RUN`。
 
