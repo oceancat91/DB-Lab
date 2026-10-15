@@ -45,7 +45,7 @@ type 为 single/multi/text/number。选择题选项为 `{id,label}`；validation
 
 ## 填写与提交
 
-- `GET /api/fill/{code}`：已登录读取当前有效发布卷，返回标题/说明、匿名/重复提示、version、questions/rules；不包含拥有者或私有填写者数据。草稿/关闭/到期拒绝。
+- `GET /api/fill/{code}`：已登录读取当前有效发布卷，返回标题/说明、匿名/重复提示、version、questions/rules；不包含拥有者或私有填写者数据。草稿 409，关闭/到期 410，未知分享码 404。
 - `POST /api/fill/{code}/next`：`{version,answers}`，answers 是已回答可达题 ID 到值的映射。缺键表示尚未访问并停在该题；键存在且为 null 表示主动跳过可选题，必答题 null 仍报错。服务端校验已答部分及路径，返回 `{path,next_question_id,complete,answers}`；不保存草稿。S4 实现。
 - `POST /api/fill/{code}/submit`：`{version,request_id,answers}`，request_id 1–128 个安全字符，整个填写过程一次生成，重试复用。服务端从首题计算完整路径，拒绝缺必答、非法/陌生/路径外题，成功事务保存一份答卷。
 

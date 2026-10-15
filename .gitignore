@@ -6,4 +6,3 @@ __pycache__/
 .coverage
 .venv/
 results/Lab4/
-*.log

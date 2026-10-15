@@ -1,0 +1,42 @@
+{
+  "scope": "S3 minimal real-MongoDB API smoke",
+  "database": "lab4_test_smoke_4ba0f11f1fd643e6ae85b0a98213d989",
+  "steps": [
+    {
+      "step": "register",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "step": "login",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "step": "create",
+      "status": 201,
+      "expected": 201
+    },
+    {
+      "step": "save",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "step": "publish",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "step": "fill_view",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "step": "close",
+      "status": 200,
+      "expected": 200
+    }
+  ],
+  "status": "PASS"
+}

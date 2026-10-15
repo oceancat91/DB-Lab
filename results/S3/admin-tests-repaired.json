@@ -1,0 +1,1051 @@
+{
+  "started_at": "2026-10-15T16:41:33.086257+08:00",
+  "timezone": "Asia/Shanghai",
+  "seed": 20261015,
+  "selection": [
+    "tests/test_admin.py"
+  ],
+  "records": [
+    {
+      "nodeid": "tests/test_admin.py::test_register_login_hash_uniqueness_and_logout",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.5397943999996642,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_register_login_hash_uniqueness_and_logout",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 1.0564328000036767,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_register_login_hash_uniqueness_and_logout",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00082970000221394,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_registration_input_validation[ab-Lab4pass123!]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0015427000034833327,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_registration_input_validation[ab-Lab4pass123!]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.007865999999921769,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_registration_input_validation[ab-Lab4pass123!]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0009368000028189272,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_registration_input_validation[   -Lab4pass123!]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0022353999956976622,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_registration_input_validation[   -Lab4pass123!]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.01002669999434147,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_registration_input_validation[   -Lab4pass123!]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0005585000035353005,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_registration_input_validation[valid-user-short]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0016931999998632818,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_registration_input_validation[valid-user-short]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.008459000004222617,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_registration_input_validation[valid-user-short]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0005209999944781885,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unauthenticated_management_and_existing_fill_route",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.00105489999987185,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unauthenticated_management_and_existing_fill_route",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.5255445999937365,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unauthenticated_management_and_existing_fill_route",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0007752999954391271,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_owner_isolation_on_implemented_management_routes",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0017841000080807135,
+      "cases": [
+        "TC-A03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_owner_isolation_on_implemented_management_routes",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.8615932999964571,
+      "cases": [
+        "TC-A03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_owner_isolation_on_implemented_management_routes",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0005081999988760799,
+      "cases": [
+        "TC-A03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_create_preserves_metadata_defaults_and_ownership",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0010344000038458034,
+      "cases": [
+        "TC-Q01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_create_preserves_metadata_defaults_and_ownership",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.3708870999980718,
+      "cases": [
+        "TC-Q01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_create_preserves_metadata_defaults_and_ownership",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00046440000005532056,
+      "cases": [
+        "TC-Q01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_empty_title_rejected_without_write[]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0011129000049550086,
+      "cases": [
+        "TC-Q01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_empty_title_rejected_without_write[]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.34229200000118,
+      "cases": [
+        "TC-Q01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_empty_title_rejected_without_write[]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0006790000043110922,
+      "cases": [
+        "TC-Q01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_empty_title_rejected_without_write[   ]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.001690499993856065,
+      "cases": [
+        "TC-Q01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_empty_title_rejected_without_write[   ]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.3736341000039829,
+      "cases": [
+        "TC-Q01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_empty_title_rejected_without_write[   ]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0010131000017281622,
+      "cases": [
+        "TC-Q01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_four_types_configuration_and_published_snapshot_freeze",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0020822000078624114,
+      "cases": [
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_four_types_configuration_and_published_snapshot_freeze",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.481488299992634,
+      "cases": [
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_four_types_configuration_and_published_snapshot_freeze",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0006748000014340505,
+      "cases": [
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_draft_published_closed_and_expired_fill_links",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.001472099989769049,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_draft_published_closed_and_expired_fill_links",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.6010556999972323,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_draft_published_closed_and_expired_fill_links",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0005628999933833256,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_stale_edit_and_publish_revision_cannot_replace_new_draft",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0017389999993611127,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_stale_edit_and_publish_revision_cannot_replace_new_draft",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.49855799999204464,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_stale_edit_and_publish_revision_cannot_replace_new_draft",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0011290999973425642,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_concurrent_publish_freezes_exactly_one_version",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0016231999907176942,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_concurrent_publish_freezes_exactly_one_version",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.4598162000038428,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_concurrent_publish_freezes_exactly_one_version",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.000698099989676848,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[missing_target]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0017692999972496182,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[missing_target]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.40885120000166353,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[missing_target]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0006596000021090731,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[self_loop]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0012547000078484416,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[self_loop]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.416999199995189,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[self_loop]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.000614699994912371,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[duplicate_id]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0017443999968236312,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[duplicate_id]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.4059780999959912,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[duplicate_id]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0005164000031072646,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[empty_questions]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0012018999987049028,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[empty_questions]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.40653710000333376,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_publish_revalidates_invalid_stored_configuration[empty_questions]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0007002999918768182,
+      "cases": [
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_expired_session_is_rejected_without_waiting_for_ttl",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0012329000019235536,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_expired_session_is_rejected_without_waiting_for_ttl",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.37924629999906756,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_expired_session_is_rejected_without_waiting_for_ttl",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0005885999999009073,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_cross_origin_write_is_rejected_and_same_origin_works",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0015291000017896295,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_cross_origin_write_is_rejected_and_same_origin_works",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.3764365000097314,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_cross_origin_write_is_rejected_and_same_origin_works",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0005324999947333708,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[owner_id-attacker]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0012860999995609745,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[owner_id-attacker]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.39280970000254456,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[owner_id-attacker]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0005643000040436164,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[status-published]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.00143940000270959,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[status-published]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.3871919000084745,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[status-published]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0007424000068567693,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[gate_seq-999]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0019367999921087176,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[gate_seq-999]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.4159561999986181,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[gate_seq-999]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.00057409999135416,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[unexpected-True]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0016238999960478395,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[unexpected-True]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.41426099999807775,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_unknown_and_server_owned_fields_are_rejected[unexpected-True]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0007341000018641353,
+      "cases": [
+        "TC-Q01",
+        "TC-Q02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_malformed_origin_is_rejected_without_server_error",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.00152160000288859,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_malformed_origin_is_rejected_without_server_error",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.3692280000104802,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_malformed_origin_is_rejected_without_server_error",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.000746600009733811,
+      "cases": [
+        "TC-A02"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_body_larger_than_one_mib_is_rejected_with_content_length",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0014264999917941168,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_body_larger_than_one_mib_is_rejected_with_content_length",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.009970600003725849,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_body_larger_than_one_mib_is_rejected_with_content_length",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0006555999862030149,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_stream_without_content_length_stops_reading_when_limit_exceeded",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0011227999930270016,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_stream_without_content_length_stops_reading_when_limit_exceeded",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.006298599997535348,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_stream_without_content_length_stops_reading_when_limit_exceeded",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0004971000016666949,
+      "cases": [
+        "TC-A01"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[integer-epoch]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0020714999991469085,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[integer-epoch]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.5087205000018002,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[integer-epoch]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.000571299999137409,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[float-epoch]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0012407999893184751,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[float-epoch]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.5294581000052858,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[float-epoch]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0006599999906029552,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[numeric-seconds]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0012916999985463917,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[numeric-seconds]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.5358221999922534,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[numeric-seconds]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0009324999991804361,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[numeric-millis]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0019566999981179833,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[numeric-millis]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.5274115000065649,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[numeric-millis]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0010521999938646331,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[true]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0018982000037794933,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[true]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.5970322999928612,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[true]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0010032999998657033,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[false]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0016943000082392246,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[false]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.5553190999926301,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_numeric_or_boolean_deadline_rejected_at_all_write_entries[false]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0008418000070378184,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_timezone_iso_and_null_deadline_accepted_at_all_write_entries[offset-iso]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0011975000088568777,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_timezone_iso_and_null_deadline_accepted_at_all_write_entries[offset-iso]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.5237176999944495,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_timezone_iso_and_null_deadline_accepted_at_all_write_entries[offset-iso]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0008890000026440248,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_timezone_iso_and_null_deadline_accepted_at_all_write_entries[utc-iso]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.001671100006205961,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_timezone_iso_and_null_deadline_accepted_at_all_write_entries[utc-iso]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.519685399995069,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_timezone_iso_and_null_deadline_accepted_at_all_write_entries[utc-iso]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.0005782999942312017,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_timezone_iso_and_null_deadline_accepted_at_all_write_entries[null]",
+      "phase": "setup",
+      "outcome": "passed",
+      "duration": 0.0017533000063849613,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_timezone_iso_and_null_deadline_accepted_at_all_write_entries[null]",
+      "phase": "call",
+      "outcome": "passed",
+      "duration": 0.5056488999980502,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    },
+    {
+      "nodeid": "tests/test_admin.py::test_timezone_iso_and_null_deadline_accepted_at_all_write_entries[null]",
+      "phase": "teardown",
+      "outcome": "passed",
+      "duration": 0.11061309999786317,
+      "cases": [
+        "TC-Q01",
+        "TC-Q03"
+      ]
+    }
+  ],
+  "collection_errors": [],
+  "database": "lab4_test_api_287832d9e12c48dd874eef3b1c1561f6",
+  "cleanup": {
+    "status": "PASS",
+    "database": "lab4_test_api_287832d9e12c48dd874eef3b1c1561f6",
+    "counts_before_drop": {
+      "users": 32,
+      "sessions": 31,
+      "surveys": 27,
+      "survey_versions": 16,
+      "responses": 0
+    },
+    "remaining_collections": []
+  },
+  "environment": {
+    "python": "3.11.17",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "pytest": "9.1.1",
+    "fastapi": "0.143.1",
+    "pymongo": "4.19.0",
+    "httpx": "0.28.1",
+    "mongodb": "6.0.29",
+    "replica_set": "lab4rs",
+    "writable_primary": true,
+    "read_preference": "primary",
+    "tz_aware": true
+  },
+  "finished_at": "2026-10-15T16:41:49.022094+08:00",
+  "exit_code": 0,
+  "summary": {
+    "collected": 35,
+    "passed": 35,
+    "failed": 0,
+    "skipped": 0,
+    "setup_teardown_errors": 0,
+    "session_tests_failed": 0,
+    "phase_outcomes": {
+      "setup:passed": 35,
+      "call:passed": 35,
+      "teardown:passed": 35
+    },
+    "collection_errors": 0
+  },
+  "source_sha256": {
+    "survey_app/__init__.py": "531d81b3cd3ee8dd145a7c6c6a04a55aaf9a633f2ada655ca6b92cef2f71db4d",
+    "survey_app/config.py": "342b03246efdf5c946a1744eaedd5090c5716284dbe8b4d9485879307b80a449",
+    "survey_app/db.py": "0d51f67fa903fb9ca4605b8e9de030888ae4d273cbca3ce437f1a001abcdad6b",
+    "survey_app/errors.py": "85076d718ce7694f3f0d8dff90d12206f67e4145d10da14168b40abcc1b07357",
+    "survey_app/main.py": "a4586b6bf284e9738542f95351c274ff0e8681f40a941424c8d5eabbc8d2574f",
+    "survey_app/models.py": "81cea0c6e39687a6655e23b00c9dcf49d9093444b1b07ec6f9b8b07883a2dc42",
+    "survey_app/questions.py": "358a5d2805c95c8fc4371fc96b5c093f20f0b202bf1cf1d8d443949b460efabd",
+    "survey_app/security.py": "fd2028e334933944184f85bfc6ac6eca2b3d18ca139d4b4d90f00a8283c95ebc",
+    "survey_app/service.py": "5b706a9ec0c50ca87b0695419b59cac4c022f22bc482953555e1b3232f4ea98d",
+    "tests/conftest.py": "35a138a6b241df29c30571c61a02f4b4ebfed59eb5e8259912b3e5329dddebb5",
+    "tests/test_admin.py": "513db43a96ef94f9e18dbc515c012c275b449cc5609cd21dba6dbf111037f129",
+    "pytest.ini": "d1c882395311f60d983895b72a26257c1dca6e99d21e59b652c6be99b236fdb8"
+  }
+}
