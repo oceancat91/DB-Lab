@@ -145,3 +145,11 @@ class SurveyService:
                 'allow_anonymous': doc['allow_anonymous'], 'allow_repeat': doc['allow_repeat'],
                 'closes_at': doc['closes_at'].isoformat() if doc['closes_at'] else None,
                 'questions': deepcopy(version['questions']), 'rules': deepcopy(version['rules'])}
+
+    def next_question(self, code, version_number, answers):
+        from .questions import evaluate_path
+        doc = self.available(code)
+        if version_number != doc['published_version']:
+            raise DomainError(409, 'version', '问卷版本不匹配，请重新打开链接')
+        version = self.version(doc)
+        return evaluate_path(version['questions'], version['rules'], answers, partial=True)

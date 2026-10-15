@@ -1,0 +1,32 @@
+- link "跳到主要内容":
+  - /url: "#main"
+- banner:
+  - link "问卷工作台首页":
+    - /url: /
+    - text: 问卷工作台
+  - generic: lab4_browser_reader
+  - button "退出登录"
+- main:
+  - region "第一阶段浏览器验收问卷":
+    - link "返回我的问卷":
+      - /url: /
+    - heading "第一阶段浏览器验收问卷" [level=1]
+    - paragraph: 合成数据：验证四类题目、跳转与返回修改。
+    - generic: 对创建者匿名（仍需登录）
+    - generic: 每个账号限提交一次
+    - paragraph: 回答仅保留在当前页面，提交前不会自动保存。返回改答会清除后续回答，并重新确定填写顺序。
+    - heading "核对你的回答" [active] [level=2]
+    - paragraph: 已按实际路径完成 2 道题。以下为当前页面中的回答预览。
+    - paragraph: 回答校验已完成，尚未提交。提交功能暂未开放，离开或刷新页面会丢失回答。
+    - list:
+      - heading "是否填写完整问卷？" [level=3]
+      - button "修改"
+      - paragraph: 跳到数字题
+      - heading "满意度（0至10整数）" [level=3]
+      - button "修改"
+      - paragraph: "9"
+    - button "返回上一题"
+- generic: ×
+- generic: 拖拽到此处完成下载
+- generic: 图片将完成下载
+- generic: AIX智能下载器

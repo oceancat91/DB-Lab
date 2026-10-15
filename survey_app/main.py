@@ -12,7 +12,7 @@ from pymongo.errors import PyMongoError
 from .config import Settings
 from .db import create_client, initialize_schema
 from .errors import DomainError
-from .models import Credentials, DeadlineInput, DraftInput, Metadata, PublishInput
+from .models import Credentials, DeadlineInput, DraftInput, Metadata, PublishInput, NextInput
 from .security import COOKIE_NAME, new_session, public_user, session_user, token_digest
 from .service import SurveyService
 
@@ -155,6 +155,11 @@ def create_app(settings: Settings | None = None):
     def fill(code: str, request: Request):
         user(request)
         return service(request).fill_view(code)
+
+    @app.post('/api/fill/{code}/next')
+    def next_question(code: str, body: NextInput, request: Request):
+        user(request)
+        return service(request).next_question(code, body.version, body.answers)
 
     return app
 

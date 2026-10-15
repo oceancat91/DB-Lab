@@ -1,4 +1,4 @@
-"""Validate questionnaire definitions without evaluating respondent answers."""
+"""Validate questionnaire configuration, answers and server-computed paths."""
 
 from __future__ import annotations
 
@@ -110,6 +110,29 @@ def _validation(value: object, question_type: str, option_count: int,
     return result
 
 
+def _required_answer_space(question: dict) -> None:
+    """A required question must permit at least one nonempty answer."""
+    if not question["required"]:
+        return
+    question_id = question["id"]
+    validation = question["validation"]
+    if question["type"] == "multi":
+        minimum = max(1, validation.get("min_choices", 0))
+        maximum = validation.get("max_choices", len(question["options"]))
+        if "exact_choices" in validation:
+            minimum = max(minimum, validation["exact_choices"])
+            maximum = min(maximum, validation["exact_choices"])
+        if minimum > maximum:
+            _invalid("必答多选题必须允许至少选择一个选项", question_id)
+    elif question["type"] == "text":
+        if max(1, validation.get("min_length", 0)) > validation.get("max_length", 10000):
+            _invalid("必答文本题必须允许输入非空白内容", question_id)
+    elif (question["type"] == "number" and validation.get("integer_only", False)
+          and "min_value" in validation and "max_value" in validation):
+        if math.ceil(validation["min_value"]) > math.floor(validation["max_value"]):
+            _invalid("必答整数题的范围内必须至少存在一个整数", question_id)
+
+
 def check_definition(questions: list, rules: list,
                      for_publish: bool = False) -> tuple[list[dict], list[dict]]:
     """Return detached normalized definitions, rejecting malformed configuration."""
@@ -170,6 +193,7 @@ def check_definition(questions: list, rules: list,
             "validation": _validation(raw.get("validation", {}), question_type,
                                       len(options), question_id),
         }
+        _required_answer_space(question)
         normalized_questions.append(question)
         questions_by_id[question_id] = question
         positions[question_id] = position
@@ -240,6 +264,154 @@ def check_definition(questions: list, rules: list,
         })
 
     return deepcopy(normalized_questions), deepcopy(normalized_rules)
+
+
+def _answer(question: dict, value: object) -> str | list[str] | int | float | None:
+    """Normalize one answer against an already checked question definition."""
+    question_id = question["id"]
+    question_type = question["type"]
+    validation = question["validation"]
+    empty = value is None
+    if question_type == "single" and isinstance(value, str) and value == "":
+        empty = True
+    elif question_type == "multi" and isinstance(value, list) and not value:
+        empty = True
+    elif question_type == "text" and isinstance(value, str) and not value.strip():
+        empty = True
+    if empty:
+        if question["required"]:
+            _invalid("此题为必答题，请填写后继续", question_id)
+        return None
+
+    if question_type == "single":
+        if not isinstance(value, str):
+            _invalid("单选题必须提供一个选项 ID", question_id)
+        if value not in {option["id"] for option in question["options"]}:
+            _invalid("单选答案引用了不存在的选项", question_id)
+        return value
+
+    if question_type == "multi":
+        if not isinstance(value, list):
+            _invalid("多选题答案必须为选项 ID 列表", question_id)
+        option_ids = [option["id"] for option in question["options"]]
+        selected = set()
+        for option_id in value:
+            if not isinstance(option_id, str) or option_id not in option_ids:
+                _invalid("多选答案引用了不存在的选项", question_id)
+            if option_id in selected:
+                _invalid("多选答案不能重复选择同一选项", question_id)
+            selected.add(option_id)
+        count = len(value)
+        if count < validation.get("min_choices", 0):
+            _invalid("多选答案未达到最少选择数量", question_id)
+        if count > validation.get("max_choices", len(option_ids)):
+            _invalid("多选答案超过最多选择数量", question_id)
+        if "exact_choices" in validation and count != validation["exact_choices"]:
+            _invalid("多选答案不符合精确选择数量", question_id)
+        return [option_id for option_id in option_ids if option_id in selected]
+
+    if question_type == "text":
+        if not isinstance(value, str):
+            _invalid("文本题答案必须为文字", question_id)
+        length = len(value)
+        if length < validation.get("min_length", 0):
+            _invalid("文本答案未达到最少长度", question_id)
+        if length > validation.get("max_length", 10000):
+            _invalid("文本答案超过最多长度", question_id)
+        return value
+
+    numeric = _number(value, "数字题答案", question_id)
+    if (validation.get("integer_only", False) and isinstance(numeric, float)
+            and not numeric.is_integer()):
+        _invalid("此数字题必须填写整数", question_id)
+    if "min_value" in validation and numeric < validation["min_value"]:
+        _invalid("数字答案小于允许的最小值", question_id)
+    if "max_value" in validation and numeric > validation["max_value"]:
+        _invalid("数字答案大于允许的最大值", question_id)
+    # Keep large finite BSON doubles representable while canonicalizing 1.0 to 1.
+    if (isinstance(numeric, float) and numeric.is_integer()
+            and -(1 << 63) <= numeric < (1 << 63)):
+        return int(numeric)
+    return numeric
+
+
+def validate_answer(question: dict, value: object) -> str | list[str] | int | float | None:
+    """Validate one question and return a detached, canonical answer or None."""
+    checked_questions, _ = check_definition([question], [])
+    return _answer(checked_questions[0], value)
+
+
+def _matches(rule: dict, answer: str | list[str] | int | float | None) -> bool:
+    if answer is None:
+        return False
+    operation, condition = rule["op"], rule["value"]
+    if operation == "eq":
+        return answer == condition
+    if operation == "any":
+        return any(option_id in answer for option_id in condition)
+    if operation == "all":
+        return all(option_id in answer for option_id in condition)
+    if operation == "lt":
+        return answer < condition
+    if operation == "lte":
+        return answer <= condition
+    if operation == "gt":
+        return answer > condition
+    if operation == "gte":
+        return answer >= condition
+    _invalid("不支持的跳转条件算子", rule["source"])
+
+
+def evaluate_path(questions: list, rules: list, answers: dict,
+                  partial: bool = False) -> dict:
+    """Recompute the reachable path, preserving explicit optional skips as null."""
+    checked_questions, checked_rules = check_definition(questions, rules)
+    if not isinstance(answers, dict):
+        _invalid("答案必须为题目 ID 到填写值的对象")
+    if not isinstance(partial, bool):
+        _invalid("部分校验标记必须为布尔值")
+    positions = {question["id"]: index for index, question in enumerate(checked_questions)}
+    for question_id in answers:
+        _identifier(question_id, "答案题目 ID")
+        if question_id not in positions:
+            _invalid("答案引用了未知题目", question_id)
+
+    by_source = {}
+    for rule in checked_rules:
+        by_source.setdefault(rule["source"], []).append(rule)
+    for source_rules in by_source.values():
+        source_rules.sort(key=lambda rule: rule["priority"])
+
+    path = []
+    normalized_answers = {}
+    next_question_id = None
+    index = 0
+    while index < len(checked_questions):
+        question = checked_questions[index]
+        question_id = question["id"]
+        path.append(question_id)
+        if partial and question_id not in answers:
+            next_question_id = question_id
+            break
+        normalized = _answer(question, answers.get(question_id))
+        normalized_answers[question_id] = normalized
+        next_index = index + 1
+        for rule in by_source.get(question_id, []):
+            if _matches(rule, normalized):
+                next_index = positions[rule["target"]]
+                break
+        index = next_index
+
+    visited = set(path)
+    for question_id in answers:
+        if question_id not in visited:
+            _invalid("答案包含当前路径之外或尚未访问的题目", question_id)
+    return {
+        "path": path,
+        "next_question_id": next_question_id,
+        "complete": next_question_id is None,
+        "answers": deepcopy(normalized_answers),
+    }
 
 
 def ensure_document_size(document: dict, limit: int = 1048576) -> None:

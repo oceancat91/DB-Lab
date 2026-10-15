@@ -4,7 +4,7 @@
   const $ = (id) => document.getElementById(id);
   const TYPES = { single: "单选题", multi: "多选题", text: "文本题", number: "数字题" };
   const STATUS = { draft: "草稿", published: "已发布", closed: "已关闭" };
-  const state = { user: null, surveys: [], current: null, dirty: false, busy: false, authMode: "login" };
+  const state = { user: null, surveys: [], current: null, dirty: false, busy: false, authMode: "login", fill: null };
   const path = window.location.pathname.match(/^\/survey\/([^/]+)\/?$/);
   const shareCode = path ? decodeURIComponent(path[1]) : null;
 
@@ -113,6 +113,10 @@
       $("main").inert = false;
       $("create-dialog").inert = false;
       updateActionStates();
+      if (state.focusId) {
+        $(state.focusId)?.focus();
+        state.focusId = null;
+      }
     }
   }
 
@@ -457,6 +461,7 @@
     $("fill-content").replaceChildren(el("p", "muted", "正在读取问卷…"));
     try {
       const survey = await api(`/api/fill/${encodeURIComponent(shareCode)}`);
+      state.fill = { survey, answers: {}, path: [], currentId: null, complete: false, changed: false, reviewId: null, reviewValue: null };
       const header = el("div", "fill-header");
       const title = el("h1", "", survey.title); title.id = "fill-title";
       header.append(title);
@@ -464,25 +469,228 @@
       const policies = el("div", "fill-policy");
       policies.append(el("span", "", survey.allow_anonymous ? "对创建者匿名（仍需登录）" : "创建者可查看你的账号"), el("span", "", survey.allow_repeat ? "允许多次填写" : "每个账号限提交一次"));
       header.append(policies);
-      const notice = el("p", "fill-notice", "当前可查看发布内容。逐题填写及提交功能尚未开放；本页不会保存回答。");
-      notice.dataset.testid = "fill-unavailable";
-      const list = el("ol", "preview-list");
-      (survey.questions || []).forEach((question, index) => {
-        const item = el("li", "preview-question");
-        item.append(el("p", "question-type", `${TYPES[question.type] || question.type}${question.required ? " · 必答" : " · 选答"}`), el("h3", "", `${index + 1}. ${question.title}`));
-        if (question.options?.length) {
-          const options = el("ul");
-          for (const option of question.options) options.append(el("li", "", option.label));
-          item.append(options);
-        } else item.append(el("p", "muted", question.type === "number" ? "数字回答" : "文本回答"));
-        list.append(item);
-      });
-      $("fill-content").replaceChildren(header, notice, list);
+      const notice = el("p", "fill-notice", "回答仅保留在当前页面，提交前不会自动保存。返回改答会清除后续回答，并重新确定填写顺序。");
+      const session = el("div"); session.id = "fill-session";
+      $("fill-content").replaceChildren(header, notice, session);
       document.title = `${survey.title} · 问卷工作台`;
+      applyFillResult(await nextFill({}));
+      renderFillSession();
     } catch (error) {
       $("fill-content").replaceChildren(el("h1", "", "暂时无法打开问卷"), el("p", "muted", error.message));
       throw error;
     }
+  }
+
+  async function nextFill(answers) {
+    return api(`/api/fill/${encodeURIComponent(shareCode)}/next`, { method: "POST", body: { version: state.fill.survey.version, answers } });
+  }
+
+  function applyFillResult(result) {
+    const fill = state.fill;
+    fill.path = result.path;
+    fill.answers = result.answers;
+    fill.currentId = result.next_question_id;
+    fill.complete = result.complete;
+    fill.reviewId = null;
+    fill.reviewValue = null;
+  }
+
+  function fillQuestion(id) {
+    return state.fill.survey.questions.find((question) => question.id === id);
+  }
+
+  function answerText(question, value) {
+    if (value === undefined || value === null || value === "" || (Array.isArray(value) && !value.length)) return "未回答（选答题）";
+    if (question.type === "single") return question.options.find((option) => option.id === value)?.label || String(value);
+    if (question.type === "multi") return value.map((id) => question.options.find((option) => option.id === id)?.label || id).join("、");
+    return String(value);
+  }
+
+  function fillHint(question) {
+    const validation = question.validation || {};
+    const hints = [];
+    if (question.type === "multi") {
+      if (validation.exact_choices !== undefined) hints.push(`请选择 ${validation.exact_choices} 项`);
+      else {
+        if (validation.min_choices !== undefined) hints.push(`最少 ${validation.min_choices} 项`);
+        if (validation.max_choices !== undefined) hints.push(`最多 ${validation.max_choices} 项`);
+      }
+    }
+    if (question.type === "text") {
+      if (validation.min_length !== undefined) hints.push(`最少 ${validation.min_length} 字`);
+      if (validation.max_length !== undefined) hints.push(`最多 ${validation.max_length} 字`);
+      hints.push("按 Unicode 码点计字数，保留原文");
+    }
+    if (question.type === "number") {
+      if (validation.min_value !== undefined) hints.push(`不小于 ${validation.min_value}`);
+      if (validation.max_value !== undefined) hints.push(`不大于 ${validation.max_value}`);
+      if (validation.integer_only) hints.push("仅允许整数");
+    }
+    if (!question.required) hints.push("可留空并继续");
+    return hints.join("；");
+  }
+
+  function fillError(error) {
+    const message = $("fill-error");
+    if (message) {
+      message.textContent = error.message;
+      message.hidden = false;
+    }
+  }
+
+  async function goToFillQuestion(id) {
+    const fill = state.fill;
+    const index = fill.path.indexOf(id);
+    if (index < 0) throw new Error("该题不在当前填写路径中，请从上一题重新继续。");
+    const earlier = fill.path.slice(0, index);
+    const prefix = {};
+    for (const previous of earlier) if (Object.hasOwn(fill.answers, previous)) prefix[previous] = fill.answers[previous];
+    const previousValue = fill.answers[id];
+    try {
+      const result = await nextFill(prefix);
+      applyFillResult(result);
+      // Preserve only the target's old value for convenient editing; later answers are discarded.
+      if (result.next_question_id === id) {
+        fill.reviewId = id;
+        fill.reviewValue = previousValue;
+      }
+      fill.changed = true;
+      renderFillSession();
+      state.focusId = "fill-question-heading";
+    } catch (error) { fillError(error); throw error; }
+  }
+
+  function renderFillSession() {
+    const fill = state.fill;
+    const session = $("fill-session");
+    session.replaceChildren();
+    if (fill.complete) {
+      renderFillReview(session);
+      return;
+    }
+    const question = fillQuestion(fill.currentId);
+    if (!question) throw new Error("问卷返回的题目不可用，请刷新后重试。");
+    const position = fill.survey.questions.findIndex((item) => item.id === question.id) + 1;
+    const panel = el("section", "fill-question");
+    panel.dataset.testid = "fill-question";
+    panel.dataset.questionId = question.id;
+    panel.append(el("p", "fill-progress", `第 ${position} 题 / 共 ${fill.survey.questions.length} 题（根据回答可能跳题）`));
+    const heading = el("h2", "", question.title);
+    heading.id = "fill-question-heading";
+    heading.tabIndex = -1;
+    const type = el("span", "fill-required", question.required ? "必答" : "选答");
+    panel.append(heading, type);
+    const hint = el("p", "muted", fillHint(question)); hint.id = "fill-hint";
+    panel.append(hint);
+    const form = el("form", "fill-form");
+    form.id = "fill-answer-form"; form.dataset.testid = "fill-answer-form"; form.noValidate = true;
+    const value = fill.reviewId === question.id ? fill.reviewValue : fill.answers[question.id];
+    if (question.type === "single" || question.type === "multi") {
+      const choices = el("fieldset", "fill-choices");
+      choices.setAttribute("aria-describedby", "fill-hint fill-error");
+      const legend = el("legend", "sr-only", question.type === "single" ? "选择一个选项" : "选择适用选项");
+      choices.append(legend);
+      for (const option of question.options || []) {
+        const label = el("label", "fill-choice");
+        const control = el("input");
+        control.type = question.type === "single" ? "radio" : "checkbox";
+        control.name = "answer"; control.value = option.id;
+        control.dataset.testid = `fill-option-${option.id}`;
+        control.checked = question.type === "single" ? value === option.id : Array.isArray(value) && value.includes(option.id);
+        label.append(control, el("span", "", option.label)); choices.append(label);
+      }
+      form.append(choices);
+      if (!question.required) form.append(button("清空选择", "quiet", () => {
+        for (const control of choices.querySelectorAll("input")) control.checked = false;
+        fill.changed = true;
+      }, "fill-clear"));
+    } else {
+      const control = el(question.type === "text" ? "textarea" : "input");
+      control.id = "fill-answer"; control.name = "answer"; control.dataset.testid = "fill-answer";
+      control.value = value ?? "";
+      control.setAttribute("aria-label", question.title);
+      control.setAttribute("aria-describedby", "fill-hint fill-error");
+      control.setAttribute("aria-required", String(question.required));
+      if (question.type === "text") {
+        control.rows = 5;
+        const count = el("p", "fill-word-count", `${Array.from(control.value).length} 字`);
+        control.addEventListener("input", () => { count.textContent = `${Array.from(control.value).length} 字`; });
+        form.append(control, count);
+      } else { control.type = "number"; control.step = "any"; form.append(control); }
+    }
+    const error = el("p", "fill-error"); error.id = "fill-error"; error.hidden = true;
+    error.setAttribute("role", "alert"); error.dataset.testid = "fill-error";
+    form.append(error);
+    const actions = el("div", "fill-actions");
+    const index = fill.path.indexOf(question.id);
+    const back = button("上一题", "secondary", () => action(back, () => goToFillQuestion(fill.path[index - 1])), "fill-back");
+    back.id = "fill-back"; back.disabled = index <= 0;
+    const next = button("下一题", "primary", () => {}, "fill-next");
+    next.id = "fill-next"; next.type = "submit";
+    actions.append(back, next); form.append(actions);
+    form.addEventListener("input", () => { fill.changed = true; error.hidden = true; });
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      action(next, async () => {
+        try {
+          let answer;
+          if (question.type === "single") answer = form.querySelector('input[name="answer"]:checked')?.value ?? null;
+          else if (question.type === "multi") {
+            answer = Array.from(form.querySelectorAll('input[name="answer"]:checked'), (node) => node.value);
+            if (!answer.length) answer = null;
+          } else {
+            const control = $("fill-answer");
+            if (question.type === "number") {
+              if (control.validity.badInput) throw new Error("请输入有效数字。");
+              answer = control.value === "" ? null : Number(control.value);
+              if (answer !== null && !Number.isFinite(answer)) throw new Error("请输入有限数字。");
+            } else answer = control.value.trim() === "" ? null : control.value;
+          }
+          const answers = {};
+          for (const id of fill.path.slice(0, index)) if (Object.hasOwn(fill.answers, id)) answers[id] = fill.answers[id];
+          answers[question.id] = answer;
+          applyFillResult(await nextFill(answers));
+          fill.changed = true;
+          renderFillSession();
+          state.focusId = fill.complete ? "fill-review-heading" : "fill-question-heading";
+        } catch (failure) { fillError(failure); throw failure; }
+      });
+    });
+    panel.append(form); session.append(panel);
+    const visited = fill.path.filter((id) => id !== question.id && Object.hasOwn(fill.answers, id));
+    if (visited.length) {
+      const history = el("nav", "fill-history"); history.setAttribute("aria-label", "返回修改已答题");
+      history.append(el("p", "muted", "返回修改已答题（后续回答会清除）"));
+      for (const id of visited) {
+        const previous = fillQuestion(id);
+        const edit = button(previous.title, "quiet", () => action(edit, () => goToFillQuestion(id)), `fill-edit-${id}`);
+        history.append(edit);
+      }
+      session.append(history);
+    }
+  }
+
+  function renderFillReview(session) {
+    const fill = state.fill;
+    const panel = el("section", "fill-review"); panel.dataset.testid = "fill-review";
+    const heading = el("h2", "", "核对你的回答"); heading.id = "fill-review-heading"; heading.tabIndex = -1;
+    panel.append(heading, el("p", "muted", `已按实际路径完成 ${fill.path.length} 道题。以下为当前页面中的回答预览。`));
+    const notice = el("p", "fill-notice", "回答校验已完成，尚未提交。提交功能暂未开放，离开或刷新页面会丢失回答。");
+    notice.dataset.testid = "fill-submit-unavailable"; panel.append(notice);
+    const list = el("ol", "fill-review-list");
+    for (const id of fill.path) {
+      const question = fillQuestion(id);
+      const item = el("li"); item.dataset.testid = `fill-review-${id}`;
+      const row = el("div", "fill-review-row");
+      row.append(el("h3", "", question.title));
+      const edit = button("修改", "quiet", () => action(edit, () => goToFillQuestion(id)), `fill-edit-${id}`);
+      row.append(edit);
+      item.append(row, el("p", "fill-review-answer", answerText(question, fill.answers[id]))); list.append(item);
+    }
+    panel.append(list);
+    const back = button("返回上一题", "secondary", () => action(back, () => goToFillQuestion(fill.path[fill.path.length - 1])), "fill-back");
+    back.id = "fill-back"; back.disabled = !fill.path.length;
+    panel.append(back); session.append(panel);
   }
 
   $("login-tab").addEventListener("click", () => switchAuth("login"));
@@ -503,8 +711,9 @@
 
   $("logout").addEventListener("click", () => action($("logout"), async () => {
     if (state.dirty && !window.confirm("退出会丢失未保存的修改。继续退出？")) return;
+    if (state.fill?.changed && !window.confirm("当前回答尚未提交，退出会丢失这些回答。继续退出？")) return;
     await api("/api/auth/logout", { method: "POST" });
-    state.current = null; state.surveys = []; state.dirty = false;
+    state.current = null; state.surveys = []; state.dirty = false; state.fill = null;
     $("editor").hidden = true; $("empty-editor").hidden = false;
     showAuth(); feedback("已退出登录。");
   }));
@@ -586,7 +795,7 @@
     catch { $("share-url").focus(); $("share-url").select(); feedback("请按 Ctrl+C 或使用系统复制操作复制已选中的链接。"); }
   }));
   window.addEventListener("beforeunload", (event) => {
-    if (state.dirty) { event.preventDefault(); event.returnValue = ""; }
+    if (state.dirty || state.fill?.changed) { event.preventDefault(); event.returnValue = ""; }
   });
 
   action(null, async () => {

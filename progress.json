@@ -4,7 +4,7 @@
     "file": "大作业一第一阶段.docx",
     "sha256": "88AF590B01A4265C31B5DA1F2D44F0BB833F4D8FA8C0852478963420B9D685EC"
   },
-  "current_stage": "S4",
+  "current_stage": "S5",
   "stages": [
     {
       "id": "S0",
@@ -69,14 +69,23 @@
     {
       "id": "S4",
       "title": "校验与可配置跳转",
-      "status": "active",
-      "gate_review": null,
-      "evidence": []
+      "status": "passed",
+      "gate_review": "results/S4/gates.md",
+      "evidence": [
+        {
+          "kind": "automated_test",
+          "path": "results/S4/rules-tests.json"
+        },
+        {
+          "kind": "manual_test",
+          "path": "results/S4/gates.md"
+        }
+      ]
     },
     {
       "id": "S5",
       "title": "提交、并发与统计",
-      "status": "pending",
+      "status": "active",
       "gate_review": null,
       "evidence": []
     },
