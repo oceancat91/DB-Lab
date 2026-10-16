@@ -52,6 +52,7 @@ table { width: 100%; border-collapse: collapse; margin: 1.5mm 0 3mm; font-size: 
 th, td { border: 0.5pt solid #cfd6d0; padding: 1mm 1.6mm; vertical-align: top; text-align: left;
          line-height: 1.5; }
 th { background: #eef2ef; font-weight: 600; }
+th:first-child, td:first-child { width: 1%; white-space: nowrap; }
 blockquote { margin: 1.5mm 0; padding: 0.8mm 0 0.8mm 3mm; border-left: 1pt solid #b9cec8; color: #56615e; }
 hr { border: 0; border-top: 0.5pt solid #cfd6d0; margin: 4mm 0; }
 a { color: #14514a; text-decoration: none; }
@@ -171,14 +172,13 @@ def convert(markdown: str, name: str = "", student_id: str = "") -> str:
         f'<li><span class="num">'
         f'{html.escape(text.split(".")[0]) if text[:1].isdigit() else ""}</span>'
         f'{inline(text.split(". ", 1)[-1])}</li>'
-        for level, text in headings if level == 2 and text != "目录")
+        for level, text in headings if level == 2 and text not in {"目录", "关键结果"})
     blank = '<span class="fill"></span>'
     author_fields = "".join(
         f'<div><b>{label}</b>{html.escape(value) if value else blank}</div>'
         for label, value in (("姓名", name), ("学号", student_id)))
     cover = f"""
 <section class="cover">
-  <div class="kicker">数据库管理系统 · 大作业一</div>
   <h1>MongoDB 在线问卷系统<br>第一阶段项目完成报告</h1>
   <div class="rule"></div>
   <div class="meta">
@@ -188,7 +188,6 @@ def convert(markdown: str, name: str = "", student_id: str = "") -> str:
     {author_fields}
     <div><b>日期</b>2026 年 10 月 16 日</div>
   </div>
-  <div class="note">本报告对应《大作业一第一阶段》“七、提交内容”第 4 项，覆盖项目目标、系统设计、MongoDB 设计、跳转设计、校验设计、AI 使用过程、测试结果、遇到的问题及解决办法。</div>
 </section>
 """
     toc = f'<section class="toc"><h2>目录</h2><ol>{toc_items}</ol></section>'

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at": "2026-10-16T23:19:16.783438+08:00",
+  "created_at": "2026-10-16T23:27:09.992922+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
   "self_exclusions": [
@@ -48,8 +48,8 @@
     },
     {
       "path": "docs/AI_USAGE.md",
-      "bytes": 42838,
-      "sha256": "dabf44e05098c60c5a4c9c7e60d5887805dfc7fd257f7fd1d84149f2531b47ba"
+      "bytes": 44816,
+      "sha256": "3968713007381da3d59e1187e03272209f7773ebc08eccdc891232306335db8e"
     },
     {
       "path": "docs/API.md",
@@ -78,8 +78,8 @@
     },
     {
       "path": "docs/EXPERIMENT_LOG.md",
-      "bytes": 60638,
-      "sha256": "b82fbc376e4d31de64a8cbdb133fda5ca2a962331f4fe97e9e3e4576b1015e79"
+      "bytes": 63107,
+      "sha256": "48a649f41f0bd14e05cab0965f4dec0d83df43a8a0857f6f5413c47b616d745a"
     },
     {
       "path": "docs/LOGIC.md",
@@ -88,8 +88,8 @@
     },
     {
       "path": "docs/REPORT_STAGE1.md",
-      "bytes": 26401,
-      "sha256": "93f428bc04984a888d6e6c6525ad00276a1d7f2747c8cd438d2e595dae55d810"
+      "bytes": 25385,
+      "sha256": "829fca188fa2546060e8e6dac6e63caa54cbea5eb45ae44e2f5458b647c24a2b"
     },
     {
       "path": "docs/REQUIREMENTS.md",
@@ -753,8 +753,8 @@
     },
     {
       "path": "results/stage1-audit/final-check.txt",
-      "bytes": 1782,
-      "sha256": "393570e8c939174e0c8e6d0a117307960322cbefb51a984f400f91d824bd39d3"
+      "bytes": 1601,
+      "sha256": "4dd3bddf5f97fb7f4fb8b424cf9711e641fbd50ff4d56d70cec648b77c519d9a"
     },
     {
       "path": "results/stage1-audit/gate-workflow.txt",
@@ -983,13 +983,13 @@
     },
     {
       "path": "scripts/build_report_docx.py",
-      "bytes": 13677,
-      "sha256": "67c3dcfa7bc277a22eeeabb457a8be0484ad4b2787df0c6d12472060062b609d"
+      "bytes": 13289,
+      "sha256": "afe4d941d46d5cda5d68f4d3853aaca6b76f7a11fff4b9ca46e41c090676be9a"
     },
     {
       "path": "scripts/build_report_pdf.py",
-      "bytes": 11407,
-      "sha256": "cd3a48640fc11f5cf2931c026cd390af27e77e16d73b95462bd149fba9e8c32d"
+      "bytes": 11173,
+      "sha256": "66a5355cab4c0ba84b0e6e4eeb2681bfd5af0a07847ccbf8f14318a95053332a"
     },
     {
       "path": "scripts/check_schema.py",

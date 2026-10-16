@@ -223,16 +223,11 @@ def build(markdown: str, name: str, student_id: str) -> Document:
         head.bold = True
         head.font.color.rgb = MUTED
         line.add_run(value)
-    note = document.add_paragraph()
-    note.paragraph_format.space_before = Pt(24)
-    run = note.add_run("本报告对应《大作业一第一阶段》“七、提交内容”第 4 项，覆盖项目目标、系统设计、"
-                       "MongoDB 设计、跳转设计、校验设计、AI 使用过程、测试结果、遇到的问题及解决办法。")
-    run.font.size = Pt(9.5)
-    run.font.color.rgb = MUTED
     document.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
 
     blocks = parse(markdown)
-    headings = [block["text"] for block in blocks if block["type"] == "h2" and block["text"] != "目录"]
+    headings = [block["text"] for block in blocks
+                if block["type"] == "h2" and block["text"] not in {"目录", "关键结果"}]
 
     toc_heading = document.add_paragraph()
     run = toc_heading.add_run("目录")

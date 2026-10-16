@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "time": "2026-10-16T23:19:16.783438+08:00",
+  "time": "2026-10-16T23:27:09.992922+08:00",
   "command": "python scripts/package_stage1.py",
   "scope": "ZIP integrity, exact manifest bytes, entries and actual local secret exclusion; no business tests run.",
   "manifest_file_count": 222,
