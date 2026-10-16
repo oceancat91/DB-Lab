@@ -111,3 +111,14 @@ AI-010实际结论：恢复agent生成合法夹具、限定新UUID的BSON恢复�
 - 未验证内容及影响：仅本机 Chrome、390×844 一档移动宽度；`prefers-reduced-motion` 只核对规则存在；其他操作系统的字体回退未验证。
 - 收尾处置：用户确认“按最佳解决方法办”后，AI 先逐字节快照 S7 时点的 manifest、打包检查与交付包，再按改后工作树重建 `dist/Lab4-stage1.zip`，并把 21 个业务文件的基线与工作树逐项比对（19 项一致、2 项为本次表现层改动、0 项缺失）。处置原则与结果见实验日志 EXP-013 续、[S7 快照说明](../results/S7/archive/README.md) 与 [基线复核](../results/ui-refresh/code-baseline-check.json)；AI 未改写 S7 门禁结论，也未删除任何原证据。
 - 学生本人贡献：任务与范围选择由用户提出，其余设计与实现为 agent 完成；对代码的理解、修改与最终取舍须由学生本人真实确认，本日志不代填。
+
+## AI-013 仓库发布与 README 改写
+
+- 日期：2026-10-16，Asia/Shanghai；工具为本次会话的 agent（底层模型标识 deepseek-flash，按会话配置记录，未独立核验服务端版本）。
+- 原始提示词：“将代码push到https://github.com/oceancat91/DB-Lab.git仓库，更新readme文件”。
+- 执行内容：AI 把 README 改写为仓库门面文档（新增仓库地址与克隆步骤、当前状态、界面改版小节与两张改版后真实截图、克隆后 dist 与 .env 不入库的说明），并在 git 中提交本阶段改动、合并远端初始提交、推送 main 分支。
+- 事实与验证：远端原内容只有 GitHub 初始提交的 README.md（正文为“# DB-Lab”与“数据库项目仓库”）；本地分支由 master 改名为 main；合并使用 --allow-unrelated-histories，README 的 add/add 冲突保留本项目版本，未强制推送、未改写远端历史；推送后远端 main=c28f3fe，共 196 个文件，无 .env、.runtime、dist、results/Lab4；推送前核对 .gitignore 覆盖上述路径，并用 git log -S 检索历史确认会话密钥从未进入提交。
+- 实际发现的 AI 错误：AI 曾用 PowerShell 的 Out-String 比较合并后的 README 与提交内容，因控制台编码差异把中文串比较成“不一致”，属 AI 自身比较方法错误；随后改用冲突标记计数、文件头内容与远端 blob 复核确认真实一致。
+- 未采纳的建议：AI 未按 GitHub 常见做法添加徽章、许可证或英文版说明，避免为公开页面增加无信息量的模板内容；交付包不入库，克隆后本地重建。
+- 未验证内容及影响：仓库可见性未在 GitHub 设置中核验；若仓库公开，课程原始 Word 与完整报告会一并公开，是否合适由用户判断。
+- 学生本人贡献：任务由用户提出，README 文案与提交由 agent 完成；仓库归属、可见性以及是否保留源 Word 由用户决定。

@@ -181,3 +181,9 @@ EXP-013实际结果：只改了 `survey_app/static/app.css`、`survey_app/static
 随后以当前工作树重建交付包：`python scripts/package_stage1.py`，脚本自身完成 ZIP CRC、清单逐文件字节与 SHA-256、条目唯一与路径安全、本机会话密钥不出现等检查后才写出 PASS 证明；重建后的 dist/Lab4-stage1.zip 及 .zip.sha256、results/S7/manifest.json、results/S7/package-check.json 均为改后状态的当前记录，S7 时点值以上述快照为准。README 打包一节同步说明“每次重建都会得到新摘要”以及快照位置，避免把基线包当成当前包提交。
 
 重建后另做一次独立解包复核（本地工具 .runtime/ui-refresh/verify_package.py，只读压缩包并解包到 .runtime）：压缩包摘要与 dist/Lab4-stage1.zip.sha256 一致；清单 193 行逐字节与 SHA-256 全部匹配、0 行不符；无 .env/.runtime/dist/results/Lab4/缓存等禁用条目（.env.example 属必需占位文件，按原脚本规则仅排除名为 .env 的文件）；解包副本内 `python scripts/check_workflow.py` 退出码 0；三份 S7 快照摘要与复制时记录一致。复核结果落在 results/ui-refresh/package-verify.json，该文件在打包之后生成，因此不在本次压缩包的清单内，属构建后本地复核记录，包内完整性仍以包内 manifest 与 package-check 为准。
+
+### EXP-013 续 2：仓库发布（2026-10-16 Asia/Shanghai）
+
+用户要求把代码推送到 GitHub 仓库并更新 README。远端 https://github.com/oceancat91/DB-Lab.git 原本只有 GitHub 初始提交的 README.md，正文是“# DB-Lab”与“数据库项目仓库”。本次把 README 改写为仓库门面文档：新增仓库地址与克隆步骤、当前状态与最近改动、界面改版小节（含两张改版后真实截图）、克隆后 dist 与 .env 不入库的说明，并调整打包一节改为“本地按需生成”。本地分支由 master 改名为 main，fetch 远端后以 --allow-unrelated-histories 合并其初始提交，README 的 add/add 冲突保留本项目版本，未使用强制推送，远端历史未被改写。
+
+实测结果：提交 1eca93c（改版、证据与 README）与合并提交 c28f3fe 推送成功，远端 main=c28f3fe，共 196 个文件；远端不含 .env、.runtime、dist、results/Lab4；推送前核对了 .gitignore 覆盖范围，并用 git log -S 确认会话密钥从未进入任何提交。发布后按新文档重新打包并复核（清单 193 行全部匹配、包内 workflow 检查退出码 0）。未核验项：GitHub 仓库可见性未在设置中确认，仓库若为公开则课程原始 Word 与完整报告一并公开，是否保留由用户决定。本项不属于 S0–S7 阶段范围，不改变任何阶段状态与原有验收结论。
