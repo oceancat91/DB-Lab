@@ -187,3 +187,25 @@ EXP-013实际结果：只改了 `survey_app/static/app.css`、`survey_app/static
 用户要求把代码推送到 GitHub 仓库并更新 README。远端 https://github.com/oceancat91/DB-Lab.git 原本只有 GitHub 初始提交的 README.md，正文是“# DB-Lab”与“数据库项目仓库”。本次把 README 改写为仓库门面文档：新增仓库地址与克隆步骤、当前状态与最近改动、界面改版小节（含两张改版后真实截图）、克隆后 dist 与 .env 不入库的说明，并调整打包一节改为“本地按需生成”。本地分支由 master 改名为 main，fetch 远端后以 --allow-unrelated-histories 合并其初始提交，README 的 add/add 冲突保留本项目版本，未使用强制推送，远端历史未被改写。
 
 实测结果：提交 1eca93c（改版、证据与 README）与合并提交 c28f3fe 推送成功，远端 main=c28f3fe，共 196 个文件；远端不含 .env、.runtime、dist、results/Lab4；推送前核对了 .gitignore 覆盖范围，并用 git log -S 确认会话密钥从未进入任何提交。发布后按新文档重新打包并复核（清单 193 行全部匹配、包内 workflow 检查退出码 0）。未核验项：GitHub 仓库可见性未在设置中确认，仓库若为公开则课程原始 Word 与完整报告一并公开，是否保留由用户决定。本项不属于 S0–S7 阶段范围，不改变任何阶段状态与原有验收结论。
+
+### EXP-013 续 3：仓库可见性复核（2026-10-16 Asia/Shanghai）
+
+对 https://github.com/oceancat91/DB-Lab 做匿名只读访问复核：未认证抓取返回 HTTP 404（GitHub 对私有仓库返回未找到页），据此判断仓库为私有，课程原始 Word、完整报告与全部证据不会公开可见。该结论只依据匿名可读性，未登录 GitHub 设置页确认，故记录为“匿名观察到的可见性是私有”，不作为账号侧配置的证明。
+
+## EXP-014 第一阶段对照指导文件全量复核（2026-10-16 Asia/Shanghai，事前）
+
+用户要求以 `大作业一第一阶段.docx` 为准，对 Lab4 第一阶段做全量检查。本次为只读复核，不改业务代码、不改测试断言、不改阶段状态、不重新打包。需求编号沿用 docs/REQUIREMENTS.md 的 R01–R14，并逐条回到 Word 原文核对，不以前一阶段的“已通过”结论代替本次证据。
+
+检查清单（按 Word 章节建立）：三、技术要求（MongoDB、无关系库、无现成问卷框架、全部业务数据在 MongoDB）；四、MongoDB 设计要求（集合拆分、冗余取舍、逻辑不写死，以及须说明的“为什么这样设计/为什么不用关系数据库/为什么适合 MongoDB”）；五、AI 编程要求（5.1 日志需含工具、提示词、得到的代码、是否修改、修改内容；5.2 报告需总结 AI 帮助、AI 错误、本人修改与本人设计）；六、测试要求（创建问卷、添加题目、跳转逻辑、校验、提交、统计六类，且写清步骤）；七、提交内容四类（代码含后端/schema/配置说明且可运行；文档含系统说明、数据库设计、API、关键逻辑；测试用例含步骤/输入/输出/结果；报告含目标、系统设计、MongoDB 设计、跳转设计、校验设计、AI 使用过程、测试结果、问题与解决）；八、评分标准五个维度；初始用户需求六节（账号、问卷管理、三类题型与校验、跳转、填写与提交、统计）。
+
+验证方式：1) 本人重跑门禁：scripts/check_workflow.py、全量 pytest（含 --evidence 输出）、scripts/check_schema.py；2) 由只读子 agent 分四路核对代码、文档与既有证据，每条结论必须给出文件与行号或用例编号，无法核实的一律标未验证；3) 本人抽查子 agent 的关键结论，不采信无证据的断言；4) 结论与缺口清单落盘到 results/stage1-audit/，再更新实验日志与 AI 使用记录。禁止把 Word 里的第二阶段要求计入第一阶段范围，也禁止把规划写成已完成。
+
+EXP-014实际结果：复核以“只读核对 + 门禁重跑 + 真实 HTTP 端到端”三条独立线路完成，未改业务代码、未改测试断言、未改阶段状态。环境前置如实记录：复核开始时 mongod 进程已不存在（.runtime/mongod.log 末条为 20:00:14 例行 checkpoint，无正常关闭记录），应用进程亦已退出，因此首次全量测试为 144 passed / 101 errors，全部 error 在 tests/conftest.py:145 建库连接处抛出，属环境未启动而非回归；失败证据原样保留为 results/stage1-audit/pytest-run-20261016T210747028946.json（exit_code=1）。用项目脚本 .\scripts\start_mongo.ps1 重启后副本集 lab4rs 恢复可写主节点、既有库未丢失，同一套测试重跑得 245 passed（results/stage1-audit/pytest-run.json，exit 0）；scripts/check_workflow.py 为 ERROR=0/WARN=0（gate-workflow.txt）；scripts/check_schema.py 为 PASS、43 项 0 失败、清理 PASS（schema-check.json）。
+
+本人独立构造的真实 HTTP 端到端复核（隔离实例 127.0.0.1:8005 + 隔离库 lab4_audit_smoke_6b1d9f2a4c7e，脚本 .runtime/audit-stage1/e2e_http.py）共 67 步全部通过，覆盖：注册/登录/未登录 401、越权读详情与统计明细 404、创建与四类题型配置、非法跳转目标被拒 422、发布取分享码、单选跳转 q1→q4 与数字跳转 q3→q5（路径恰为 ["q1","q4"]）、必答空答与多选超限与数字非整数与超范围均 422 且返回题目号、伪造路径作答 422、提交回执与同 request_id 重放同回执、允许重复时第二次提交生成新回执且提交数 2 去重人数 1、匿名明细不含账号、截止后读写 410、关闭后 410 且状态 closed、已发布问卷按草稿修改 409；证据 results/stage1-audit/http-e2e.json。该库在核对后按精确库名删除。
+
+只读子 agent 三路完成、第四路（跳转/填写/统计）在其范围内已被上述端到端复核以实测覆盖，故不再等待。合并结论：技术约束（MongoDB、无关系库、无现成问卷框架）、MongoDB 设计实现（5 集合 strict/error 校验、9 索引实测存在且与代码一致、事务与并发证据）、后端逻辑、测试覆盖、四类交付物均满足；发现 12 项缺口，其中最需要处理的是 P197 的功能界面落差——Web「新建问卷」对话框只有标题与说明，创建请求把 allow_anonymous 硬编码为 true（survey_app/static/app.js:982，templates/index.html:46），而服务端、API 测试与编辑页均支持该字段；其余为文档与记录类缺口（本人贡献留白、索引-查询对照表与样例文档不足、AI-006–AI-011 日志字段不全、SESSION_TTL_SECONDS 未在 README/.env.example 说明、schema 演进方案缺失、测试报告未反映改版后复跑、README 两处示例输出文件当前不存在、AI/EXP 编号跳号、残留非业务库）。完整清单、逐条证据与未验证项见 results/stage1-audit/report.md。抽查纠正一处：子 agent 关于“发布后 draft 被移除”的说法经 service.py:99-101 的 $unset 核实成立；子 agent 关于配置变量遗漏的说法经 README/.env.example 0 处提及核实成立。本次不改动任何受验代码，也不因本次复核改写既有阶段结论。
+
+EXP-014 补充（第四路与界面证据）：第四路只读核对（跳转 P254–P263、填写 P265–P276、统计 P278–P292）后完成，结论为满足 24 条、部分满足 1 条（P272「每次填写都应该被保存」被实现为「每次成功提交保存」，未完成填写不落库，页面明示，属项目决策 D03 且 DECISIONS.md:53 自认未获教师确认）。该路提出的“旧版浏览器证据基于 app.js 0FD13105…、当前为 85FF0B19…，缺当前版本的服务端校验错误界面截图”经本人补拍闭环：在隔离实例（8005，库 lab4_audit_error_9d3c5a1f7b2e，核对后已删除）上用改版后界面复现多选超限，页面顶部反馈显示「多选答案超过最多选择数量（题目：q2）」，题内就地显示同一提示，已勾选的 4 项保留、停留原题、浏览器无脚本错误，证据 results/stage1-audit/browser-validation-error.png。该路提出的其余风险已并入报告缺口清单（统计/明细响应无分页上限、前端无自动化用例、优先级唯一仅服务端校验、二期需重定义单题统计口径）。
+
+EXP-014 推送状态（如实记录）：本次复核结果已提交到本地 main（提交信息“Audit stage 1 against the assignment brief and record the findings”），但推送 GitHub 时网络中断——DNS 可解析 github.com（20.205.243.166），TCP 443 不可达，未配置代理，连续三次重试均以连接失败退出（exit 128），远端 main 仍为 d229203。该失败与代码或凭据无关，属本机到 GitHub 的网络可达性问题；待网络恢复后用 `git push origin main` 重试即可，本地提交与交付包不受影响。交付包已按最新工作树重建（dist/Lab4-stage1.zip，摘要见同目录 .zip.sha256），桌面副本同步刷新。

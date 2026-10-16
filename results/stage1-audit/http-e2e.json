@@ -1,0 +1,346 @@
+{
+  "created_at": "2026-10-16T21:08:49.774652+08:00",
+  "instance": "http://127.0.0.1:8005",
+  "database": "lab4_audit_smoke_6b1d9f2a4c7e",
+  "steps_total": 67,
+  "steps_passed": 67,
+  "steps_failed": 0,
+  "failures": [],
+  "steps": [
+    {
+      "step": "POST /api/auth/register",
+      "pass": true,
+      "detail": "HTTP 201（期望 201）"
+    },
+    {
+      "step": "POST /api/auth/login",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "POST /api/auth/register",
+      "pass": true,
+      "detail": "HTTP 201（期望 201）"
+    },
+    {
+      "step": "POST /api/auth/login",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "GET /api/surveys",
+      "pass": true,
+      "detail": "HTTP 401（期望 401）"
+    },
+    {
+      "step": "GET /api/auth/me",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "POST /api/surveys",
+      "pass": true,
+      "detail": "HTTP 201（期望 201）"
+    },
+    {
+      "step": "PUT /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "题目数量为 5",
+      "pass": true,
+      "detail": "实际 5"
+    },
+    {
+      "step": "规则数量为 2",
+      "pass": true,
+      "detail": "实际 2"
+    },
+    {
+      "step": "PUT /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086",
+      "pass": true,
+      "detail": "HTTP 422（期望 422）"
+    },
+    {
+      "step": "POST /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086/publish",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "发布后有分享码",
+      "pass": true,
+      "detail": "share_code=I8j_r1K9dhE9CJaM"
+    },
+    {
+      "step": "GET /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086",
+      "pass": true,
+      "detail": "HTTP 404（期望 404）"
+    },
+    {
+      "step": "GET /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086/statistics",
+      "pass": true,
+      "detail": "HTTP 404（期望 404）"
+    },
+    {
+      "step": "GET /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086/responses",
+      "pass": true,
+      "detail": "HTTP 404（期望 404）"
+    },
+    {
+      "step": "GET /api/fill/I8j_r1K9dhE9CJaM",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/next",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "首题是 q1",
+      "pass": true,
+      "detail": "实际 q1"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/next",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "单选跳转 q1→q4",
+      "pass": true,
+      "detail": "实际 q4"
+    },
+    {
+      "step": "路径只含 q1、q4",
+      "pass": true,
+      "detail": "实际 ['q1', 'q4']"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/next",
+      "pass": true,
+      "detail": "HTTP 422（期望 422）"
+    },
+    {
+      "step": "必答空答被拒并指出题目",
+      "pass": true,
+      "detail": "question_id=q1"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/next",
+      "pass": true,
+      "detail": "HTTP 422（期望 422）"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/next",
+      "pass": true,
+      "detail": "HTTP 422（期望 422）"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/next",
+      "pass": true,
+      "detail": "HTTP 422（期望 422）"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/next",
+      "pass": true,
+      "detail": "HTTP 422（期望 422）"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/next",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "数字跳转 q3→q5",
+      "pass": true,
+      "detail": "实际 q5"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/next",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "路径完成后 complete 为真",
+      "pass": true,
+      "detail": "complete=True"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/submit",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "提交返回回执编号",
+      "pass": true,
+      "detail": "receipt=67a00f14-23cc-4023-b330-d939143004de"
+    },
+    {
+      "step": "首次提交 replayed 为假",
+      "pass": true,
+      "detail": "replayed=False"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/submit",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "重试返回同一回执且标记重放",
+      "pass": true,
+      "detail": "id相同=True replayed=True"
+    },
+    {
+      "step": "GET /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086/statistics",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "整卷统计成功提交数为 1",
+      "pass": true,
+      "detail": "submissions=1"
+    },
+    {
+      "step": "整卷统计去重人数为 1",
+      "pass": true,
+      "detail": "respondents=1"
+    },
+    {
+      "step": "单选题给出每选项人数",
+      "pass": true,
+      "detail": "q1 options=[{'id': 'o1', 'label': '笔记本电脑', 'count': 1, 'people': 1}, {'id': 'o2', 'label': '台式机', 'count': 0, 'people': 0}, {'id': 'o3', 'label': '平板电脑', 'count': 0, 'people': 0}, {'id': 'o4', 'label': '手机', 'count': 0, 'people': 0}]"
+    },
+    {
+      "step": "数字题给出平均值",
+      "pass": true,
+      "detail": "q3 mean=30.0"
+    },
+    {
+      "step": "文本题返回填写内容",
+      "pass": true,
+      "detail": "q5 values=['希望期末项目早一点公布题目。']"
+    },
+    {
+      "step": "GET /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086/statistics/q3",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "单题统计可用",
+      "pass": true,
+      "detail": "id=q3"
+    },
+    {
+      "step": "GET /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086/responses",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "明细返回 1 份答卷",
+      "pass": true,
+      "detail": "len=1"
+    },
+    {
+      "step": "非匿名答卷显示填写者账号",
+      "pass": true,
+      "detail": "username=audit_filler_210848"
+    },
+    {
+      "step": "POST /api/surveys",
+      "pass": true,
+      "detail": "HTTP 201（期望 201）"
+    },
+    {
+      "step": "PUT /api/surveys/23019a49-fed7-4e94-a3c2-81b5c74ac193",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "POST /api/surveys/23019a49-fed7-4e94-a3c2-81b5c74ac193/publish",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "GET /api/fill/19HOW-E_YYCqGHxU",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "POST /api/fill/19HOW-E_YYCqGHxU/submit",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "GET /api/surveys/23019a49-fed7-4e94-a3c2-81b5c74ac193/responses",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "匿名答卷标记匿名且不含账号",
+      "pass": true,
+      "detail": "anonymous=True has_username=False"
+    },
+    {
+      "step": "POST /api/fill/I8j_r1K9dhE9CJaM/submit",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "允许重复时第二次提交生成新回执",
+      "pass": true,
+      "detail": "first=67a00f14-23cc-4023-b330-d939143004de second=e6be2b92-5a27-4577-bc10-eb5a093d617b"
+    },
+    {
+      "step": "GET /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086/statistics",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "整卷统计提交数变为 2、去重人数仍为 1",
+      "pass": true,
+      "detail": "submissions=2 respondents=1"
+    },
+    {
+      "step": "PATCH /api/surveys/23019a49-fed7-4e94-a3c2-81b5c74ac193/deadline",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "GET /api/fill/19HOW-E_YYCqGHxU",
+      "pass": true,
+      "detail": "HTTP 410（期望 410）"
+    },
+    {
+      "step": "POST /api/fill/19HOW-E_YYCqGHxU/submit",
+      "pass": true,
+      "detail": "HTTP 410（期望 410）"
+    },
+    {
+      "step": "POST /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086/close",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "GET /api/fill/I8j_r1K9dhE9CJaM",
+      "pass": true,
+      "detail": "HTTP 410（期望 410）"
+    },
+    {
+      "step": "GET /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086",
+      "pass": true,
+      "detail": "HTTP 200（期望 200）"
+    },
+    {
+      "step": "关闭后状态为 closed",
+      "pass": true,
+      "detail": "status=closed"
+    },
+    {
+      "step": "PUT /api/surveys/c0b0393c-f3bf-476b-805b-fd34041cf086",
+      "pass": true,
+      "detail": "HTTP 409（期望 409）"
+    }
+  ]
+}
