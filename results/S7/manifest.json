@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at": "2026-10-16T21:39:43.820242+08:00",
+  "created_at": "2026-10-16T21:49:38.691667+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
   "self_exclusions": [
@@ -780,6 +780,11 @@
       "path": "results/stage1-audit/selector-check-after-fixes.txt",
       "bytes": 140,
       "sha256": "690887d902d251170914e5cfbe5ca2135ef22c00755c037797b434a2e524d6ef"
+    },
+    {
+      "path": "results/stage1-audit/word-ai-section.txt",
+      "bytes": 1454,
+      "sha256": "588954caf20c692bc9d0d1ecb0f229c12fd316601fc32e9079633f15897da5fe"
     },
     {
       "path": "results/ui-refresh/after/01-login.png",

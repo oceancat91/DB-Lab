@@ -1,0 +1,30 @@
+[100] style=Normal       list=False 五、AI 编程要求（重要）
+[101] style=Normal       list=False 本项目鼓励使用 AI。如果不借助AI，工作量将大大增加。
+[102] style=Normal       list=False 但必须记录 AI 使用过程。
+[103] style=Normal       list=False 必须提交：
+[104] style=Normal       list=False 5.1 AI 使用日志
+[105] style=Normal       list=False 需要说明：
+[106] style=Normal       list=True  使用了什么工具
+[107] style=Normal       list=True  使用了什么提示词
+[108] style=Normal       list=True  得到了什么代码
+[109] style=Normal       list=True  是否修改
+[110] style=Normal       list=True  修改了什么
+[111] style=Normal       list=False 示例：
+[112] style=Normal       list=False Prompt:
+请帮我设计MongoDB schema用于问卷系统
+
+Result:
+得到用户表结构
+
+修改：
+增加validation字段
+[113] style=Normal       list=False 必须真实记录。
+[114] style=Normal       list=False 
+[115] style=Normal       list=False 5.2 AI 使用说明
+[116] style=Normal       list=False 需要在最终报告中总结：
+[117] style=Normal       list=True  AI帮了什么
+[118] style=Normal       list=True  AI做错了什么
+[119] style=Normal       list=True  自己改了什么
+[120] style=Normal       list=True  自己设计了什么
+[121] style=Normal       list=False 评分时会看。
+[122] style=Normal       list=False 
