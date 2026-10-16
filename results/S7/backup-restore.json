@@ -1,0 +1,169 @@
+{
+  "status": "PASS",
+  "started_at": "2026-10-16T13:48:47.874805+08:00",
+  "timezone": "Asia/Shanghai",
+  "stage": "S7",
+  "requirements": [
+    "R13",
+    "DOC-02",
+    "TC-E02"
+  ],
+  "command": "python scripts/backup_restore_demo.py",
+  "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
+  "seed": 20261015,
+  "schema_version": 1,
+  "published_version": 1,
+  "input": "docs/fixtures/statistics.json",
+  "databases": {
+    "source": "lab4_test_backup_380b989ad56d4b0cb7f196ead4da2e1b",
+    "restored": "lab4_test_restore_380b989ad56d4b0cb7f196ead4da2e1b"
+  },
+  "backup_directory": ".runtime/backup-demo/380b989ad56d4b0cb7f196ead4da2e1b",
+  "backup_format": "BSON document streams, one file per collection; transaction snapshot",
+  "cleanup": {
+    "lab4_test_backup_380b989ad56d4b0cb7f196ead4da2e1b": {
+      "status": "PASS",
+      "counts_before_drop": {
+        "users": 3,
+        "sessions": 0,
+        "surveys": 1,
+        "survey_versions": 1,
+        "responses": 3
+      }
+    },
+    "lab4_test_restore_380b989ad56d4b0cb7f196ead4da2e1b": {
+      "status": "PASS",
+      "counts_before_drop": {
+        "users": 3,
+        "sessions": 0,
+        "surveys": 1,
+        "survey_versions": 1,
+        "responses": 3
+      }
+    }
+  },
+  "checks": {
+    "source_service_submissions_and_statistics": "PASS",
+    "five_collection_snapshot_export": "PASS",
+    "all_bson_documents_equal": {
+      "users": true,
+      "sessions": true,
+      "surveys": true,
+      "survey_versions": true,
+      "responses": true
+    },
+    "strict_schema_and_indexes_equal": "PASS",
+    "all_document_schema_versions_one": true,
+    "whole_and_six_single_question_statistics": "PASS",
+    "three_original_receipts_replayed_without_writes": "PASS",
+    "three_restored_account_passwords_verified": "PASS"
+  },
+  "scope": "Synthetic quiescent backup; empty sessions collection does not prove session recovery.",
+  "source_sha256": {
+    "survey_app/__init__.py": "531d81b3cd3ee8dd145a7c6c6a04a55aaf9a633f2ada655ca6b92cef2f71db4d",
+    "survey_app/config.py": "342b03246efdf5c946a1744eaedd5090c5716284dbe8b4d9485879307b80a449",
+    "survey_app/db.py": "0d51f67fa903fb9ca4605b8e9de030888ae4d273cbca3ce437f1a001abcdad6b",
+    "survey_app/errors.py": "85076d718ce7694f3f0d8dff90d12206f67e4145d10da14168b40abcc1b07357",
+    "survey_app/main.py": "c35f234d56b4acc0e5a9b9b7e39f9babc94917b5bece92732d9edcd113f7ece9",
+    "survey_app/models.py": "81cea0c6e39687a6655e23b00c9dcf49d9093444b1b07ec6f9b8b07883a2dc42",
+    "survey_app/questions.py": "c05c5c299dd650c26b2305f43009f02283acb1579adb6880abd8198f54d308ef",
+    "survey_app/security.py": "fd2028e334933944184f85bfc6ac6eca2b3d18ca139d4b4d90f00a8283c95ebc",
+    "survey_app/service.py": "b93d4724afc806ead612611598e03ff58010a1dd6b80ef4af7fd31445b159bd4",
+    "survey_app/statistics.py": "f3ae350e5db2c4f14991f9d8f3c6f30b54d8a8349cf6d14cb9a06a07678fbf19",
+    "survey_app/submissions.py": "79d220010278a2bcdc548f92f7dc8f6ffe820d66de7fb13e09ea80df5508a595",
+    "scripts/backup_restore_demo.py": "614fcc90a7ea0eccb1f2ff19a603871020c3b7f152e1a613ff06a4b7f1235f9a",
+    "docs/fixtures/statistics.json": "1ff8db37f98135c6dd383894d230b60db34aa28b17a9846224361f73ffe76a85",
+    "environment.yml": "f79474d761bfa0ff298f00e6ff8c2d0f9501580e4c056ce6b88dda49de3a13f9"
+  },
+  "step": "finished",
+  "environment": {
+    "python": "3.11.17",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "pymongo": "4.19.0",
+    "mongodb": "6.0.29",
+    "replica_set": "lab4rs",
+    "writable_primary": true,
+    "data_directory": ".runtime/mongo",
+    "port": 27084
+  },
+  "expected": {
+    "schema_version": 1,
+    "published_version": 1,
+    "collections": {
+      "users": 3,
+      "sessions": 0,
+      "surveys": 1,
+      "survey_versions": 1,
+      "responses": 3
+    },
+    "submissions": 3,
+    "respondents": 2,
+    "single": {
+      "A": {
+        "count": 2,
+        "people": 1
+      },
+      "B": {
+        "count": 1,
+        "people": 1
+      }
+    },
+    "multi": {
+      "X": {
+        "count": 2,
+        "people": 1
+      },
+      "Y": {
+        "count": 2,
+        "people": 2
+      }
+    },
+    "text_values": [
+      "甲",
+      "乙",
+      "丙"
+    ],
+    "number_values": [
+      10,
+      20
+    ],
+    "number_mean": 15,
+    "number_answered_submissions": 2,
+    "number_answered_people": 2,
+    "end_answered_submissions": 0,
+    "third_path": [
+      "single",
+      "multi",
+      "text",
+      "gate",
+      "end"
+    ]
+  },
+  "actual": {
+    "collections": {
+      "users": 3,
+      "sessions": 0,
+      "surveys": 1,
+      "survey_versions": 1,
+      "responses": 3
+    },
+    "submissions": 3,
+    "respondents": 2,
+    "number_mean": 15.0,
+    "number_values": [
+      10,
+      20
+    ],
+    "legitimate_skipped_third_path": [
+      "single",
+      "multi",
+      "text",
+      "gate",
+      "end"
+    ],
+    "replayed_original_receipts": 3,
+    "sessions_recovery": "NOT_COVERED_EMPTY_COLLECTION"
+  },
+  "finished_at": "2026-10-16T13:48:49.517969+08:00",
+  "exit_code": 0
+}

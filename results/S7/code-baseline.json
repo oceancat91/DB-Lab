@@ -1,0 +1,135 @@
+{
+  "status": "PASS",
+  "application_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
+  "schema_version": 1,
+  "published_version": 1,
+  "files": [
+    {
+      "path": "environment.yml",
+      "working_sha256": "f79474d761bfa0ff298f00e6ff8c2d0f9501580e4c056ce6b88dda49de3a13f9",
+      "git_lf_sha256": "732700fedf030332bdb31e7acd06e8c6c6b9b33d33971da5d6b10c995c31467a",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "pytest.ini",
+      "working_sha256": "d1c882395311f60d983895b72a26257c1dca6e99d21e59b652c6be99b236fdb8",
+      "git_lf_sha256": "d1c882395311f60d983895b72a26257c1dca6e99d21e59b652c6be99b236fdb8",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/__init__.py",
+      "working_sha256": "531d81b3cd3ee8dd145a7c6c6a04a55aaf9a633f2ada655ca6b92cef2f71db4d",
+      "git_lf_sha256": "531d81b3cd3ee8dd145a7c6c6a04a55aaf9a633f2ada655ca6b92cef2f71db4d",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/config.py",
+      "working_sha256": "342b03246efdf5c946a1744eaedd5090c5716284dbe8b4d9485879307b80a449",
+      "git_lf_sha256": "342b03246efdf5c946a1744eaedd5090c5716284dbe8b4d9485879307b80a449",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/db.py",
+      "working_sha256": "0d51f67fa903fb9ca4605b8e9de030888ae4d273cbca3ce437f1a001abcdad6b",
+      "git_lf_sha256": "0d51f67fa903fb9ca4605b8e9de030888ae4d273cbca3ce437f1a001abcdad6b",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/errors.py",
+      "working_sha256": "85076d718ce7694f3f0d8dff90d12206f67e4145d10da14168b40abcc1b07357",
+      "git_lf_sha256": "85076d718ce7694f3f0d8dff90d12206f67e4145d10da14168b40abcc1b07357",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/main.py",
+      "working_sha256": "c35f234d56b4acc0e5a9b9b7e39f9babc94917b5bece92732d9edcd113f7ece9",
+      "git_lf_sha256": "c35f234d56b4acc0e5a9b9b7e39f9babc94917b5bece92732d9edcd113f7ece9",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/models.py",
+      "working_sha256": "81cea0c6e39687a6655e23b00c9dcf49d9093444b1b07ec6f9b8b07883a2dc42",
+      "git_lf_sha256": "81cea0c6e39687a6655e23b00c9dcf49d9093444b1b07ec6f9b8b07883a2dc42",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/questions.py",
+      "working_sha256": "c05c5c299dd650c26b2305f43009f02283acb1579adb6880abd8198f54d308ef",
+      "git_lf_sha256": "c05c5c299dd650c26b2305f43009f02283acb1579adb6880abd8198f54d308ef",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/security.py",
+      "working_sha256": "fd2028e334933944184f85bfc6ac6eca2b3d18ca139d4b4d90f00a8283c95ebc",
+      "git_lf_sha256": "fd2028e334933944184f85bfc6ac6eca2b3d18ca139d4b4d90f00a8283c95ebc",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/service.py",
+      "working_sha256": "b93d4724afc806ead612611598e03ff58010a1dd6b80ef4af7fd31445b159bd4",
+      "git_lf_sha256": "b93d4724afc806ead612611598e03ff58010a1dd6b80ef4af7fd31445b159bd4",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/static/app.css",
+      "working_sha256": "aad2e79da305e5d8678136faad76371efb28409fb3f7e5259ab8e1750f887ea2",
+      "git_lf_sha256": "aad2e79da305e5d8678136faad76371efb28409fb3f7e5259ab8e1750f887ea2",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/static/app.js",
+      "working_sha256": "0fd13105f6bc42ea306402fabf2089f655db073c6f7a44a5c0adebbbb77d72b7",
+      "git_lf_sha256": "0fd13105f6bc42ea306402fabf2089f655db073c6f7a44a5c0adebbbb77d72b7",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/statistics.py",
+      "working_sha256": "f3ae350e5db2c4f14991f9d8f3c6f30b54d8a8349cf6d14cb9a06a07678fbf19",
+      "git_lf_sha256": "f3ae350e5db2c4f14991f9d8f3c6f30b54d8a8349cf6d14cb9a06a07678fbf19",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/submissions.py",
+      "working_sha256": "79d220010278a2bcdc548f92f7dc8f6ffe820d66de7fb13e09ea80df5508a595",
+      "git_lf_sha256": "79d220010278a2bcdc548f92f7dc8f6ffe820d66de7fb13e09ea80df5508a595",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "survey_app/templates/index.html",
+      "working_sha256": "f60f4762b6af3ff2525bdc93d423b9dd111544ef2f21e4af98e305e0b7352821",
+      "git_lf_sha256": "f60f4762b6af3ff2525bdc93d423b9dd111544ef2f21e4af98e305e0b7352821",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "tests/conftest.py",
+      "working_sha256": "35a138a6b241df29c30571c61a02f4b4ebfed59eb5e8259912b3e5329dddebb5",
+      "git_lf_sha256": "35a138a6b241df29c30571c61a02f4b4ebfed59eb5e8259912b3e5329dddebb5",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "tests/test_admin.py",
+      "working_sha256": "513db43a96ef94f9e18dbc515c012c275b449cc5609cd21dba6dbf111037f129",
+      "git_lf_sha256": "513db43a96ef94f9e18dbc515c012c275b449cc5609cd21dba6dbf111037f129",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "tests/test_rules.py",
+      "working_sha256": "2e60531f0c8d79c8a8e057ef25c1a4902643e19f23ed5005ff5579b02104bdbc",
+      "git_lf_sha256": "2e60531f0c8d79c8a8e057ef25c1a4902643e19f23ed5005ff5579b02104bdbc",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "tests/test_statistics.py",
+      "working_sha256": "ef693c3fb92974e1beac395742f05c0ba43744721ba45363bde8c52cf1b65550",
+      "git_lf_sha256": "ef693c3fb92974e1beac395742f05c0ba43744721ba45363bde8c52cf1b65550",
+      "matches_after_crlf_normalization": true
+    },
+    {
+      "path": "tests/test_submissions.py",
+      "working_sha256": "4404761ba9252e48c71a326088783e40a2114affcca6b2dbbb238a9724c94a29",
+      "git_lf_sha256": "4404761ba9252e48c71a326088783e40a2114affcca6b2dbbb238a9724c94a29",
+      "matches_after_crlf_normalization": true
+    }
+  ],
+  "note": "Application/tests/dependency definition unchanged since the tested S5 commit; docs and S7-only utilities have separate manifest hashes. Working CRLF and Git LF are explicitly distinguished."
+}

@@ -145,3 +145,9 @@ S6收尾：26/26组PASS；新conda、干净归档副本、独立MongoDB与HTTP�
 ## EXP-011 S7 第一阶段交付与基线
 
 2026-10-15 Asia/Shanghai，前置S6已通过；事前登记。范围R01/R12/R13/R14、DOC01/DOC02。计划新增SYSTEM、REPORT_STAGE1、BASELINE_STAGE1和合成统计夹具，补备份恢复方法并在新UUID合成测试库演示；保留受验业务代码e7255c3及文件摘要。根agent核对README/需求状态、四类交付物、文件清单及打包排除.env/.runtime/.git/缓存/旧嵌套results/Lab4；实际解压校验哈希和秘密不入包。S7门禁全部满足后才标complete。
+
+### EXP-011 续作：2026-10-16 Asia/Shanghai
+
+用户提示“继续”。中断前报告与SYSTEM已实际落盘，但恢复演示和交付包未完成；恢复时不把旧计划当成功。完整重读规范/状态/决策与测试计划，当前S7 active。首个流程检查因README已引用但BASELINE尚未落盘报1ERROR（results/S7/workflow-resume.txt）；先补真实基线说明并消除该结构错误，再运行恢复演示。根继续核验四类材料、21业务基线摘要、ZIP清单/秘密排除和真实解压结构检查，保留所有失败历史；除新增交付工具外业务代码不变。
+
+S7收尾实测：2026-10-16，backup-restore.json首轮PASS exit0；静止合成源snapshot五集合BSON恢复，文档/Schema/index相等，3份2人均值15、三原回执重放无写入，双精确UUID库清理PASS，sessions空不覆盖。报告与Word四类/九项审阅通过。归档预检156文件真实解压、清单SHA/字节全部匹配、当前文档链接0错、解压后workflow0，业务21文件未变；见unpacked-preflight.json。S7全部门禁据实通过并将current_stage设为complete；最后状态元数据变更后用同一工具重建和复核最终ZIP，最终摘要随包单独保存。原结构1ERROR与其修复0ERROR输出均保留，无未解释WARN。

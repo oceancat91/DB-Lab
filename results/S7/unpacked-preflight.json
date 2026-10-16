@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "time": "2026-10-16T13:51:01.242032+08:00",
+  "scope": "Preflight archive while S7 active; final metadata will be repackaged and verified again.",
+  "archive_sha256": "8060dfb5838b1cb23a8f7ffcead7aa8421af168d4659b565835f6c29e0d776de",
+  "zip_files": 156,
+  "manifest_files": 154,
+  "actual_extraction": ".runtime/submission-preflight-f3859952b388446fa394a899cb5ce9fe",
+  "all_manifest_hashes_match": true,
+  "unpacked_workflow_exit_code": 0,
+  "all_current_document_links_errors": [],
+  "business_source_unchanged": true,
+  "excluded_runtime_env_git": true,
+  "exit_code": 0
+}

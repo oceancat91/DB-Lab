@@ -1,0 +1,51 @@
+{
+  "status": "PASS",
+  "time": "2026-10-16T13:52:04.134468+08:00",
+  "reviewer": "Codex root; internal AI review is separate evidence, no student contribution inferred",
+  "source_requirement": "Word 七、提交内容 and WORKFLOW G7.1-G7.3",
+  "four_classes": {
+    "code_and_configuration": [
+      "survey_app/main.py",
+      "survey_app/db.py",
+      "environment.yml",
+      ".env.example",
+      "README.md"
+    ],
+    "design_documents": [
+      "docs/SYSTEM.md",
+      "docs/DATABASE.md",
+      "docs/API.md",
+      "docs/LOGIC.md"
+    ],
+    "test_cases_and_results": [
+      "docs/TEST_PLAN.md",
+      "docs/TEST_REPORT.md",
+      "results/S5/full-tests.json",
+      "results/acceptance/reproduction-final.json"
+    ],
+    "complete_report_and_ai": [
+      "docs/REPORT_STAGE1.md",
+      "docs/AI_USAGE.md",
+      "docs/EXPERIMENT_LOG.md"
+    ]
+  },
+  "report_required_topics": [
+    "目标",
+    "系统设计",
+    "MongoDB设计",
+    "跳转设计",
+    "校验设计",
+    "AI过程",
+    "测试结果",
+    "问题",
+    "解决方法"
+  ],
+  "evidence": [
+    "results/S7/delivery-review.md",
+    "results/S7/backup-restore.json",
+    "results/S7/code-baseline.json",
+    "results/S7/unpacked-preflight.json"
+  ],
+  "student_personal_work": "Not supplied; explicitly not fabricated",
+  "exit_code": 0
+}

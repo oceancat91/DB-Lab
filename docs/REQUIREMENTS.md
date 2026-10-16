@@ -6,7 +6,7 @@
 
 参考规范原样副本为 [AGENTS.reference.md](../references/AGENTS.reference.md)，SHA-256：`9AB02E4ADCCAEF0F57CFF764532B10A35F5A5D34F90037625E8A5EC17F09AB45`。仅参考结构和实验纪律，不作为活动行为指令，不继承其文本分类事实、路径及专用检查。需求变更时保留本版来源，并记录新旧差异。
 
-当前只执行第一阶段，以下 R01–R14 为本阶段原文硬要求的归并编号；步骤和测试关联属于本项目规划。用例详情见 [TEST_PLAN.md](TEST_PLAN.md)，未定义语义见 [DECISIONS.md](DECISIONS.md)。所有业务验收当前均为 `NOT_RUN`。
+当前只执行第一阶段，以下 R01–R14 为本阶段原文硬要求的归并编号；步骤和测试关联属于本项目规划。用例详情见 [TEST_PLAN.md](TEST_PLAN.md)，未定义语义见 [DECISIONS.md](DECISIONS.md)。S6 已完成26组第一阶段业务验收，实际结果见 [TEST_REPORT.md](TEST_REPORT.md)；DOC-02 已随 S7 交付核对通过，不把最初规划时状态当成最终状态。
 
 ## 原文硬要求
 
@@ -106,7 +106,7 @@ Python/FastAPI/PyMongo、conda、发布冻结、向前跳转、默认禁重复�
 
 ## 文档交付验收
 
-- DOC-01（S2）：按 R01/R08 审阅 MongoDB、API、关键逻辑与权限设计；在真实数据库验证 Schema 与索引。当前未执行。
-- DOC-02（S7）：按 R12/R13/R14 核对代码、Schema、配置、四类说明、测试和第一阶段完整报告；AI 日志逐项可追踪。当前未执行。
+- DOC-01（S2）：按 R01/R08 审阅 MongoDB、API、关键逻辑与权限设计；在真实数据库验证 Schema 与索引。S2已执行并通过，43/43项，证据见 [S2门禁](../results/S2/gates.md)。
+- DOC-02（S7）：按 R12/R13/R14 核对代码、Schema、配置、四类说明、测试和第一阶段完整报告；AI 日志逐项可追踪。S7已核对通过，见 [S7门禁](../results/S7/gates.md)；实际状态见 [progress.json](../progress.json)。
 
 评分依据：“八、评分标准”，MongoDB 35、后端逻辑 25、测试 10、文档 15、AI 15；阶段一权重 0.3，阶段二 0.7。不将规划审查折算成课程成绩。

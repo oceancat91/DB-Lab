@@ -1,0 +1,49 @@
+{
+  "fixture_version": 1,
+  "source": "tests/test_statistics.py::_fixture_questions and _three_responses",
+  "scope": "Synthetic stage-one recovery fixture; no accounts, sessions or private hashes.",
+  "seed": 20261015,
+  "survey": {
+    "title": "统计验收合成问卷",
+    "description": "仅用于隔离测试数据库",
+    "allow_anonymous": true,
+    "allow_repeat": true,
+    "closes_at": null
+  },
+  "questions": [
+    {"id": "single", "type": "single", "title": "单选", "required": true,
+     "options": [{"id": "A", "label": "甲选项"}, {"id": "B", "label": "乙选项"}]},
+    {"id": "multi", "type": "multi", "title": "多选", "required": true,
+     "options": [{"id": "X", "label": "X选项"}, {"id": "Y", "label": "Y选项"}],
+     "validation": {"min_choices": 1, "max_choices": 2}},
+    {"id": "text", "type": "text", "title": "文字", "required": true,
+     "validation": {"min_length": 1, "max_length": 100}},
+    {"id": "gate", "type": "single", "title": "是否填写数字", "required": true,
+     "options": [{"id": "answer", "label": "填写"}, {"id": "skip", "label": "跳过"}]},
+    {"id": "number", "type": "number", "title": "数字", "required": true,
+     "validation": {"min_value": 0, "max_value": 100, "integer_only": true}},
+    {"id": "end", "type": "text", "title": "可选结语", "required": false}
+  ],
+  "rules": [{"source": "gate", "op": "eq", "value": "skip", "target": "end", "priority": 10}],
+  "submissions": [
+    {"respondent": "first", "answers": {"single": "A", "multi": ["X", "Y"], "text": "甲", "gate": "answer", "number": 10, "end": null}},
+    {"respondent": "second", "answers": {"single": "B", "multi": ["Y"], "text": "乙", "gate": "answer", "number": 20, "end": null}},
+    {"respondent": "first", "answers": {"single": "A", "multi": ["X"], "text": "丙", "gate": "skip", "end": null}}
+  ],
+  "expected": {
+    "schema_version": 1,
+    "published_version": 1,
+    "collections": {"users": 3, "sessions": 0, "surveys": 1, "survey_versions": 1, "responses": 3},
+    "submissions": 3,
+    "respondents": 2,
+    "single": {"A": {"count": 2, "people": 1}, "B": {"count": 1, "people": 1}},
+    "multi": {"X": {"count": 2, "people": 1}, "Y": {"count": 2, "people": 2}},
+    "text_values": ["甲", "乙", "丙"],
+    "number_values": [10, 20],
+    "number_mean": 15,
+    "number_answered_submissions": 2,
+    "number_answered_people": 2,
+    "end_answered_submissions": 0,
+    "third_path": ["single", "multi", "text", "gate", "end"]
+  }
+}
