@@ -1,0 +1,40 @@
+PASS  1 代码：后端模块（9 项）
+PASS  1 代码：MongoDB schema 与初始化（2 项）
+PASS  1 代码：配置说明（4 项）
+PASS  2 文档：系统说明（1 项）
+PASS  2 文档：数据库设计（1 项）
+PASS  2 文档：API 说明（1 项）
+PASS  2 文档：关键逻辑说明（1 项）
+PASS  3 测试用例：计划与结果（2 项）
+PASS  4 报告与记录（4 项）
+
+报告九项（Word 七、4）：
+PASS  项目目标
+PASS  系统设计
+PASS  MongoDB设计
+PASS  跳转设计
+PASS  校验设计
+PASS  AI使用过程
+PASS  测试结果
+PASS  遇到的问题
+PASS  如何解决
+
+AI 要求：
+PASS  5.1 工具
+PASS  5.1 提示词
+PASS  5.1 得到了什么代码
+PASS  5.1 是否修改/修改了什么
+PASS  5.2 AI帮了什么
+PASS  5.2 AI做错了什么
+PASS  5.2 自己改了什么
+PASS  5.2 自己设计了什么
+PASS  测试用例含步骤/输入/预期/实际
+PASS  六类要求的真实响应片段
+PASS  技术约束：文档声明不用关系库与现成问卷框架
+PASS  技术约束：依赖清单无关系库/ORM
+PASS  MongoDB 须说明三项
+
+交付包与 PDF：
+PASS  交付包清单 214 个文件
+PASS  报告 PDF 源页面存在（17986 字符）
+提示  报告 PDF 本身位于 dist/（构建产物，不入包）：已生成

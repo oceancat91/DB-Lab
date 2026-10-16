@@ -5,10 +5,10 @@
     "R13"
   ],
   "timezone": "Asia/Shanghai",
-  "started_at": "2026-10-16T21:39:25.017530+08:00",
+  "started_at": "2026-10-16T22:44:53.299580+08:00",
   "seed": 20261015,
   "command": "python scripts/check_schema.py",
-  "database": "lab4_test_schema_0526c4bb360043998ee28850f0d82c65",
+  "database": "lab4_test_schema_ae64317567e64cf698f3d1db3bd6eed4",
   "scope": "field validators/indexes only; no account, rule or submission API acceptance",
   "environment": {
     "python": "3.11.17",
@@ -594,7 +594,7 @@
   ],
   "cleanup": {
     "status": "PASS",
-    "database": "lab4_test_schema_0526c4bb360043998ee28850f0d82c65",
+    "database": "lab4_test_schema_ae64317567e64cf698f3d1db3bd6eed4",
     "remaining_collections": []
   },
   "indexes": {
@@ -771,7 +771,7 @@
   "ttl_scope": "expires_at TTL index definition verified; asynchronous expiration timing is not claimed",
   "status": "PASS",
   "exit_code": 0,
-  "finished_at": "2026-10-16T21:39:25.657744+08:00",
+  "finished_at": "2026-10-16T22:44:53.759215+08:00",
   "source_sha256": {
     "survey_app/config.py": "342b03246efdf5c946a1744eaedd5090c5716284dbe8b4d9485879307b80a449",
     "survey_app/db.py": "0d51f67fa903fb9ca4605b8e9de030888ae4d273cbca3ce437f1a001abcdad6b",

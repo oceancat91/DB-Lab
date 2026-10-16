@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at": "2026-10-16T22:42:42.250670+08:00",
+  "created_at": "2026-10-16T22:46:37.738134+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
   "self_exclusions": [
@@ -48,8 +48,8 @@
     },
     {
       "path": "docs/AI_USAGE.md",
-      "bytes": 35523,
-      "sha256": "6bbfe604b5738d1da6b5517a58504d6b8649c32fd1db26cceac4a2e5aae14e98"
+      "bytes": 36755,
+      "sha256": "7d3e8909636167fbced7b08b36cc03ec57cb89b90bb838b61cb1aca54fe73a45"
     },
     {
       "path": "docs/API.md",
@@ -78,8 +78,8 @@
     },
     {
       "path": "docs/EXPERIMENT_LOG.md",
-      "bytes": 50351,
-      "sha256": "5b2eaadeeca26b14b5df4fb3605cbd82504523178349b124861e4bbfb8e0b8f1"
+      "bytes": 51965,
+      "sha256": "39edb745cd4130b37f30bf391e9c09c35c63755b68ac5adde369995182012912"
     },
     {
       "path": "docs/LOGIC.md",
@@ -662,9 +662,14 @@
       "sha256": "d6c797564d9bf5d18f867c01d60b05244c2e5859da5b7ac2700227bb77f32898"
     },
     {
-      "path": "results/local-run.json",
+      "path": "results/local-run-20261016T224452142173.json",
       "bytes": 236178,
       "sha256": "53450083323af50aab8af4545b82d55167f67fe1e3a07e74b24296f5c40eda9f"
+    },
+    {
+      "path": "results/local-run.json",
+      "bytes": 236104,
+      "sha256": "8430ea13d966cde8b9e3eb0d789cdb42227e34632f010ceec792c4948318d576"
     },
     {
       "path": "results/planning/checker-validation.json",
@@ -737,6 +742,16 @@
       "sha256": "3cb9ae03dda812e73182b569a500fdeaf35bcf52e85ce3c216465ad77e4ac4b4"
     },
     {
+      "path": "results/stage1-audit/final-check.md",
+      "bytes": 6178,
+      "sha256": "687f43774fb765b6a1fb17023abd43e2b4b459fe999507afb7833b07e5df7aa8"
+    },
+    {
+      "path": "results/stage1-audit/final-check.txt",
+      "bytes": 1309,
+      "sha256": "7148ccd1951bce59617a69e32c9a9ef92e15b5cc76a3a2b95d82cc2aba0f2154"
+    },
+    {
       "path": "results/stage1-audit/gate-workflow.txt",
       "bytes": 297,
       "sha256": "3bff31f96af4db2c57f5bdd51e3f0255f90a5c87b0dc8e66909583dbb290cdce"
@@ -772,9 +787,14 @@
       "sha256": "b660d27fc9af7c4858cafd49d7ce032849f16c9ff8219ee7207dc47cd4878012"
     },
     {
-      "path": "results/stage1-audit/schema-check.json",
+      "path": "results/stage1-audit/schema-check-20261016T224453299580.json",
       "bytes": 16049,
       "sha256": "f1f7286a092afe05d62a9c9300d3f628feaa6c8fb01f75b28373c4cb32f42566"
+    },
+    {
+      "path": "results/stage1-audit/schema-check.json",
+      "bytes": 16049,
+      "sha256": "d13502429eba55e5044d23337e8b17bcb70a185e871ba1669c5f7b616d2d0d18"
     },
     {
       "path": "results/stage1-audit/selector-check-after-fixes.txt",
