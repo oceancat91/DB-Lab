@@ -184,6 +184,7 @@ def convert(markdown: str, name: str = "", student_id: str = "") -> str:
   <div class="meta">
     <div><b>课程</b>数据库管理系统</div>
     <div><b>项目</b>基于 MongoDB 的问卷系统开发（第一阶段）</div>
+    <div><b>仓库</b><a href="https://github.com/oceancat91/DB-Lab.git">https://github.com/oceancat91/DB-Lab.git</a></div>
     {author_fields}
     <div><b>日期</b>2026 年 10 月 16 日</div>
   </div>

@@ -214,6 +214,7 @@ def build(markdown: str, name: str, student_id: str) -> Document:
     meta = document.add_paragraph()
     meta.paragraph_format.space_before = Pt(30)
     for label, value in (("课程：", "数据库管理系统"), ("项目：", "基于 MongoDB 的问卷系统开发（第一阶段）"),
+                         ("仓库：", "https://github.com/oceancat91/DB-Lab.git"),
                          ("姓名：", name or "＿＿＿＿＿＿＿＿"), ("学号：", student_id or "＿＿＿＿＿＿＿＿"),
                          ("日期：", "2026 年 10 月 16 日")):
         line = document.add_paragraph()

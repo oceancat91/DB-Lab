@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at": "2026-10-16T23:08:10.685611+08:00",
+  "created_at": "2026-10-16T23:12:19.342503+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
   "self_exclusions": [
@@ -48,8 +48,8 @@
     },
     {
       "path": "docs/AI_USAGE.md",
-      "bytes": 40202,
-      "sha256": "3f6909dd338f81c9aa1c37e3f5c70802a91ef0e1022dc1eb7cbd96195a7bf39e"
+      "bytes": 41513,
+      "sha256": "b22ba3793f0358c95eed6a82b3de473768014c3e4b1a0998e2e48782e0c11c07"
     },
     {
       "path": "docs/API.md",
@@ -78,8 +78,8 @@
     },
     {
       "path": "docs/EXPERIMENT_LOG.md",
-      "bytes": 57305,
-      "sha256": "2205779aae8d63104cd3167d67a89b3451fa981aee5735cb4fe928fcd21d20ab"
+      "bytes": 58756,
+      "sha256": "8ccb9b0f8b1476291fb3e1ecc2e10677076eeec3fe57858d4a61f8b667adf2a1"
     },
     {
       "path": "docs/LOGIC.md",
@@ -983,13 +983,13 @@
     },
     {
       "path": "scripts/build_report_docx.py",
-      "bytes": 13593,
-      "sha256": "af0e205349be31c6d26ef2e43d10be6ff9641e31503e2a61d8b986b390f4a90f"
+      "bytes": 13677,
+      "sha256": "67c3dcfa7bc277a22eeeabb457a8be0484ad4b2787df0c6d12472060062b609d"
     },
     {
       "path": "scripts/build_report_pdf.py",
-      "bytes": 11283,
-      "sha256": "2fc17f0e1e383dbe33df0e7550bfb6ce5140026f709551c27a09339ce34d75ec"
+      "bytes": 11407,
+      "sha256": "cd3a48640fc11f5cf2931c026cd390af27e77e16d73b95462bd149fba9e8c32d"
     },
     {
       "path": "scripts/check_schema.py",
