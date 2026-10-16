@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at": "2026-10-16T22:21:25.753391+08:00",
+  "created_at": "2026-10-16T22:23:56.386410+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
   "self_exclusions": [
@@ -48,8 +48,8 @@
     },
     {
       "path": "docs/AI_USAGE.md",
-      "bytes": 33613,
-      "sha256": "004559ea5fa34ed0000bcbf164ae3a2fcda28f69e6f1db3bc0fdd9e0527e19f4"
+      "bytes": 33395,
+      "sha256": "4351b4a92788308851ce065d9d57ed45b13ad9ae0eb4c0bd0527f5cb103c5cb7"
     },
     {
       "path": "docs/API.md",
@@ -88,8 +88,8 @@
     },
     {
       "path": "docs/REPORT_STAGE1.md",
-      "bytes": 31802,
-      "sha256": "38d3fb4a767912e9a3bfa0de5a77213254452a82cc6ea5f728d55c90ae4d1f1d"
+      "bytes": 31889,
+      "sha256": "c38c1ce51a08e109f3aedd7bfb4de8c5fc1a96b56ae819103f66b427d12a4d45"
     },
     {
       "path": "docs/REQUIREMENTS.md",
