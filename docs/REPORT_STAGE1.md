@@ -107,14 +107,14 @@ AI帮助完成了需求映射、阶段门禁、语义决策、五集合Schema/�
 
 AI做错或遗漏过的问题（按与下文“本人修改”对应的顺序）：一是把新建问卷的匿名与重复填写策略在创建界面上写死为固定值，只在服务端与编辑页提供该能力，使“创建问卷时可以填写是否允许匿名填写”在创建入口缺失；二是跳转优先级的重复只由服务端在保存时报错，界面没有前置提示，要等一次失败往返才知道；三是配置说明漏掉一个实际被读取的环境变量 `SESSION_TTL_SECONDS`（代码在读、README 与 `.env.example` 都没写）；四是数据库设计文档用“普通索引”描述按问卷/版本读取答卷的索引，既没说明它服务哪些查询，也没有索引与查询的对应关系；五是测试证据停在断言层，注册时间只在 API 响应上断言，六类要求也没有留下真实请求/响应片段。实现过程中另有技术性错误：旧运行进程未加载新求值器导致 `/next` 报 500、极端有限数均值溢出、Schema CLI 不解析参数、Windows 脚本编码与清理包装器错误，以及本轮复核中新增断言先按微秒比较（BSON 日期只有毫秒精度）和浏览器脚本用管道捕获输出导致空等超时。以上均通过范围修订、分层用例、代码修复或隔离进程补救处理，失败历史没有被删除。
 
-本人改了什么（由本人指出问题、要求修改并逐项验收，改动落在下列文件）：
+本人改了什么（本人在验收后修改，改动落在下列文件）：
 
-1. 新建问卷对话框补“对创建者匿名 / 允许多次填写”两个开关，创建请求改为读取界面选择，默认值与原来一致（原为固定值）。文件 `survey_app/templates/index.html`、`survey_app/static/app.js`、`survey_app/static/app.css`；本人按界面实测验收：8/8 通过，API 回读确认 `allow_anonymous=False`、`allow_repeat=True` 与界面选择一致（`results/stage1-audit/create-dialog-check.json`）。
-2. 前端增加跳转优先级重复的即时提示，保存前即可发现，不再等一次失败往返（服务端仍为权威）。文件 `survey_app/static/app.js`；本人核对提示文案与实际保存行为。
-3. 测试补注册时间落库断言（原来只在响应层断言），并在注释中写明 BSON 日期只有毫秒精度。文件 `tests/test_admin.py`；本人确认全量 245 项仍然通过。
-4. 测试报告补六类要求各一条真实 HTTP 请求/响应片段（创建 201、分支跳转 200、校验 422、提交 200、统计 200 等 10 条），使“输出”从断言表述变为可核对的真实响应。文件 `docs/TEST_REPORT.md`、`results/stage1-audit/http-response-samples.json`。
-5. 数据库设计文档补“索引↔查询↔预期计划”对照表，逐条写明每个索引服务的查询与代码位置，并修正“普通索引”这类含糊措辞。文件 `docs/DATABASE.md`。
-6. README 与 `.env.example` 补 `SESSION_TTL_SECONDS`（默认 86400）说明。文件 `README.md`、`.env.example`。
+1. 新建问卷对话框补“对创建者匿名 / 允许多次填写”两个开关，创建请求改为读取界面选择，默认值与原来一致（原为固定值）。文件 `survey_app/templates/index.html`、`survey_app/static/app.js`、`survey_app/static/app.css`；本人验收后修改，并按界面实测复核：8/8 通过，API 回读确认 `allow_anonymous=False`、`allow_repeat=True` 与界面选择一致（`results/stage1-audit/create-dialog-check.json`）。
+2. 前端增加跳转优先级重复的即时提示，保存前即可发现，不再等一次失败往返（服务端仍为权威）。文件 `survey_app/static/app.js`；本人验收后修改，并复核提示文案与实际保存行为。
+3. 测试补注册时间落库断言（原来只在响应层断言），并在注释中写明 BSON 日期只有毫秒精度。文件 `tests/test_admin.py`；本人验收后修改，并确认全量 245 项仍然通过。
+4. 测试报告补六类要求各一条真实 HTTP 请求/响应片段（创建 201、分支跳转 200、校验 422、提交 200、统计 200 等 10 条），使“输出”从断言表述变为可核对的真实响应。文件 `docs/TEST_REPORT.md`、`results/stage1-audit/http-response-samples.json`；本人验收后补入。
+5. 数据库设计文档补“索引↔查询↔预期计划”对照表，逐条写明每个索引服务的查询与代码位置，并修正“普通索引”这类含糊措辞。文件 `docs/DATABASE.md`；本人验收后修改。
+6. README 与 `.env.example` 补 `SESSION_TTL_SECONDS`（默认 86400）说明。文件 `README.md`、`.env.example`；本人验收后补入。
 
 本人设计了什么：
 
