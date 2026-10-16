@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at": "2026-10-16T22:53:01.216646+08:00",
+  "created_at": "2026-10-16T23:08:10.685611+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
   "self_exclusions": [
@@ -48,8 +48,8 @@
     },
     {
       "path": "docs/AI_USAGE.md",
-      "bytes": 38149,
-      "sha256": "25078972890bb4d33aac72596d37a7e13553d288c215223f66007e49aadf2875"
+      "bytes": 40202,
+      "sha256": "3f6909dd338f81c9aa1c37e3f5c70802a91ef0e1022dc1eb7cbd96195a7bf39e"
     },
     {
       "path": "docs/API.md",
@@ -78,8 +78,8 @@
     },
     {
       "path": "docs/EXPERIMENT_LOG.md",
-      "bytes": 53330,
-      "sha256": "b8ae741baa4061e7588e134d8d20d3859259899903665040f17a9e3f69ef6256"
+      "bytes": 57305,
+      "sha256": "2205779aae8d63104cd3167d67a89b3451fa981aee5735cb4fe928fcd21d20ab"
     },
     {
       "path": "docs/LOGIC.md",
@@ -742,6 +742,11 @@
       "sha256": "3cb9ae03dda812e73182b569a500fdeaf35bcf52e85ce3c216465ad77e4ac4b4"
     },
     {
+      "path": "results/stage1-audit/docx-structure-check.json",
+      "bytes": 927,
+      "sha256": "2efb9f08503f18331ab3ff6175786777c6a997a63e7c7a8be8a3d7d6e800113a"
+    },
+    {
       "path": "results/stage1-audit/final-check.md",
       "bytes": 6178,
       "sha256": "687f43774fb765b6a1fb17023abd43e2b4b459fe999507afb7833b07e5df7aa8"
@@ -775,6 +780,11 @@
       "path": "results/stage1-audit/pytest-run.json",
       "bytes": 236153,
       "sha256": "abe900a48b3120b23bf8e7572688e49fadc1ad333ce486e6b92c3102939d1e5b"
+    },
+    {
+      "path": "results/stage1-audit/report-docx-check.txt",
+      "bytes": 469,
+      "sha256": "3e79aabd6563c049407aa35aafbdbe644bb32a242917600c1326e657989a7508"
     },
     {
       "path": "results/stage1-audit/report-pdf-check.txt",
@@ -970,6 +980,11 @@
       "path": "scripts/browser_smoke.py",
       "bytes": 10375,
       "sha256": "a7ee3883e0fe23f8377caaab9fdf9ea7a6ad02591f0010580e63dd93163ed425"
+    },
+    {
+      "path": "scripts/build_report_docx.py",
+      "bytes": 13593,
+      "sha256": "af0e205349be31c6d26ef2e43d10be6ff9641e31503e2a61d8b986b390f4a90f"
     },
     {
       "path": "scripts/build_report_pdf.py",
