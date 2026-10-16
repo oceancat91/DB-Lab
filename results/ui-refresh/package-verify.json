@@ -1,8 +1,8 @@
 {
-  "created_at": "2026-10-16T22:23:57.650733+08:00",
+  "created_at": "2026-10-16T22:28:31.366787+08:00",
   "archive": "dist/Lab4-stage1.zip",
-  "archive_bytes": 2570368,
-  "archive_sha256": "ca62affefc3e061df395137cd8569b601d60beb30f3f653fc2f2e310b91ec85b",
+  "archive_bytes": 2571164,
+  "archive_sha256": "cf22440f59ef303c59f4da004ef1caa7a21ec988e333e2236f75e5ba425d0177",
   "checksum_file_matches": true,
   "zip_entries_including_manifest_and_proof": 215,
   "manifest_file_count": 213,
