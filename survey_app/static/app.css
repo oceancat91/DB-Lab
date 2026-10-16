@@ -681,6 +681,13 @@ main {
   gap: 16px;
 }
 
+.create-policy {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 4px 0 18px;
+}
+
 .check-label {
   display: flex;
   gap: 9px;

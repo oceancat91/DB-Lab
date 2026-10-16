@@ -211,7 +211,7 @@
 | 10 | 低（文档） | 测试报告未反映改版后的复跑（`TEST_REPORT.md:3` 明确“未重复运行业务测试”，基线 e7255c3） | P169 | 追加一行：改版后 2026-10-16 再次 245/245（`results/local-run.json`、`results/stage1-audit/pytest-run.json`） |
 | 11 | 低（文档） | README 示例命令的输出文件 `results/local-environment.json`、`results/local-schema.json` 当前不存在（仅 `results/local-run.json` 存在） | P144 | 注明“首次运行生成”或改用已存在的证据路径 |
 | 12 | 低（可追溯） | AI 记录缺 AI-002/AI-003，实验日志缺 EXP-003；AI-010 有一条未编号续段 | P104 | 补编号或加一行说明 |
-| 13 | 低（环境） | 实例上残留 `lab4_test_browser_c1c68…` 与 `lab4_environment` 两个非业务库 | 清理纪律 | 确认用途后再决定是否清理；本次未删除非本次创建的库 |
+| 13 | 已核实，非缺陷（原判“残留库”已更正） | `lab4_environment` 与 `lab4_test_browser_c1c68…` 经查**都被证据引用**：前者是文档化的环境能力探针库（`docs/ENVIRONMENT.md:7`、`results/S1/environment.json`、`results/S7/restore-environment.json`），后者是浏览器验收 E01 的留证数据库（`docs/TEST_REPORT.md:265`、`results/S5/browser.json`、`results/acceptance/browser-e01.json`，报告明确写明该库不参与 245 项测试库清理） | 复核记录 | 保留两个库；它们不影响 `lab4_survey`，删除反而会使对应证据无法复核 |
 | 14 | 低（运行风险） | 统计与明细整包返回全部原始答案，响应侧无分页或上限（请求侧有 1 MiB 限制） | 非 Word 违规 | 答卷量大时再加分页；一期数据量下不构成问题 |
 | 15 | 低（测试） | 前端无自动化测试，填写页交互只有代码审阅与浏览器截图 | P132 允许手工测试 | 若要加，可补最小 DOM 断言或用现有 agent-browser 脚本化为可复跑用例 |
 | 16 | 低 | “同一来源优先级唯一”仅由服务端在保存/发布/求值时校验，前端只给标签提示，重复值到保存才报 422 | 体验问题 | 前端可加即时校验；不影响正确性 |
@@ -242,3 +242,29 @@
 本次同时闭环了一项证据新鲜度问题：旧版界面下的“服务端校验错误”截图已由当前版本的实测截图替代。
 
 除“本人贡献”必须由学生本人完成外，其余整改均为文档级改动或一次约 10 行的前端改动，不需要修改服务端逻辑。
+
+## 9 整改结果（EXP-015，2026-10-16）
+
+用户要求“依次解决可解决的 16 个问题”，即第 6 节中除第 1 项（必须由学生本人填写）以外的全部条目。逐项处置与实际验证如下：
+
+| # | 处置 | 证据 |
+| --- | --- | --- |
+| 1 | **未处理（按课程要求必须由学生本人完成）** | 报告中“本人贡献”仍留白 |
+| 2 | 已修：新建对话框新增“对创建者匿名 / 允许多次填写”两个开关（默认值与原来一致），创建请求改为读取该界面选择 | `templates/index.html`、`static/app.js`、`static/app.css`；界面实测 8/8 通过（`create-dialog-check.json`、`create-dialog.png`），其中“匿名开关按界面选择保存 allow_anonymous=False、重复开关 allow_repeat=True”两项为真实 API 回读结果 |
+| 3 | 已补文档：`REPORT_STAGE1.md` 新增 5.1 节“需要向教师确认的两处口径”，`SYSTEM.md` 同步标注；未改实现 | `REPORT_STAGE1.md:71`、`SYSTEM.md:96` |
+| 4 | 已补：AI-006～AI-011 六条各补“逐字提示词／得到并采纳的产出／是否修改与修改点／未知与未验证”四要素，内容只取自实验日志与既有证据 | `AI_USAGE.md`（AI-006～AI-011 的补记段） |
+| 5 | 已补：`DATABASE.md` 用一张表给出 9 个索引的字段特性、服务的查询与代码位置、选择性与预期计划；删除“普通索引”这类含糊措辞 | `DATABASE.md:25`（索引与查询的对应关系） |
+| 6 | 已补：`schema-examples.json` 含四类题型（单选/多选/数字/文本）的 validation、两条跳转规则、已发布形态（无 draft）与草稿形态两份 survey 样例、含跳题路径的答卷样例 | `schema-examples.json`（键：surveys、surveys_draft、survey_versions、responses） |
+| 7 | 已补：README 配置段与 `.env.example` 增加 `SESSION_TTL_SECONDS`（默认 86400） | `README.md:48`、`.env.example` |
+| 8 | 已补：`DATABASE.md` 新增“Schema 版本与演进思路”，写明五步迁移/回填/双读/换版流程与回滚方式，并明确**本次未执行、未演练** | `DATABASE.md`“Schema 版本与演进思路（未执行，仅设计说明）” |
+| 9 | 已补：`TEST_REPORT.md` 附录给出六类要求各一条真实 HTTP 请求/响应片段（创建 201、跳转 200、校验 422×2、提交 200、统计 200 等 10 条）；`tests/test_admin.py` 增加注册时间落库断言（含 BSON 毫秒精度说明） | `TEST_REPORT.md` 附录、`results/stage1-audit/http-response-samples.json`、`tests/test_admin.py:98`；全量 245 passed |
+| 10 | 已补：`TEST_REPORT.md` 顶部增加“改版后复跑”段，记录两次 245 passed 的改版后证据 | `TEST_REPORT.md:5` |
+| 11 | 已补：README 注明三处 `--output/--evidence` 是本地运行产物、首次执行才生成 | `README.md`“验证”节后说明 |
+| 12 | 已补：`AI_USAGE.md` 与 `EXPERIMENT_LOG.md` 各加编号说明（AI-002/003、EXP-003 为预留未用编号），AI-010 之后的未编号段标注为续段 | `AI_USAGE.md:5`、`EXPERIMENT_LOG.md:5` |
+| 13 | **已核实为非缺陷并更正原判**：两个库分别被环境探针证据与浏览器验收证据引用，保留 | 见第 6 节第 13 项；`docs/ENVIRONMENT.md:7`、`docs/TEST_REPORT.md:265` |
+| 14 | 已补声明：统计/明细响应无分页上限、请求侧 1 MiB 限制，说明何时需要分页 | `API.md`、`SYSTEM.md:96` |
+| 15 | 已补自动化用例：`scripts/browser_smoke.py` 自建问卷与账号后驱动真实浏览器核对登录、逐题填写、单选跳转、回改截断、提交回执与无脚本错误；缺 CLI 或应用未运行时以退出码 2 跳过 | 实测 **8/8 通过**，证据 `results/browser-smoke/report.json` 与 3 张截图；`TEST_PLAN.md` E01 下补充说明 |
+| 16 | 已修：`app.js` 的 `draftPayload()` 增加同一来源优先级重复的客户端检查，保存前给出明确提示（服务端仍为权威） | `static/app.js:450` |
+| 17 | 已补声明：统计接口按当前发布版本返回、无版本参数，二期引入 v2 前需先定义口径 | `API.md`、`SYSTEM.md:96` |
+
+本轮改动的回归验证：`python -m pytest tests --evidence results/local-run.json -q` → **245 passed**（exit 0，含新增落库断言）；`python scripts/check_workflow.py` → **ERROR=0 / WARN=0**；CSS 选择器覆盖比对（对比上一提交）→ **丢失 0 个、新增 1 个**（`.create-policy`）。临时实例与临时库（`lab4_ui_smoke_…`）已停止并删除，业务库 `lab4_survey` 未改动。

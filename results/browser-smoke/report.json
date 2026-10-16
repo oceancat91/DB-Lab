@@ -1,0 +1,52 @@
+{
+  "created_at": "2026-10-16T21:37:16.500818+08:00",
+  "base": "http://127.0.0.1:8005",
+  "database": "lab4_ui_smoke_5e8d1c3a7f42",
+  "share_code": "RSbNf4n0EYw40Hkc",
+  "owner": "smoke_owner_f8eb6370",
+  "filler": "smoke_filler_f8eb6370",
+  "checks_total": 8,
+  "checks_passed": 8,
+  "checks": [
+    {
+      "check": "登录后进入第 1 题",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "单选跳转 q1→q3 生效（跳过 q2）",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "完成后进入核对页",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "点路径轨可回改到 q1",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "回改后路径只剩当前题",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "提交后出现回执",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "回执含编号",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "浏览器无脚本错误",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

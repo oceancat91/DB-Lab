@@ -446,6 +446,13 @@
     const survey = state.current;
     if (!$("survey-form").reportValidity()) throw new Error("请先补全题目、选项及规则中的必填内容，并检查数值格式。");
     if (!survey.title.trim()) throw new Error("请填写问卷标题。");
+    // The server enforces this too; catching it here keeps the message next to the rule instead of after a round trip.
+    const priorities = new Set();
+    for (const rule of survey.rules) {
+      const key = `${rule.source}:${rule.priority}`;
+      if (priorities.has(key)) throw new Error("同一来源题的跳转优先级不能重复，请修改后再保存。");
+      priorities.add(key);
+    }
     return { title: survey.title.trim(), description: survey.description || "", allow_anonymous: Boolean(survey.allow_anonymous), allow_repeat: Boolean(survey.allow_repeat), closes_at: deadlineValue(), revision: survey.revision, questions: survey.questions, rules: survey.rules };
   }
 
@@ -979,7 +986,7 @@
       if (state.dirty && !window.confirm("当前问卷还有未保存修改。放弃这些修改并创建新问卷？")) return;
       const title = $("create-title").value.trim();
       if (!title) throw new Error("请填写问卷标题。");
-      const survey = await api("/api/surveys", { method: "POST", body: { title, description: $("create-description").value, allow_anonymous: true, allow_repeat: false, closes_at: null } });
+      const survey = await api("/api/surveys", { method: "POST", body: { title, description: $("create-description").value, allow_anonymous: $("create-anonymous").checked, allow_repeat: $("create-repeat").checked, closes_at: null } });
       $("create-dialog").close();
       await reloadList();
       await openSurvey(survey.id, true);

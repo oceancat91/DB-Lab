@@ -1,0 +1,326 @@
+{
+  "created_at": "2026-10-16T21:22:57.656605+08:00",
+  "instance": "http://127.0.0.1:8005",
+  "database": "lab4_samples_2f7c4b8e1a90",
+  "note": "真实 HTTP 请求与响应片段，取自隔离实例与隔离库；响应体按需截断，未保存凭据与会话 cookie。",
+  "samples": [
+    {
+      "category": "创建问卷",
+      "request": "POST /api/surveys",
+      "status": 201,
+      "response": {
+        "id": "9bb337bc-0085-441d-8d66-083ec80e21fa",
+        "title": "响应片段样例问卷",
+        "description": "用于测试报告附录",
+        "allow_anonymous": false,
+        "allow_repeat": true,
+        "closes_at": null,
+        "status": "draft",
+        "revision": 0,
+        "version": null,
+        "share_code": "IiOk2tsoChvEfIjg",
+        "share_url": "/survey/IiOk2tsoChvEfIjg",
+        "questions": [],
+        "rules": [],
+        "created_at": "2026-10-16T13:22:57.443612+00:00",
+        "updated_at": "2026-10-16T13:22:57.443612+00:00"
+      }
+    },
+    {
+      "category": "添加题目与跳转规则",
+      "request": "PUT /api/surveys/9bb337bc-0085-441d-8d66-083ec80e21fa",
+      "status": 200,
+      "response": "{\"id\": \"9bb337bc-0085-441d-8d66-083ec80e21fa\", \"title\": \"响应片段样例问卷\", \"description\": \"用于测试报告附录\", \"allow_anonymous\": false, \"allow_repeat\": true, \"closes_at\": null, \"status\": \"draft\", \"revision\": 1, \"version\": null, \"share_code\": \"IiOk2tsoChvEfIjg\", \"share_url\": \"/survey/IiOk2tsoChvEfIjg\", \"questions\": [{\"id\": \"q1\", \"type\": \"single\", \"title\": \"你平时主要用哪种设备完成课程作业？\", \"required\": true, \"options\": [{\"id\": \"o1\", \"label\": \"笔记本电脑\"}, {\"id\": \"o2\", \"label\": \"台式机\"}, {\"id\": \"o3\", \"label\": \"平板电脑\"}, {\"id\": \"o4\", \"label\": \"手机\"}], \"validation\": {}}, {\"id\": \"q2\", \"type\": \"multi\", \"title\": \"本学期你希望课程增加哪些内容？\", \"required\": true, \"options\": [{\"id\": \"o1\", \"label\": \"更多动手实验\"}, {\"id\": \"o2\", \"label\": \"真实案例讲解\"}, {\"id\": \"o3\", \"label\": \"前沿论文导读\"}], \"validation\": {\"min_choices\": 1, \"max_choices\": 2}}, {\"id\": \"q3\", \"type\": \"number\", \"title\": \"你平均每周投入多少小时？\", \"required\": true, \"options\": [], \"validation\": {\"min_value\": 0, \"max_value\": 120, \"integer_only\": true}}, {\"id\": \"q4\", \"type\": \"text\", \"title\": \"对这门课还有什么建议？\", \"required\": false, \"options\": [], \"validation\": {\"max_length\": 200}}], \"rules\": [{\"source\": \"q1\", \"op\": \"eq\", \"value\": \"o4\", \"target\": \"q4\", \"priority\": 10}], \"created_at\": \"2026-10-16T13:22:57.443000+00:00\", …"
+    },
+    {
+      "category": "发布问卷",
+      "request": "POST /api/surveys/9bb337bc-0085-441d-8d66-083ec80e21fa/publish",
+      "status": 200,
+      "response": "{\"id\": \"9bb337bc-0085-441d-8d66-083ec80e21fa\", \"title\": \"响应片段样例问卷\", \"description\": \"用于测试报告附录\", \"allow_anonymous\": false, \"allow_repeat\": true, \"closes_at\": null, \"status\": \"published\", \"revision\": 2, \"version\": 1, \"share_code\": \"IiOk2tsoChvEfIjg\", \"share_url\": \"/survey/IiOk2tsoChvEfIjg\", \"questions\": [{\"id\": \"q1\", \"type\": \"single\", \"title\": \"你平时主要用哪种设备完成课程作业？\", \"required\": true, \"options\": [{\"id\": \"o1\", \"label\": \"笔记本电脑\"}, {\"id\": \"o2\", \"label\": \"台式机\"}, {\"id\": \"o3\", \"label\": \"平板电脑\"}, {\"id\": \"o4\", \"label\": \"手机\"}], \"validation\": {}}, {\"id\": \"q2\", \"type\": \"multi\", \"title\": \"本学期你希望课程增加哪些内容？\", \"required\": true, \"options\": [{\"id\": \"o1\", \"label\": \"更多动手实验\"}, {\"id\": \"o2\", \"label\": \"真实案例讲解\"}, {\"id\": \"o3\", \"label\": \"前沿论文导读\"}], \"validation\": {\"min_choices\": 1, \"max_choices\": 2}}, {\"id\": \"q3\", \"type\": \"number\", \"title\": \"你平均每周投入多少小时？\", \"required\": true, \"options\": [], \"validation\": {\"min_value\": 0, \"max_value\": 120, \"integer_only\": true}}, {\"id\": \"q4\", \"type\": \"text\", \"title\": \"对这门课还有什么建议？\", \"required\": false, \"options\": [], \"validation\": {\"max_length\": 200}}], \"rules\": [{\"source\": \"q1\", \"op\": \"eq\", \"value\": \"o4\", \"target\": \"q4\", \"priority\": 10}], \"created_at\": \"2026-10-16T13:22:57.443000+00:00\",…"
+    },
+    {
+      "category": "填写者读取问卷",
+      "request": "GET /api/fill/IiOk2tsoChvEfIjg",
+      "status": 200,
+      "response": {
+        "title": "响应片段样例问卷",
+        "description": "用于测试报告附录",
+        "version": 1,
+        "allow_anonymous": false,
+        "allow_repeat": true,
+        "closes_at": null,
+        "questions": [
+          {
+            "id": "q1",
+            "type": "single",
+            "title": "你平时主要用哪种设备完成课程作业？",
+            "required": true,
+            "options": [
+              {
+                "id": "o1",
+                "label": "笔记本电脑"
+              },
+              {
+                "id": "o2",
+                "label": "台式机"
+              },
+              {
+                "id": "o3",
+                "label": "平板电脑"
+              },
+              {
+                "id": "o4",
+                "label": "手机"
+              }
+            ],
+            "validation": {}
+          },
+          {
+            "id": "q2",
+            "type": "multi",
+            "title": "本学期你希望课程增加哪些内容？",
+            "required": true,
+            "options": [
+              {
+                "id": "o1",
+                "label": "更多动手实验"
+              },
+              {
+                "id": "o2",
+                "label": "真实案例讲解"
+              },
+              {
+                "id": "o3",
+                "label": "前沿论文导读"
+              }
+            ],
+            "validation": {
+              "min_choices": 1,
+              "max_choices": 2
+            }
+          },
+          {
+            "id": "q3",
+            "type": "number",
+            "title": "你平均每周投入多少小时？",
+            "required": true,
+            "options": [],
+            "validation": {
+              "min_value": 0,
+              "max_value": 120,
+              "integer_only": true
+            }
+          },
+          {
+            "id": "q4",
+            "type": "text",
+            "title": "对这门课还有什么建议？",
+            "required": false,
+            "options": [],
+            "validation": {
+              "max_length": 200
+            }
+          }
+        ],
+        "rules": [
+          {
+            "source": "q1",
+            "op": "eq",
+            "value": "o4",
+            "target": "q4",
+            "priority": 10
+          }
+        ]
+      }
+    },
+    {
+      "category": "跳转逻辑：q1 选“手机”后跳到 q4",
+      "request": "POST /api/fill/IiOk2tsoChvEfIjg/next",
+      "status": 200,
+      "response": {
+        "path": [
+          "q1",
+          "q4"
+        ],
+        "next_question_id": "q4",
+        "complete": false,
+        "answers": {
+          "q1": "o4"
+        }
+      }
+    },
+    {
+      "category": "校验：多选超过上限被拒",
+      "request": "POST /api/fill/IiOk2tsoChvEfIjg/next",
+      "status": 422,
+      "response": {
+        "error": {
+          "code": "validation",
+          "message": "多选答案超过最多选择数量",
+          "question_id": "q2"
+        }
+      }
+    },
+    {
+      "category": "校验：数字题非整数被拒",
+      "request": "POST /api/fill/IiOk2tsoChvEfIjg/next",
+      "status": 422,
+      "response": {
+        "error": {
+          "code": "validation",
+          "message": "此数字题必须填写整数",
+          "question_id": "q3"
+        }
+      }
+    },
+    {
+      "category": "提交问卷",
+      "request": "POST /api/fill/IiOk2tsoChvEfIjg/submit",
+      "status": 200,
+      "response": {
+        "id": "4a94ece0-0525-4d49-ab80-7e8e7ad6d9fc",
+        "submitted_at": "2026-10-16T13:22:57.575000+00:00",
+        "replayed": false
+      }
+    },
+    {
+      "category": "统计（整卷）",
+      "request": "GET /api/surveys/9bb337bc-0085-441d-8d66-083ec80e21fa/statistics",
+      "status": 200,
+      "response": {
+        "survey_id": "9bb337bc-0085-441d-8d66-083ec80e21fa",
+        "version": 1,
+        "submissions": 1,
+        "respondents": 1,
+        "questions": [
+          {
+            "id": "q1",
+            "type": "single",
+            "title": "你平时主要用哪种设备完成课程作业？",
+            "answered_submissions": 1,
+            "answered_people": 1,
+            "options": [
+              {
+                "id": "o1",
+                "label": "笔记本电脑",
+                "count": 1,
+                "people": 1
+              },
+              {
+                "id": "o2",
+                "label": "台式机",
+                "count": 0,
+                "people": 0
+              },
+              {
+                "id": "o3",
+                "label": "平板电脑",
+                "count": 0,
+                "people": 0
+              },
+              {
+                "id": "o4",
+                "label": "手机",
+                "count": 0,
+                "people": 0
+              }
+            ]
+          },
+          {
+            "id": "q2",
+            "type": "multi",
+            "title": "本学期你希望课程增加哪些内容？",
+            "answered_submissions": 1,
+            "answered_people": 1,
+            "options": [
+              {
+                "id": "o1",
+                "label": "更多动手实验",
+                "count": 1,
+                "people": 1
+              },
+              {
+                "id": "o2",
+                "label": "真实案例讲解",
+                "count": 1,
+                "people": 1
+              },
+              {
+                "id": "o3",
+                "label": "前沿论文导读",
+                "count": 0,
+                "people": 0
+              }
+            ]
+          },
+          {
+            "id": "q3",
+            "type": "number",
+            "title": "你平均每周投入多少小时？",
+            "answered_submissions": 1,
+            "answered_people": 1,
+            "values": [
+              30
+            ],
+            "mean": 30.0
+          },
+          {
+            "id": "q4",
+            "type": "text",
+            "title": "对这门课还有什么建议？",
+            "answered_submissions": 1,
+            "answered_people": 1,
+            "values": [
+              "希望期末项目早一点公布题目。"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "category": "统计（单题）",
+      "request": "GET /api/surveys/9bb337bc-0085-441d-8d66-083ec80e21fa/statistics/q3",
+      "status": 200,
+      "response": {
+        "id": "q3",
+        "type": "number",
+        "title": "你平均每周投入多少小时？",
+        "answered_submissions": 1,
+        "answered_people": 1,
+        "values": [
+          30
+        ],
+        "mean": 30.0
+      }
+    },
+    {
+      "category": "答卷明细",
+      "request": "GET /api/surveys/9bb337bc-0085-441d-8d66-083ec80e21fa/responses",
+      "status": 200,
+      "response": [
+        {
+          "id": "4a94ece0-0525-4d49-ab80-7e8e7ad6d9fc",
+          "version": 1,
+          "answers": {
+            "q1": "o1",
+            "q2": [
+              "o1",
+              "o2"
+            ],
+            "q3": 30,
+            "q4": "希望期末项目早一点公布题目。"
+          },
+          "path": [
+            "q1",
+            "q2",
+            "q3",
+            "q4"
+          ],
+          "submitted_at": "2026-10-16T13:22:57.575000+00:00",
+          "anonymous": false,
+          "username": "sample_filler"
+        }
+      ]
+    }
+  ]
+}

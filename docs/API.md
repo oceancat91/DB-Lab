@@ -58,3 +58,5 @@ submit 200 返回 `{id,submitted_at,replayed}`；第一次 replayed=false，相�
 - `GET /api/surveys/{id}/responses`：本人答卷明细，包含答卷 ID、时间、path、answers；匿名时不披露账户身份，非匿名时才包含 username。不返回数据库原文档或私有判重字段。
 
 统计包含 survey_id、version、submissions、respondents、questions。单题含 id/type/title、answered_submissions、answered_people；选择题 options 含 id/label/count/people；填空题 values 保留原文，数字另含 mean。无数字回答 mean=null。任何已有答卷均无需手动“生成统计”操作。
+
+两个已声明的边界：一是统计与明细接口**按当前发布版本**返回该问卷的全部答卷，没有分页或条数上限（请求方向有 1 MiB 限制，响应方向没有）；第一阶段每卷一次发布、数据量为课程实验规模，若后续答卷量增大，需要加分页或聚合接口。二是这两个接口都不接受版本参数；若第二阶段引入第二个发布版本，需要先定义“统计哪个版本”的口径再新增参数，当前实现不能直接复用。

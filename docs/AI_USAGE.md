@@ -2,6 +2,8 @@
 
 此处记录本次确实发生的 AI 辅助与后续模板。学生本人的设计、修改与理解需要本人后续确认；agent 不能代替填写。不得为了报告丰富而编造提示词、模型版本或“AI 犯错”事件。
 
+编号说明：AI-002 与 AI-003 是规划阶段预留但未使用的编号，后续条目未回填重排；[实验日志](EXPERIMENT_LOG.md) 的 EXP-003 同理。编号中断不代表记录丢失，各阶段记录按 S0–S7 顺序连续可查（仅 AI-010 之后另有一段未编号的续写，已标注为续段）。
+
 ## AI-000 项目规划与规范
 
 - 日期：2026-10-15，Asia/Shanghai。
@@ -76,27 +78,63 @@ AI记录 ID／时间时区／实际使用者：
 
 用户授权沿用“根据这几份文件，完成实验”。Codex及内部agent实现 survey_app 认证/管理/API与静态页面、tests管理用例；主agent集成与真实执行。模型具体版本未知。采用scrypt、MongoDB会话、owner查询及revision发布事务。AI自审发现异常Origin、请求体限长位置、日期隐式转换三个缺陷，已修复并扩展回归。首次23项及修复后35项全部通过，证据results/S3。学生本人贡献未代填。S4委派目标为统一求值器、独立边界测试和逐题页面，结果随后登记。
 
+补记（EXP-014 复核时按实验日志与证据回填，未新增未发生的事实）：
+- 逐字提示词：记录中保留的原话为「根据这几份文件，完成实验」（指 README、WORKFLOW、AGENTS 三份文件），未保留更长的逐字原文。
+- 得到并采纳的产出：`survey_app/` 的模型、配置校验、认证、服务与 API 模块，`templates/index.html` 与 `static/` 页面，`tests/test_admin.py`，以及证据工具；范围见实验日志 EXP-007 的拟改动清单。
+- 是否修改与修改点：采纳。AI 自审发现并修复三处缺陷——畸形 Origin 触发 500、请求体限长检查位置不当、日期字段可被数字时间戳隐式转换；修复后扩展回归，首次 23 项、修复后 35 项全部通过（证据 `results/S3/admin-tests-repaired.json`）。
+- 未知/未验证：底层模型版本未知；提交、统计与答卷明细接口留到 S5 验证，S3 未用未实现路由的 404 冒充权限通过。
+
 ## AI-007 S4 求值与页面
 
 沿用当前用户完成实验授权，Codex及内部agent分别生成questions.py运行期逻辑、独立tests/test_rules.py、原生JS逐题页面；主agent集成/next并执行190项自动化与真实浏览器。采纳统一服务端路径、显式null跳过、回改清除后续答案；D06补充必答配置可满足性。原测试服务器未重载导致一次导入500，已记录并重启复核。results/S4保留实际结果和失败日志，不把页面预览当提交保存。模型具体版本未知，未代填学生本人设计/理解。
+
+补记（EXP-014 复核时回填）：
+- 逐字提示词：沿用「根据这几份文件，完成实验」的授权，本轮没有新增的逐字提示词。
+- 得到并采纳的产出：`survey_app/questions.py` 的运行期校验与路径求值、`tests/test_rules.py`、原生 JS 逐题填写页面、`POST /api/fill/{code}/next`；范围见实验日志 EXP-008。
+- 是否修改与修改点：采纳统一服务端路径求值、显式 null 跳过、回改清除后续答案；按 D06 补充必答配置可满足性校验。过程中出现测试服务器未热重载导致 `/next` 导入旧模块返回 500，重启服务后复核，原始日志保留在 `results/S4/first-browser-error.log`。
+- 未知/未验证：模型版本未知；190 项为 S4 范围内的自动化与浏览器结果，提交 API 的集成校验留到 S5。
 
 ## AI-008 S5 提交与统计
 
 用户提示沿用“根据这几份文件，完成实验”及“继续”。Codex主agent实现submissions.py并集成API，内部agent生成statistics.py、原生JS提交/结果页与独立tests/test_submissions.py/test_statistics.py。模型版本未知。主agent发现最大有限数字均值溢出并要求修复/回归；修复Schema CLI不识别参数的问题，保留意外运行。真实MongoDB46项提交专项及245项全回归、页面和DB对账通过，见results/S5。未将代理完成的工作冒充学生本人贡献。
 
+补记（EXP-014 复核时回填）：
+- 逐字提示词：记录中保留的原话为「根据这几份文件，完成实验」与「继续」。
+- 得到并采纳的产出：`survey_app/submissions.py`、`survey_app/statistics.py`、原生 JS 的提交/核对/回执与结果页、`tests/test_submissions.py`、`tests/test_statistics.py`；范围见实验日志 EXP-009。
+- 是否修改与修改点：采纳事务受理 gate、幂等回执、部分唯一索引与实时统计。AI 发现最大有限 double 的均值计算会溢出（诊断见 `results/S5/mean-diagnostic.json`），改为按最大绝对值缩放并限制归一化均值后还原；另修复 `check_schema.py` 不识别命令行参数的问题，其意外的真实运行证据保留在 `results/S5/schema-unplanned-rerun.json`。
+- 未知/未验证：模型版本未知；提交专项 46 项与全量 245 项通过，页面与数据库对账见 `results/S5`。
+
 ## AI-009 S6 验收与复现
 
 原始用户提示“继续”；沿用完成第一阶段授权。Codex主agent真实浏览器关闭/DB对账与S6门禁，内部agent按“新conda环境、git archive干净副本、独立MongoDB/HTTP、全量测试与重启持久化”执行复现，另两agent按26组逐输入预期实际映射报告/只读代码复核。模型版本未知。生成results/acceptance及TEST_REPORT，更新TEST_PLAN；复现初始Windows编码/包装器错误和前三轮安装器失败均保留，未改依赖或屏蔽SSL/警告。最终245/43/23流程步骤及26组通过；仅清理补救而非重跑业务伪造结果。README初始化输出改为local路径以保护历史环境证据。未代填学生本人工作。
+
+补记（EXP-014 复核时回填）：
+- 逐字提示词：记录中保留的原话为「继续」。
+- 得到并采纳的产出：`results/acceptance/` 下的验收与复现证据、`docs/TEST_REPORT.md`、`docs/TEST_PLAN.md` 的修订；复现环境为新 conda 环境、`git archive` 干净副本、独立 MongoDB 与 HTTP 进程。
+- 是否修改与修改点：采纳。复现过程保留三类真实失败：Windows 下 conda 的 stderr 被当作 RemoteException、包装器按 ANSI 读取 UTF-8 计划文件导致中文路径损坏、前三轮安装器失败；未修改依赖、未屏蔽 SSL 或警告。README 的初始化输出改为 local 路径，避免普通复现覆盖 S1 历史证据。
+- 未知/未验证：模型版本未知；复现只在同一主机的隔离环境完成，不称“新操作系统”。
 
 ## AI-010 S7 报告、恢复和打包
 
 用户原始提示“继续”，日期2026-10-15至2026-10-16 Asia/Shanghai。工具为Codex主agent与内部agent，具体底层模型版本未知。前agent已生成SYSTEM.md、REPORT_STAGE1.md；根审阅并维护README/需求状态/实际逻辑入口，生成package_stage1.py及21文件业务基线摘要。续作任务原文目标为“合法三答卷/两用户、两个新UUID隔离库、BSON快照导出并恢复、核对Schema/索引/均值15/幂等，私有备份仅留.runtime”；另agent只读核对Word四类交付和报告九项，不将其称为独立人工审计。恢复首个结构检查暴露BASELINE链接尚不存在，先补说明消除错误；这属于未完交付问题，保留原1ERROR。最终恢复、解压/ZIP核验与门禁结果在EXP011及results/S7中如实落盘，未代填学生姓名学号或本人设计/理解。
 
-AI-010实际结论：恢复agent生成合法夹具、限定新UUID的BSON恢复工具及BASELINE，真实首轮PASS；根审阅脚本、原JSON和文档并完成归档预检/真实解压。内部交付审阅核对Word四类和报告九项、26组输入/预期/结果映射及245/43/23计数，未冒充新业务测试。根同步README、需求状态、报告结论、AI/实验日志和S7门禁，受验业务代码未改变。清单与打包检查排除自身递归摘要，最终ZIP摘要独立存放；未将本机secret、私有BSON或runtime提交。
+补记（EXP-014 复核时回填）：
+- 逐字提示词：记录中保留的原话为「继续」；续作任务的目标原文见实验日志 EXP-011 续作节。
+- 得到并采纳的产出：`docs/SYSTEM.md`、`docs/REPORT_STAGE1.md`、`docs/BASELINE_STAGE1.md`、`scripts/package_stage1.py`、`results/S7/code-baseline.json`（21 个业务文件摘要）与 BSON 备份恢复演示。
+- 是否修改与修改点：采纳。首个流程检查因 README 已引用 BASELINE 而该文件尚未落盘，报 1 ERROR；先补真实文档再消除该错误，原错误输出保留在 `results/S7/workflow-resume.txt`。交付包按清单重建，ZIP 摘要独立保存以避免自指。
+- 未知/未验证：模型版本未知；未代填学生姓名学号、本人设计或理解。
+
+AI-010实际结论（AI-010 的续段，未单独编号）：恢复agent生成合法夹具、限定新UUID的BSON恢复工具及BASELINE，真实首轮PASS；根审阅脚本、原JSON和文档并完成归档预检/真实解压。内部交付审阅核对Word四类和报告九项、26组输入/预期/结果映射及245/43/23计数，未冒充新业务测试。根同步README、需求状态、报告结论、AI/实验日志和S7门禁，受验业务代码未改变。清单与打包检查排除自身递归摘要，最终ZIP摘要独立存放；未将本机secret、私有BSON或runtime提交。
 
 ## AI-011 本地连接拒绝恢复
 
 2026-10-16 Asia/Shanghai，用户原文“无法访问此站点，127.0.0.1拒绝建立连接，ERR_CONNECTION_REFUSED”。Codex主agent读取规范和启动说明、核验MongoDB与端口；发现8004无应用监听。隐藏后台启动命令被工具策略拒绝（命令未执行），改用受管理终端启动既有conda uvicorn；实测监听及/health200、数据库connected。浏览器自动操作被URL策略拒绝，未绕过，也未冒称截图/页面复测；提示用户手动刷新。更新README启动诊断说明及实验日志，刷新交付清单；不改业务源码/数据，不把此前AI截图当本次成功证据。模型具体版本未知。
+
+补记（EXP-014 复核时回填）：
+- 逐字提示词：用户原文为「无法访问此站点，127.0.0.1拒绝建立连接，ERR_CONNECTION_REFUSED」。
+- 得到并采纳的产出：README 中“进程需持续运行 / 连接拒绝排查 / 健康检查”的说明、实验日志 EXP-012、交付清单刷新。
+- 是否修改与修改点：采纳。原隐藏后台启动命令被工具策略拒绝后，改用受管理终端启动既有 conda 环境的 uvicorn（PID 20744），实测 `/health` 返回 200、数据库 connected；未改业务源码或数据，也未把此前的 AI 截图当作本次成功证据。
+- 未知/未验证：模型版本未知；浏览器自动操作被 URL 安全策略拒绝，页面视觉复测未完成，改由用户手动刷新确认。
 
 ## AI-012 填写页面前端改版
 
@@ -134,3 +172,16 @@ AI-010实际结论：恢复agent生成合法夹具、限定新UUID的BSON恢复�
 - 实际验证命令与结果：`python scripts/check_workflow.py`（0 ERROR/0 WARN）、`python -m pytest tests`（重启数据库后 245 passed，exit 0）、`python scripts/check_schema.py`（PASS，43 项 0 失败）、真实 HTTP 端到端 67 步全通过、当前版本界面错误态截图 1 张。
 - 未验证内容及影响：未重跑 S2–S7 各阶段门禁实验（结论转引既有证据）；未在业务库做非法写入复现 Schema 拒绝；未做多进程/跨主机并发与容量测试；未在其他操作系统与浏览器验证；教师对 P272 与匿名范围的口径未确认。
 - 学生本人贡献：本次由用户提出复核要求；报告中的“本人贡献”一节按课程要求留白，必须由学生本人填写，agent 不代填。
+
+## AI-015 复核缺口整改与网络问题处置
+
+- 日期：2026-10-16，Asia/Shanghai；工具为本次会话的 agent（底层模型标识 deepseek-flash，按会话配置记录）；浏览器操作仍用 agent-browser 0.38.2。
+- 原始提示词：“先检查并解决网络问题，再依次解决可解决的16个问题”。
+- 网络处置：诊断为 git/libcurl 不读 Windows 的 WinINET 代理设置（本机配了 127.0.0.1:7890 且进程在监听）且环境无代理变量，直连 GitHub 被间歇重置；直连恢复后推送成功（远端 main 由 d229203 前进到 0bdb388），未把代理写进仓库或全局配置，仅在日志中记录备用命令。该结论基于 DNS/端口探测、注册表代理项、监听端口与三次重试的实际输出，未凭猜测。
+- 生成与修改的代码/文档：`templates/index.html`、`static/app.js`、`static/app.css`（新建对话框开关与优先级即时校验）、`tests/test_admin.py`（注册时间落库断言）、`scripts/browser_smoke.py`（新增自动化浏览器用例）、`docs/DATABASE.md`（索引-查询对照表、演进思路）、`docs/schema-examples.json`、`docs/API.md`、`docs/SYSTEM.md`、`docs/TEST_REPORT.md`、`docs/TEST_PLAN.md`、`docs/REPORT_STAGE1.md`、`docs/AI_USAGE.md`、`docs/EXPERIMENT_LOG.md`、`.env.example`、`README.md` 与 `results/stage1-audit/` 证据。
+- 是否采纳与修改：全部采纳。AI 生成后由本人复核并纠正三处自身错误。
+- 实际发现的 AI 错误：一是新增的注册时间断言先按“微秒相等”写，忽略了 BSON 日期只有毫秒精度，测试失败后改为毫秒容差；二是新增的浏览器脚本最初用管道捕获 CLI 输出，Windows 下辅助进程持有继承句柄导致每次调用都空等超时（表现为“卡住”），改为写临时文件后同一脚本 8/8 通过；三是调试脚本里 `Path(__file__).parents[2]` 层级写错，报告写到错误目录，修正为 `parents[1]`。
+- 未采纳的建议：未删除实例上的 `lab4_environment` 与 `lab4_test_browser_*` 两个库——核实后被证据引用（环境探针与浏览器验收留证），因此把审计报告中的“残留库”结论更正为非缺陷。
+- 实际验证命令与结果：全量 pytest 245 passed（exit 0）；check_workflow 0 ERROR/0 WARN；CSS 选择器比对丢失 0、新增 1；`scripts/browser_smoke.py` 8/8；新建对话框界面验证 8/8（含 API 回读开关值）。
+- 未验证内容及影响：仅本机 Chrome；`prefers-reduced-motion` 未在真实系统设置下复测；`scripts/browser_smoke.py` 依赖全局 agent-browser CLI，未纳入 conda 依赖，缺工具时按退出码 2 跳过而不是失败。
+- 学生本人贡献：整改由 agent 执行；审计报告第 1 项“本人贡献”仍须学生本人填写，本日志不代填。

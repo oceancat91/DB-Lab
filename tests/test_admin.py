@@ -94,6 +94,11 @@ def test_register_login_hash_uniqueness_and_logout(client, client_factory, db):
     assert_error(client.get("/api/auth/me"), 401)  # registration does not log in
     stored = db.users.find_one({"_id": user["id"]})
     assert stored is not None and stored["username_key"] == username.casefold()
+    # Registration time must be a real BSON date in the document, not only in the API response.
+    # BSON dates carry milliseconds while the API ISO text may carry microseconds, so compare with a tolerance.
+    assert isinstance(stored["created_at"], datetime) and stored["created_at"].tzinfo is not None
+    api_created = datetime.fromisoformat(user["created_at"].replace("Z", "+00:00"))
+    assert abs((stored["created_at"] - api_created).total_seconds()) < 0.001
     assert "password" not in stored and PASSWORD not in stored["password_hash"]
     assert "scrypt" in stored["password_hash"].lower()
     assert_error(client.post("/api/auth/register", json={"username": f"  {username.upper()}  ", "password": PASSWORD}), 409)

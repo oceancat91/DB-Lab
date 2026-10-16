@@ -1,5 +1,5 @@
 {
-  "note": "设计样例，非实测数据；$date 为 MongoDB Extended JSON 日期表示。",
+  "note": "设计样例，非实测数据；$date 为 MongoDB Extended JSON 日期表示。surveys 为已发布形态（发布时 draft 已由 $unset 移除），surveys_draft 为草稿形态；两份样例指向同一问卷的不同阶段。",
   "users": {
     "_id": "10000000-0000-4000-8000-000000000001",
     "username": "demo_user", "username_key": "demo_user",
@@ -15,26 +15,63 @@
   "surveys": {
     "_id": "20000000-0000-4000-8000-000000000001",
     "owner_id": "10000000-0000-4000-8000-000000000001", "share_code": "example_share",
-    "title": "课程反馈", "description": "设计样例",
-    "allow_anonymous": true, "allow_repeat": false, "status": "published",
+    "title": "课程反馈", "description": "已发布形态：没有 draft 子文档，题目看 survey_versions 快照",
+    "allow_anonymous": false, "allow_repeat": true, "status": "published",
     "closes_at": null, "created_at": {"$date": "2026-10-15T08:00:00Z"},
-    "updated_at": {"$date": "2026-10-15T08:00:00Z"},
-    "published_version": 1, "revision": 1, "gate_seq": 1,
+    "updated_at": {"$date": "2026-10-15T08:02:00Z"},
+    "published_version": 1, "revision": 2, "gate_seq": 1,
     "last_accepted_at": {"$date": "2026-10-15T08:05:00Z"}, "schema_version": 1
+  },
+  "surveys_draft": {
+    "_id": "20000000-0000-4000-8000-000000000002",
+    "owner_id": "10000000-0000-4000-8000-000000000001", "share_code": "example_draft",
+    "title": "草稿示例", "description": "草稿形态：题目与规则内嵌在 draft，可整体替换并做 revision 乐观并发校验",
+    "allow_anonymous": true, "allow_repeat": false, "status": "draft",
+    "closes_at": {"$date": "2026-11-01T15:59:00Z"}, "created_at": {"$date": "2026-10-15T08:00:00Z"},
+    "updated_at": {"$date": "2026-10-15T08:01:00Z"},
+    "published_version": null, "revision": 1, "gate_seq": 0,
+    "draft": {
+      "questions": [
+        {"id": "q1", "type": "single", "title": "单选题示例", "required": true,
+         "options": [{"id": "o1", "label": "选项一"}, {"id": "o2", "label": "选项二"}], "validation": {}}
+      ],
+      "rules": []
+    },
+    "schema_version": 1
   },
   "survey_versions": {
     "_id": "30000000-0000-4000-8000-000000000001",
     "survey_id": "20000000-0000-4000-8000-000000000001", "version": 1,
-    "questions": [{"id": "q1", "type": "single", "title": "是否满意", "required": true,
-      "options": [{"id": "yes", "label": "满意"}, {"id": "no", "label": "不满意"}], "validation": {}}],
-    "rules": [], "created_at": {"$date": "2026-10-15T08:00:00Z"}, "schema_version": 1
+    "questions": [
+      {"id": "q1", "type": "single", "title": "你平时主要用哪种设备完成课程作业？", "required": true,
+       "options": [{"id": "o1", "label": "笔记本电脑"}, {"id": "o2", "label": "台式机"},
+                   {"id": "o3", "label": "平板电脑"}, {"id": "o4", "label": "手机"}],
+       "validation": {}},
+      {"id": "q2", "type": "multi", "title": "本学期你希望课程增加哪些内容？", "required": true,
+       "options": [{"id": "o1", "label": "更多动手实验"}, {"id": "o2", "label": "真实案例讲解"},
+                   {"id": "o3", "label": "前沿论文导读"}, {"id": "o4", "label": "小组项目"}],
+       "validation": {"min_choices": 1, "max_choices": 3}},
+      {"id": "q3", "type": "number", "title": "你平均每周投入多少小时？", "required": true,
+       "options": [], "validation": {"min_value": 0, "max_value": 120, "integer_only": true}},
+      {"id": "q4", "type": "single", "title": "下学期你打算继续选修相关课程吗？", "required": true,
+       "options": [{"id": "o1", "label": "打算选修"}, {"id": "o2", "label": "还没决定"}],
+       "validation": {}},
+      {"id": "q5", "type": "text", "title": "对这门课还有什么建议？", "required": false,
+       "options": [], "validation": {"max_length": 200}}
+    ],
+    "rules": [
+      {"source": "q1", "op": "eq", "value": "o4", "target": "q4", "priority": 10},
+      {"source": "q3", "op": "gt", "value": 20, "target": "q5", "priority": 20}
+    ],
+    "created_at": {"$date": "2026-10-15T08:02:00Z"}, "schema_version": 1
   },
   "responses": {
     "_id": "40000000-0000-4000-8000-000000000001",
     "survey_id": "20000000-0000-4000-8000-000000000001", "version": 1,
     "respondent_id": "10000000-0000-4000-8000-000000000001",
     "request_id": "example_request", "payload_hash": "1111111111111111111111111111111111111111111111111111111111111111",
-    "answers": {"q1": "yes"}, "path": ["q1"], "single_submission": true,
-    "anonymous": true, "submitted_at": {"$date": "2026-10-15T08:05:00Z"}, "schema_version": 1
+    "answers": {"q1": "o1", "q2": ["o1", "o2"], "q3": 30, "q5": "示例回答"},
+    "path": ["q1", "q2", "q3", "q5"], "single_submission": false,
+    "anonymous": false, "submitted_at": {"$date": "2026-10-15T08:05:00Z"}, "schema_version": 1
   }
 }

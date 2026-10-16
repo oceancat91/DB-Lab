@@ -1,0 +1,48 @@
+{
+  "created_at": "2026-10-16T21:37:48.302407+08:00",
+  "base": "http://127.0.0.1:8005",
+  "checks_total": 8,
+  "checks_passed": 8,
+  "checks": [
+    {
+      "check": "对话框含匿名字段",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "对话框含重复填写字段",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "默认对创建者匿名",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "默认不允许重复填写",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "创建成功且出现在列表",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "check": "匿名开关按界面选择保存",
+      "pass": true,
+      "detail": "allow_anonymous=False"
+    },
+    {
+      "check": "重复开关按界面选择保存",
+      "pass": true,
+      "detail": "allow_repeat=True"
+    },
+    {
+      "check": "浏览器无脚本错误",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

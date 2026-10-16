@@ -2,6 +2,8 @@
 
 本报告记录已执行的结果；验收步骤和预期保存在 [TEST_PLAN.md](TEST_PLAN.md)，解释依据为已采纳的 [DECISIONS.md](DECISIONS.md)。仅覆盖第一阶段 26 组用例，不以第二阶段为验收前置。编制：Codex，2026-10-15，Asia/Shanghai；本次汇总只读取既有证据，未重复运行业务测试。
 
+改版后复跑（2026-10-16 补记）：S7 之后填写页面做过一次改版，改版后重新运行全量测试仍为 **245 passed**（exit 0，证据 [results/local-run.json](../results/local-run.json)）；对照指导文件的第一阶段复核中再次复跑同样得 245 passed（证据 [复核证据](../results/stage1-audit/pytest-run.json)）。两次都是同一批 245 条断言，改版只涉及 `survey_app/static/app.css` 与 `survey_app/static/app.js` 两个表现层文件，21 个业务文件的基线差异见 [基线复核](../results/ui-refresh/code-baseline-check.json)。本报告正文的逐组结果仍以 S6 汇总（基线 e7255c3）为准。
+
 ## 证据、环境与计数口径
 
 业务基线为 `e7255c3`（S5 通过后提交）。[full-tests.json](../results/S5/full-tests.json) 记录 2026-10-15 21:49:00.685782 至 21:49:24.365886 +08:00 的实际执行，selection=`tests`、seed=`20261015`、退出码0；[原始控制台](../results/S5/full-tests.txt) 为 245 passed、1 warning。JSON 含应用和测试源码 SHA-256，供与该次执行基线逐文件核对。
@@ -294,3 +296,46 @@ TC-R05“恰好截止”使用真实MongoDB表达式探针：保留原门禁表�
 - E02前3次conda调用编排记录分别为exit1、exit_code=null（不能当作成功）、exit1；[尝试1](../results/acceptance/reproduction-conda-result-attempt1.json)、[尝试2](../results/acceptance/reproduction-conda-result-attempt2.json)、[尝试3](../results/acceptance/reproduction-conda-result-attempt3.json)及各自输出保留，最终新建环境exit0。之后业务验证通过，但MongoDB清理包装器曾exit1；[原失败](../results/acceptance/reproduction.json)与[错误输出](../results/acceptance/reproduction-runner-error.txt)保留，[补救](../results/acceptance/reproduction-cleanup-repair.json)只核验并停止自有进程，未重跑业务、未删除保留数据。[最终PASS](../results/acceptance/reproduction-final.json)明确引用原失败和补救，而非覆盖原记录。
 
 报告汇总期间只审阅既有JSON、日志及源码，不运行应用或重复业务测试。26组已按上述证据验收；S6阶段门禁及S7最终交付仍由主执行者依workflow核对、记录并推进，本报告不代替其状态操作。
+
+## 附：六类要求的真实响应片段
+
+正文各组的“输出”以预期断言表述；为补足“输入→输出”成对证据，这里按指导文件六类要求各取一次真实 HTTP 请求与响应，全部来自隔离实例与隔离库的一次连续执行（脚本 `.runtime/audit-stage1/capture_samples.py`，完整片段见 [http-response-samples.json](../results/stage1-audit/http-response-samples.json)）。ID、分享码与时间为该次运行的真实值，未保存凭据与会话 cookie。
+
+| 类别 | 请求 | 状态 |
+| --- | --- | --- |
+| 创建问卷 | `POST /api/surveys` | 201 |
+| 添加题目与跳转规则 | `PUT /api/surveys/{id}` | 200 |
+| 发布问卷 | `POST /api/surveys/{id}/publish` | 200 |
+| 跳转逻辑（q1 选“手机”） | `POST /api/fill/{code}/next` | 200 |
+| 校验（多选超过上限） | `POST /api/fill/{code}/next` | 422 |
+| 校验（数字题非整数） | `POST /api/fill/{code}/next` | 422 |
+| 提交问卷 | `POST /api/fill/{code}/submit` | 200 |
+| 统计（整卷） | `GET /api/surveys/{id}/statistics` | 200 |
+| 统计（单题） | `GET /api/surveys/{id}/statistics/q3` | 200 |
+| 答卷明细 | `GET /api/surveys/{id}/responses` | 200 |
+
+```json
+// 创建问卷 → 201
+{"id":"9bb337bc-0085-441d-8d66-083ec80e21fa","title":"响应片段样例问卷","description":"用于测试报告附录",
+ "allow_anonymous":false,"allow_repeat":true,"closes_at":null,"status":"draft","revision":0,"version":null,
+ "share_code":"IiOk2tsoChvEfIjg","share_url":"/survey/IiOk2tsoChvEfIjg","questions":[],"rules":[],
+ "created_at":"2026-10-16T13:22:57.443612+00:00","updated_at":"2026-10-16T13:22:57.443612+00:00"}
+
+// 跳转逻辑：q1 选“手机”(o4) 后，服务端把下一题定为 q4 并返回实际路径 → 200
+{"path":["q1","q4"],"next_question_id":"q4","complete":false,"answers":{"q1":"o4"}}
+
+// 校验：多选超过“最多 2 项” → 422
+{"error":{"code":"validation","message":"多选答案超过最多选择数量","question_id":"q2"}}
+
+// 校验：整数题给 1.5 → 422
+{"error":{"code":"validation","message":"此数字题必须填写整数","question_id":"q3"}}
+
+// 提交问卷 → 200（回执；同 request_id 重试会返回同一 id 且 replayed=true）
+{"id":"4a94ece0-0525-4d49-ab80-7e8e7ad6d9fc","submitted_at":"2026-10-16T13:22:57.575000+00:00","replayed":false}
+
+// 统计（整卷）→ 200，节选
+{"survey_id":"9bb337bc-0085-441d-8d66-083ec80e21fa","version":1,"submissions":1,"respondents":1,
+ "questions":[{"id":"q1","type":"single","answered_submissions":1,"answered_people":1,
+   "options":[{"id":"o1","label":"笔记本电脑","count":1,"people":1},{"id":"o2","label":"台式机","count":0,"people":0}]},
+  {"id":"q3","type":"number","answered_submissions":1,"answered_people":1,"values":[30],"mean":30.0}]}
+```

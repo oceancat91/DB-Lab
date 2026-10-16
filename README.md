@@ -45,7 +45,7 @@ python -m uvicorn survey_app.main:app --host 127.0.0.1 --port 8004
 
 打开 http://127.0.0.1:8004/ ，注册新账号后创建问卷。密码至少8字符。mongod独立绑定127.0.0.1:27084，副本集lab4rs，数据在本目录.runtime/mongo，业务库lab4_survey；没有使用旧Lab的27017服务。初始化会校验实际数据目录归属，不会清空既有数据库。应用在启动时也会检查Schema及索引。
 
-`.env` 由脚本生成随机会话密钥，已有文件不覆盖。配置变量为 MONGODB_URI、MONGODB_DATABASE、SESSION_SECRET、COOKIE_SECURE；环境变量优先于.env。使用其他端口或副本集时，启动及初始化分别传入 `-Port / -ReplicaSet` 和 `--port / --replica-set`，并同步连接串。本地实验使用HTTP与回环无认证实例，公网部署需要另行配置认证、TLS和访问控制。
+`.env` 由脚本生成随机会话密钥，已有文件不覆盖。配置变量为 MONGODB_URI、MONGODB_DATABASE、SESSION_SECRET、COOKIE_SECURE、SESSION_TTL_SECONDS（会话有效期秒数，默认 86400，同时决定 Mongo 会话文档的 expires_at）；环境变量优先于.env。使用其他端口或副本集时，启动及初始化分别传入 `-Port / -ReplicaSet` 和 `--port / --replica-set`，并同步连接串。本地实验使用HTTP与回环无认证实例，公网部署需要另行配置认证、TLS和访问控制。
 
 本地网页需要应用进程持续运行；若出现 `ERR_CONNECTION_REFUSED`，先确认上述uvicorn命令正在运行，启动后刷新浏览器。可访问 http://127.0.0.1:8004/health 检查应用及数据库连通；重启电脑后需要重新启动本地服务。
 
@@ -60,6 +60,8 @@ python -m pytest tests --evidence results/local-run.json -q
 python scripts/check_schema.py --output results/local-schema.json
 python scripts/check_workflow.py
 ```
+
+这三个 `--output/--evidence` 路径是**本地运行产物**：首次执行才会生成（当前仓库里只保留了已执行的 `results/local-run.json`），可以自行改名或换目录，不会覆盖阶段证据。交付物中的固定证据是 `results/S1`、`results/S2` 等阶段文件，以及 `results/acceptance`、`results/stage1-audit` 下的验收与复核记录。
 
 pytest自动新建lab4_test_api_UUID测试库，结束只清理该精确新库。业务数据和会话全部持久化到真实MongoDB，不使用关系数据库或文件替代。流程检查器只核对文档/状态/证据结构，不能代替业务测试。Starlette在固定版本中提示TestClient/httpx兼容路径未来弃用，当前实测正常；浏览器与真实HTTP另行验证。
 
