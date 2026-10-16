@@ -219,3 +219,11 @@ EXP-014 推送恢复（2026-10-16 晚间）：复核发现本机 WinINET 配置�
 用户要求“先检查并解决网络问题，再依次解决可解决的16个问题”，即 EXP-014 报告中除“本人贡献留白”（必须由学生本人填写）以外的 16 项。范围与处置逐项记录在 results/stage1-audit/report.md 第 9 节。改动分三类：**前端两处**（新建对话框补匿名/重复开关；规则优先级重复的客户端即时校验）、**测试一处**（注册时间落库断言，不改变用例数）、**文档多处**（索引-查询对照表与措辞、样例文档补四类题型与两种问卷形态、演进思路、SESSION_TTL_SECONDS、待确认口径、响应片段附录、复跑说明、编号说明、统计响应边界与二期口径）。第 13 项经核实为**非缺陷**：lab4_environment 是文档化的环境探针库、lab4_test_browser_* 是浏览器验收留证库，两者都被证据引用，保留不删，原判在本报告中更正。
 
 实际验证：全量 `python -m pytest tests --evidence results/local-run.json -q` 得 **245 passed**（exit 0；新增断言首次因 BSON 日期只有毫秒精度而失败，改为毫秒容差后通过，失败过程如实记录在本地运行记录中）；`python scripts/check_schema.py --output results/stage1-audit/schema-check.json` 在改动后复跑仍为 **PASS、43 项 0 失败、测试库清理 PASS**；`python scripts/check_workflow.py` 得 **ERROR=0/WARN=0**；CSS 选择器覆盖比对（相对上一提交）丢失 0、新增 .create-policy；新增自动化浏览器用例 `scripts/browser_smoke.py` 实测 **8/8 通过**（results/browser-smoke/），新建对话框开关的界面验证 `results/stage1-audit/create-dialog-check.json` 实测 **8/8 通过**（API 回读确认 allow_anonymous=False、allow_repeat=True 与界面选择一致）。临时实例（8005）与临时库 lab4_ui_smoke_5e8d1c3a7f42 已停止并删除，业务库未改动，既有阶段证据未改写。未解决项只剩第 1 项本人贡献，按课程要求必须由学生本人完成。
+
+## EXP-016 本人贡献内容写入报告（2026-10-16 Asia/Shanghai）
+
+用户核对 Word 原文后确认「五、AI 编程要求 → 5.2 AI 使用说明」确实要求总结“自己改了什么、自己设计了什么”（原文段落 115–121，证据 results/stage1-audit/word-ai-section.txt），并提供了本人贡献内容，要求写入报告：**本人设计**为（1）完整设计项目工作流，（2）质量验收与人工、自动化测试；**本人修改**为从 EXP-014/EXP-015 的整改项中选取 6 条；**AI 做错了什么**按与这 6 条一一对应的口径填写，控制条数以免失真。
+
+处置：改写 docs/REPORT_STAGE1.md 第 8 节的四段内容——AI 帮了什么保留原文；AI 做错了什么列 5 条产品级错误（创建入口缺匿名/重复开关、优先级重复无前置提示、漏写 SESSION_TTL_SECONDS、索引描述含糊无对照、测试证据停在断言层）并另附实现期的技术性错误清单（含本轮新增断言按微秒比较、浏览器脚本管道空等超时）；本人改了什么列出 6 条并逐条给出落盘文件与本人验收方式；本人设计了什么列出 2 条并给出落盘文档与执行记录。同时保留原句“agent 实际设计了登录后匿名、冻结快照、真实 gate 事务、判重与幂等分离、稳定路径和统计口径”，明确这部分属 AI 工作、不记入本人贡献；并写明本节本人内容由本人提供、agent 仅整理表述，未替本人补充或推断未发生的工作。
+
+边界说明：本人贡献的具体表述由学生本人给出，agent 无法独立核实其真实性，也不代替本人确认“已理解全部模块”。results/S7/submission-review.json 中 S7 时点的 “student_personal_work: Not supplied” 属当时事实，保留不改写，最新状态以本报告第 8 节为准。results/stage1-audit/report.md 的第 1 项缺口已相应标注为“已由学生本人完成”。本次只改文档，未改业务代码与测试；改动后重新打包并复核。
