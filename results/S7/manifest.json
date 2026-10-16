@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at": "2026-10-16T22:46:37.738134+08:00",
+  "created_at": "2026-10-16T22:53:01.216646+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
   "self_exclusions": [
@@ -48,8 +48,8 @@
     },
     {
       "path": "docs/AI_USAGE.md",
-      "bytes": 36755,
-      "sha256": "7d3e8909636167fbced7b08b36cc03ec57cb89b90bb838b61cb1aca54fe73a45"
+      "bytes": 38149,
+      "sha256": "25078972890bb4d33aac72596d37a7e13553d288c215223f66007e49aadf2875"
     },
     {
       "path": "docs/API.md",
@@ -78,8 +78,8 @@
     },
     {
       "path": "docs/EXPERIMENT_LOG.md",
-      "bytes": 51965,
-      "sha256": "39edb745cd4130b37f30bf391e9c09c35c63755b68ac5adde369995182012912"
+      "bytes": 53330,
+      "sha256": "b8ae741baa4061e7588e134d8d20d3859259899903665040f17a9e3f69ef6256"
     },
     {
       "path": "docs/LOGIC.md",
@@ -88,8 +88,8 @@
     },
     {
       "path": "docs/REPORT_STAGE1.md",
-      "bytes": 33097,
-      "sha256": "d5e102ac1ad7bb4f62f2dc9f61f61974f7e0e8875addfa9d98a8d7711f4af0ff"
+      "bytes": 26401,
+      "sha256": "93f428bc04984a888d6e6c6525ad00276a1d7f2747c8cd438d2e595dae55d810"
     },
     {
       "path": "docs/REQUIREMENTS.md",
@@ -748,8 +748,8 @@
     },
     {
       "path": "results/stage1-audit/final-check.txt",
-      "bytes": 1309,
-      "sha256": "7148ccd1951bce59617a69e32c9a9ef92e15b5cc76a3a2b95d82cc2aba0f2154"
+      "bytes": 1782,
+      "sha256": "393570e8c939174e0c8e6d0a117307960322cbefb51a984f400f91d824bd39d3"
     },
     {
       "path": "results/stage1-audit/gate-workflow.txt",
@@ -775,6 +775,11 @@
       "path": "results/stage1-audit/pytest-run.json",
       "bytes": 236153,
       "sha256": "abe900a48b3120b23bf8e7572688e49fadc1ad333ce486e6b92c3102939d1e5b"
+    },
+    {
+      "path": "results/stage1-audit/report-pdf-check.txt",
+      "bytes": 938,
+      "sha256": "0ee96ae3d97f34363e8dd22111bd6e7e19d4477dae4e7209f5403b8db6660a35"
     },
     {
       "path": "results/stage1-audit/report.md",
@@ -968,8 +973,8 @@
     },
     {
       "path": "scripts/build_report_pdf.py",
-      "bytes": 11212,
-      "sha256": "400bc86e50fb738ca928942e330092de6d5271848b39153eb1bed21ece98fdaa"
+      "bytes": 11283,
+      "sha256": "2fc17f0e1e383dbe33df0e7550bfb6ce5140026f709551c27a09339ce34d75ec"
     },
     {
       "path": "scripts/check_schema.py",
