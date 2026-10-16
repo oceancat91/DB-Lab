@@ -462,7 +462,7 @@
   }
 
   async function loadFill() {
-    $("fill-content").replaceChildren(el("p", "muted", "正在读取问卷…"));
+    $("fill-content").replaceChildren(el("p", "fill-loading", "正在读取问卷…"));
     try {
       const survey = await api(`/api/fill/${encodeURIComponent(shareCode)}`);
       state.fill = newFill(survey);
@@ -481,7 +481,9 @@
       applyFillResult(await nextFill({}));
       renderFillSession();
     } catch (error) {
-      $("fill-content").replaceChildren(el("h1", "", "暂时无法打开问卷"), el("p", "muted", error.message));
+      const failed = el("div", "fill-failed");
+      failed.append(el("h1", "", "暂时无法打开问卷"), el("p", "muted", error.message));
+      $("fill-content").replaceChildren(failed);
       throw error;
     }
   }
@@ -521,24 +523,67 @@
     const validation = question.validation || {};
     const hints = [];
     if (question.type === "multi") {
+      const { min_choices: min, max_choices: max } = validation;
       if (validation.exact_choices !== undefined) hints.push(`请选择 ${validation.exact_choices} 项`);
-      else {
-        if (validation.min_choices !== undefined) hints.push(`最少 ${validation.min_choices} 项`);
-        if (validation.max_choices !== undefined) hints.push(`最多 ${validation.max_choices} 项`);
-      }
+      else if (min !== undefined && max !== undefined) hints.push(`请选择 ${min}–${max} 项`);
+      else if (min !== undefined) hints.push(`至少选择 ${min} 项`);
+      else if (max !== undefined) hints.push(`最多选择 ${max} 项`);
     }
     if (question.type === "text") {
-      if (validation.min_length !== undefined) hints.push(`最少 ${validation.min_length} 字`);
-      if (validation.max_length !== undefined) hints.push(`最多 ${validation.max_length} 字`);
-      hints.push("按 Unicode 码点计字数，保留原文");
+      const { min_length: min, max_length: max } = validation;
+      if (min !== undefined && max !== undefined) hints.push(`填写 ${min}–${max} 字`);
+      else if (min !== undefined) hints.push(`至少 ${min} 字`);
+      else if (max !== undefined) hints.push(`最多 ${max} 字`);
+      if (min !== undefined || max !== undefined) hints.push("按 Unicode 码点计字数");
     }
     if (question.type === "number") {
-      if (validation.min_value !== undefined) hints.push(`不小于 ${validation.min_value}`);
-      if (validation.max_value !== undefined) hints.push(`不大于 ${validation.max_value}`);
-      if (validation.integer_only) hints.push("仅允许整数");
+      const { min_value: min, max_value: max } = validation;
+      const kind = validation.integer_only ? "整数" : "数字";
+      if (min !== undefined && max !== undefined) hints.push(`填写 ${min}–${max} 之间的${kind}`);
+      else if (min !== undefined) hints.push(`不小于 ${min} 的${kind}`);
+      else if (max !== undefined) hints.push(`不大于 ${max} 的${kind}`);
+      else if (validation.integer_only) hints.push("仅允许整数");
     }
-    if (!question.required) hints.push("可留空并继续");
-    return hints.join("；");
+    if (!question.required) hints.push("可留空");
+    return hints.join("，");
+  }
+
+  function questionNumber(id) {
+    const index = state.fill.survey.questions.findIndex((question) => question.id === id);
+    return index < 0 ? "" : String(index + 1).padStart(2, "0");
+  }
+
+  // The rail shows the path the server actually computed: answered questions are
+  // re-openable, the current question is marked, and the rest is undecided until
+  // an answer is given. Numbers are questionnaire positions, so skipped
+  // questions show up as a gap instead of a hidden branch.
+  function fillPath(fill, currentId) {
+    const rail = el("nav", "fill-path fill-history");
+    rail.setAttribute("aria-label", "答题进度");
+    rail.append(el("p", "fill-path-title", "答题进度"));
+    const list = el("ol", "fill-path-list");
+    const answered = fill.path.filter((id) => id !== currentId && Object.hasOwn(fill.answers, id));
+    for (const id of answered) {
+      const previous = fillQuestion(id);
+      const item = el("li", "fill-path-item is-done");
+      const edit = el("button", "fill-path-link");
+      edit.type = "button";
+      edit.dataset.testid = `fill-edit-${id}`;
+      edit.title = previous.title;
+      edit.append(el("span", "fill-path-index", questionNumber(id)), el("span", "fill-path-text", previous.title));
+      edit.addEventListener("click", () => action(edit, () => goToFillQuestion(id)));
+      item.append(edit);
+      list.append(item);
+    }
+    const current = el("li", "fill-path-item is-current");
+    current.setAttribute("aria-current", "step");
+    current.append(el("span", "fill-path-index", questionNumber(currentId)), el("span", "fill-path-text", fillQuestion(currentId).title));
+    list.append(current);
+    const later = el("li", "fill-path-item is-later");
+    later.append(el("span", "fill-path-index", "…"), el("span", "fill-path-text", "按回答继续"));
+    list.append(later);
+    rail.append(list, el("p", "fill-path-note", "跳过的题目不显示，点题号可回改。"));
+    return rail;
   }
 
   function fillError(error) {
@@ -589,14 +634,19 @@
     const panel = el("section", "fill-question");
     panel.dataset.testid = "fill-question";
     panel.dataset.questionId = question.id;
-    panel.append(el("p", "fill-progress", `第 ${position} 题 / 共 ${fill.survey.questions.length} 题（根据回答可能跳题）`));
+    const top = el("div", "fill-question-top");
+    top.append(el("p", "fill-progress", `第 ${position} 题 / 共 ${fill.survey.questions.length} 题`));
+    top.append(el("span", `fill-required${question.required ? "" : " is-optional"}`, question.required ? "必答" : "选答"));
     const heading = el("h2", "", question.title);
     heading.id = "fill-question-heading";
     heading.tabIndex = -1;
-    const type = el("span", "fill-required", question.required ? "必答" : "选答");
-    panel.append(heading, type);
-    const hint = el("p", "muted", fillHint(question)); hint.id = "fill-hint";
-    panel.append(hint);
+    panel.append(top, heading);
+    const hintText = fillHint(question);
+    if (hintText) {
+      const hint = el("p", "fill-hint muted", hintText);
+      hint.id = "fill-hint";
+      panel.append(hint);
+    }
     const form = el("form", "fill-form");
     form.id = "fill-answer-form"; form.dataset.testid = "fill-answer-form"; form.noValidate = true;
     const value = fill.reviewId === question.id ? fill.reviewValue : fill.answers[question.id];
@@ -671,18 +721,10 @@
         } catch (failure) { fillError(failure); throw failure; }
       });
     });
-    panel.append(form); session.append(panel);
-    const visited = fill.path.filter((id) => id !== question.id && Object.hasOwn(fill.answers, id));
-    if (visited.length) {
-      const history = el("nav", "fill-history"); history.setAttribute("aria-label", "返回修改已答题");
-      history.append(el("p", "muted", "返回修改已答题（后续回答会清除）"));
-      for (const id of visited) {
-        const previous = fillQuestion(id);
-        const edit = button(previous.title, "quiet", () => action(edit, () => goToFillQuestion(id)), `fill-edit-${id}`);
-        history.append(edit);
-      }
-      session.append(history);
-    }
+    panel.append(form);
+    const body = el("div", "fill-body");
+    body.append(fillPath(fill, question.id), panel);
+    session.append(body);
   }
 
   function renderFillReview(session) {
@@ -697,6 +739,7 @@
     for (const id of fill.path) {
       const question = fillQuestion(id);
       const item = el("li"); item.dataset.testid = `fill-review-${id}`;
+      item.append(el("span", "fill-review-index", questionNumber(id)));
       const row = el("div", "fill-review-row");
       row.append(el("h3", "", question.title));
       const edit = button("修改", "quiet", () => action(edit, () => goToFillQuestion(id)), `fill-edit-${id}`);
@@ -762,7 +805,7 @@
     const heading = el("h2", "", "提交成功"); heading.id = "fill-receipt-heading"; heading.tabIndex = -1;
     panel.append(heading, el("p", "", "你的回答已保存，谢谢参与。"));
     const details = el("dl", "receipt-details");
-    details.append(el("dt", "", "回执编号"), el("dd", "", fill.receipt.id), el("dt", "", "提交时间"), el("dd", "", submittedTime(fill.receipt.submitted_at)));
+    details.append(el("dt", "", "回执编号"), el("dd", "receipt-id", fill.receipt.id), el("dt", "", "提交时间"), el("dd", "", submittedTime(fill.receipt.submitted_at)));
     panel.append(details);
     if (fill.receipt.replayed) panel.append(el("p", "muted", "已确认先前提交成功，本次重试没有新增答卷。"));
     if (fill.survey.allow_repeat) {

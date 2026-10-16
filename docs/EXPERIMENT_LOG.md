@@ -157,3 +157,27 @@ S7收尾实测：2026-10-16，backup-restore.json首轮PASS exit0；静止合成
 用户报告http://127.0.0.1:8004/ ERR_CONNECTION_REFUSED。已完整重读规范/工作流/状态与运行文档，结构检查0ERROR/0WARN；S0-S7已完成，不新增阶段。只读核查MongoDB27084运行且dbPath确属本项目、lab4rs可写；8004无应用监听。原隐藏后台启动命令被工具策略拒绝执行，未产生进程或计划文件。现改用受管理终端启动现有conda环境的uvicorn，便于查看日志/停止；验证/health、首页及当前浏览器。禁止清库/改密钥，不更改受验业务代码；运行证据在.runtime，日志改变后刷新交付摘要。
 
 EXP-012实际结果：现有conda Python在受管理终端session80096启动uvicorn，PID20744；127.0.0.1:8004监听，/health真实HTTP200，status=ok/database=connected。没有改业务代码、清库、改密钥或重新安装依赖。浏览器URL安全策略拒绝获取当前错误页（协议检查未通过），未尝试替代浏览器/DOM旁路；因此本次不宣称页面视觉复测通过，用户需手动刷新。README补充进程需持续运行及连接拒绝/健康检查说明。日志和说明更新后重新打包、核验文件摘要；既有业务验收仍适用。self-improving判断no-delta：这是本项目进程运行状态及启动说明问题，不修改全局技能/规则。
+
+## EXP-013 填写页面前端改版（2026-10-16 Asia/Shanghai，事前）
+
+用户当前明确指示优先于本项目约定：要求读取 Lab4 并调用前端设计技能优化问卷页面。已向用户确认范围为“填写页面为主、整体视觉系统同步”，视觉方向由 agent 按问卷题材确定。本项是 S7 结束后用户新增的界面改进，不新增阶段、不新增需求编号、不改动受验业务语义（服务端、Schema、API、校验、跳转、提交、统计逻辑全部不变），只改表现层。
+
+范围与文件：R03/R09/R11 的展示层。改动文件限于 `survey_app/static/app.css` 与 `survey_app/static/app.js`；`survey_app/templates/index.html` 与全部 Python 代码不改。保留既有 id 与 data-testid 契约（fill-view、fill-title、fill-save-note、fill-question、fill-answer-form、fill-answer、fill-option-*、fill-clear、fill-next、fill-back、fill-hint、fill-error、fill-question-heading、fill-edit-*、fill-review*、fill-submit*、fill-receipt*），既有定位方式仍有效。
+
+设计判断（先方案后实现）：配色为纸与墨，页面底 #F4F5F2、卡面 #FFFFFF、正文 #1B2422、次要文字 #56615E、发丝线 #E1E5E1、主色松墨绿 #1D6B5E、选中底 #E8F0ED，朱砂红 #B23A2E 只用于“必答”与回执编号；标题/题干用宋体系（Songti SC／SimSun 等），界面与正文用 Segoe UI + 微软雅黑栈，数字走 Latin 字体与 tabular-nums，中文不使用负字距。布局为单列纸面（≤760px），答题区在桌面分两栏：左侧 132px 答题路径轨（真实路径的序号、可点回改、当前题标记、末端按回答继续），右侧为当前题；移动端路径轨折为横向编号条。原则：一屏一题、结构即信息（序号只标记真实路径）、纸与线（发丝线分隔而非圆角卡片堆叠与阴影）、一处用力（朱砂红只出现两处）、中文排版（题干行高 1.7、行宽 ≤34 汉字）。
+
+课程合规说明：Word 只写“界面可简单”，未指定风格；本次不增加任何功能、不改变填写与提交流程，故不改变 R01–R14 的验收口径，也不需要重跑业务门禁。但待交付包 `dist/Lab4-stage1.zip` 及其清单摘要会与改后的静态文件不一致；本次先完成改版与验证并如实记录，是否重新打包由用户决定，不静默改写 S7 已通过证据。
+
+验证计划：1) `scripts/check_workflow.py` 结构检查；2) 全量 pytest（自动新建并仅清理 UUID 测试库）；3) 新 UUID 库 + 独立端口 8005 的真实浏览器验证填写、回改、核对、提交回执，截图存 `results/ui-refresh/`；4) 选择器覆盖比对，确认改版未丢失既有 CSS 选择器；5) 只停止本次新建的进程并按精确库名清理。禁止清空既有数据库、禁止改密钥、禁止用静态预览冒充真实浏览器验证。
+
+EXP-013实际结果：只改了 `survey_app/static/app.css`、`survey_app/static/app.js` 与本文档，`index.html` 和 Python 代码未动（`git status` 仅此三项）。新 app.css 摘要 049F606F8A355654830BFF4F37D28EC4248CB87B02688A15FCFCCE7BBAAAAE17，新 app.js 摘要 85FF0B197D9F662D8E5951FF07099DF81B21D1E5419BA3C1DEB645F2EE9F6062。结构检查 ERROR=0/WARN=0（results/ui-refresh/workflow-check.txt）；全量回归 `python -m pytest tests --evidence results/local-run.json -q` 得 245 passed、1 warning（既有 Starlette/httpx 弃用提示）、退出码 0。选择器覆盖比对（本地工具 .runtime/ui-refresh/check_selectors.py）显示旧 250 项、新 271 项，丢失 10 项：3 项 .fill-history* 与 1 项 .fill-question>.muted 属有意替换为 .fill-path*／.fill-hint，6 项 .preview-* 经全仓库检索确认无 JS/HTML 产生属遗留死规则；据此还发现并补回统计页仍在用的 .question-type 和 .fill-review 基础间距。真实浏览器验证在隔离实例进行：同一 conda 环境另起 uvicorn 监听 127.0.0.1:8005，MONGODB_DATABASE 覆盖为 lab4_ui_check_4f2a91c7b3d5，seed.py 经真实 API 建 1 份已发布问卷（5 题覆盖四类题型，2 条真实跳转规则）及两个合成账号；改版前后各截 1440×900（移动 390×844）同名截图，见 [改版证据](../results/ui-refresh/review.md)。实测通过：正向填写四类题、按 q1=手机 跳至 q4 且路径轨编号由 01 断档到 04、点路径轨 q2 回改后路径截断为 01+02 且原选项保留 2 项、核对页编号为问卷题号、提交回执显示新回执编号、Tab 后选项行 outline 为 2px rgb(29,107,94)、console 与页面错误均为空；夹具库记录 4 份答卷（全程版本 1），业务库 lab4_survey 未写入。未验证项：仅本机 Chrome 与 390×844 一档移动宽度，prefers-reduced-motion 只核对规则存在，未重跑或改写 S0–S7 任何原验收证据。偏差提示：dist/Lab4-stage1.zip 内静态文件摘要已与改后工作树不一致，本次未重新打包，是否重打由用户决定。验证结束后停止本次 8005 进程并按精确库名清理该隔离库。
+
+### EXP-013 续：交付包重建与 S7 产物快照（2026-10-16 Asia/Shanghai）
+
+用户确认“按最佳解决方法办”。处理原则是不改写 S7 已通过的原始证据，只为改后状态新增可追溯记录。先逐字节快照 S7 时点产物：`results/S7/manifest.json`（27732 字节，a2b7fbf242e894ccedc68482f98f3b67045afffd6e54a682f646da3984290950）与 `results/S7/package-check.json`（634 字节，ab66f80278fe405c27be88dd4a28329de1e4e5f6ce72a7086f9fda21d81dcd6d）复制为 `results/S7/archive/manifest-s7-baseline.json` 与 `package-check-s7-baseline.json`；S7 时点交付包 `dist/Lab4-stage1.zip`（636693 字节，1dd92dcb5dac605183db384c7b91c529fc3acd219727ced0b43771ca8989ba5f）复制为 `dist/Lab4-stage1-s7-baseline.zip` 并生成配套 `.sha256`；快照与复制的摘要一致性、来源和用途记录在 results/ui-refresh/repackaging.json，说明见 [S7 快照说明](../results/S7/archive/README.md)。
+
+基线范围实测：以 results/S7/code-baseline.json 的 21 个业务文件逐项重算工作树摘要与 LF 归一化摘要，19 项与 S7 基线一致、2 项改变、0 项缺失；改变的只有 survey_app/static/app.css 与 survey_app/static/app.js，即 EXP-013 的界面改版，服务端、Schema、校验、跳转、提交、统计与全部测试文件未变。逐项结果见 [基线复核](../results/ui-refresh/code-baseline-check.json)。据此判定 S7 门禁 G7.1–G7.3 的实质结论不受影响：改版后全量 245 项测试再次通过，并新增真实浏览器验证；本次不重跑业务门禁、不改任何原验收断言、不删除原失败记录。
+
+随后以当前工作树重建交付包：`python scripts/package_stage1.py`，脚本自身完成 ZIP CRC、清单逐文件字节与 SHA-256、条目唯一与路径安全、本机会话密钥不出现等检查后才写出 PASS 证明；重建后的 dist/Lab4-stage1.zip 及 .zip.sha256、results/S7/manifest.json、results/S7/package-check.json 均为改后状态的当前记录，S7 时点值以上述快照为准。README 打包一节同步说明“每次重建都会得到新摘要”以及快照位置，避免把基线包当成当前包提交。
+
+重建后另做一次独立解包复核（本地工具 .runtime/ui-refresh/verify_package.py，只读压缩包并解包到 .runtime）：压缩包摘要与 dist/Lab4-stage1.zip.sha256 一致；清单 193 行逐字节与 SHA-256 全部匹配、0 行不符；无 .env/.runtime/dist/results/Lab4/缓存等禁用条目（.env.example 属必需占位文件，按原脚本规则仅排除名为 .env 的文件）；解包副本内 `python scripts/check_workflow.py` 退出码 0；三份 S7 快照摘要与复制时记录一致。复核结果落在 results/ui-refresh/package-verify.json，该文件在打包之后生成，因此不在本次压缩包的清单内，属构建后本地复核记录，包内完整性仍以包内 manifest 与 package-check 为准。

@@ -1,0 +1,28 @@
+{
+  "created_at": "2026-10-16T15:18:06.825625+08:00",
+  "purpose": "Preserve S7-time packaging artifacts before rebuilding the delivery archive after the EXP-013 UI refresh.",
+  "snapshots": [
+    {
+      "source": "results/S7/manifest.json",
+      "snapshot": "results/S7/archive/manifest-s7-baseline.json",
+      "bytes": 27732,
+      "sha256": "a2b7fbf242e894ccedc68482f98f3b67045afffd6e54a682f646da3984290950",
+      "identical_copy": true
+    },
+    {
+      "source": "results/S7/package-check.json",
+      "snapshot": "results/S7/archive/package-check-s7-baseline.json",
+      "bytes": 634,
+      "sha256": "ab66f80278fe405c27be88dd4a28329de1e4e5f6ce72a7086f9fda21d81dcd6d",
+      "identical_copy": true
+    },
+    {
+      "source": "dist/Lab4-stage1.zip",
+      "snapshot": "dist/Lab4-stage1-s7-baseline.zip",
+      "bytes": 636693,
+      "sha256": "1dd92dcb5dac605183db384c7b91c529fc3acd219727ced0b43771ca8989ba5f",
+      "identical_copy": true,
+      "checksum_file": "dist/Lab4-stage1-s7-baseline.zip.sha256"
+    }
+  ]
+}

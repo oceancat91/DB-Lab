@@ -1,0 +1,41 @@
+{
+  "created_at": "2026-10-16T21:00:06.963521+08:00",
+  "archive": "dist/Lab4-stage1.zip",
+  "archive_bytes": 2208578,
+  "archive_sha256": "1b9a3ccd482f54035b6b932ed9d8fde16766aaae005be01ad3c0eb560c4461e8",
+  "checksum_file_matches": true,
+  "zip_entries_including_manifest_and_proof": 195,
+  "manifest_file_count": 193,
+  "proof_file_count": 195,
+  "proof_status": "PASS",
+  "manifest_rows_verified": 193,
+  "manifest_mismatches": [],
+  "forbidden_entries": [],
+  "unpacked_to": ".runtime/ui-refresh/unpacked",
+  "unpacked_workflow_check_exit": 0,
+  "unpacked_workflow_check_output": [
+    "流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。",
+    "结构检查结束：ERROR=0，WARN=0。WARN 须在实验日志逐条解释。",
+    "结构检查通过；业务测试与逐条门禁仍需真实证据和人工审阅。"
+  ],
+  "s7_snapshots": [
+    {
+      "snapshot": "results/S7/archive/manifest-s7-baseline.json",
+      "recorded_sha256": "a2b7fbf242e894ccedc68482f98f3b67045afffd6e54a682f646da3984290950",
+      "current_sha256": "a2b7fbf242e894ccedc68482f98f3b67045afffd6e54a682f646da3984290950",
+      "unchanged": true
+    },
+    {
+      "snapshot": "results/S7/archive/package-check-s7-baseline.json",
+      "recorded_sha256": "ab66f80278fe405c27be88dd4a28329de1e4e5f6ce72a7086f9fda21d81dcd6d",
+      "current_sha256": "ab66f80278fe405c27be88dd4a28329de1e4e5f6ce72a7086f9fda21d81dcd6d",
+      "unchanged": true
+    },
+    {
+      "snapshot": "dist/Lab4-stage1-s7-baseline.zip",
+      "recorded_sha256": "1dd92dcb5dac605183db384c7b91c529fc3acd219727ced0b43771ca8989ba5f",
+      "current_sha256": "1dd92dcb5dac605183db384c7b91c529fc3acd219727ced0b43771ca8989ba5f",
+      "unchanged": true
+    }
+  ]
+}

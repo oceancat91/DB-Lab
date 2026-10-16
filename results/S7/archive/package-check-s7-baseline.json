@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "time": "2026-10-16T14:15:06.051669+08:00",
+  "command": "python scripts/package_stage1.py",
+  "scope": "ZIP integrity, exact manifest bytes, entries and actual local secret exclusion; no business tests run.",
+  "manifest_file_count": 159,
+  "zip_file_count": 161,
+  "checks": [
+    "unique safe Lab4 paths",
+    "CRC",
+    "all manifest SHA256 and byte counts",
+    "runtime/cache/credentials excluded",
+    "actual local session secrets absent"
+  ],
+  "exit_code": 0,
+  "note": "This proof and manifest exclude their own hashes to avoid a circular digest. ZIP digest is in dist/*.sha256."
+}

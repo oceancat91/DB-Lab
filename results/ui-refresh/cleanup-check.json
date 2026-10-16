@@ -1,0 +1,11 @@
+{
+  "leak_check_before_drop": {
+    "business_database": "lab4_survey",
+    "business_databases_present": true,
+    "fixture_titled_surveys": 0,
+    "fixture_users": 0
+  },
+  "dropped": "lab4_ui_check_4f2a91c7b3d5",
+  "check_database_still_present": false,
+  "business_database_still_present": true
+}

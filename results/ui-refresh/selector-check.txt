@@ -1,0 +1,44 @@
+旧版本选择器 250 个，新版本 271 个
+新版丢失的选择器（10）：
+  - .fill-history
+  - .fill-history.button
+  - .fill-history>.muted
+  - .fill-question>.muted
+  - .preview-list
+  - .preview-question
+  - .preview-question.muted
+  - .preview-question:last-child
+  - .preview-questionh3
+  - .preview-questionul
+新版新增的选择器（31）：
+  + .fill-body
+  + .fill-choice:has(input:focus-visible)
+  + .fill-failed
+  + .fill-failedh1
+  + .fill-hint
+  + .fill-loading
+  + .fill-path
+  + .fill-path-index
+  + .fill-path-item
+  + .fill-path-item.is-current
+  + .fill-path-item.is-current.fill-path-index
+  + .fill-path-item.is-current.fill-path-text
+  + .fill-path-item.is-done.fill-path-index
+  + .fill-path-item.is-done:before
+  + .fill-path-item.is-later
+  + .fill-path-item.is-later.fill-path-index
+  + .fill-path-item.is-later.fill-path-text
+  + .fill-path-item:before
+  + .fill-path-item:last-child
+  + .fill-path-item:last-child:before
+  + .fill-path-link
+  + .fill-path-link:hover
+  + .fill-path-link:hover.fill-path-text
+  + .fill-path-list
+  + .fill-path-note
+  + .fill-path-text
+  + .fill-path-title
+  + .fill-question-top
+  + .fill-required.is-optional
+  + .fill-review-index
+  + .receipt-id

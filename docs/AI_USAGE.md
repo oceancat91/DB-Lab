@@ -97,3 +97,17 @@ AI-010实际结论：恢复agent生成合法夹具、限定新UUID的BSON恢复�
 ## AI-011 本地连接拒绝恢复
 
 2026-10-16 Asia/Shanghai，用户原文“无法访问此站点，127.0.0.1拒绝建立连接，ERR_CONNECTION_REFUSED”。Codex主agent读取规范和启动说明、核验MongoDB与端口；发现8004无应用监听。隐藏后台启动命令被工具策略拒绝（命令未执行），改用受管理终端启动既有conda uvicorn；实测监听及/health200、数据库connected。浏览器自动操作被URL策略拒绝，未绕过，也未冒称截图/页面复测；提示用户手动刷新。更新README启动诊断说明及实验日志，刷新交付清单；不改业务源码/数据，不把此前AI截图当本次成功证据。模型具体版本未知。
+
+## AI-012 填写页面前端改版
+
+- 日期：2026-10-16，Asia/Shanghai；工具为本次会话的 agent（底层模型标识 deepseek-flash，按会话配置记录，未独立核验服务端版本）；浏览器操作用 agent-browser 0.38.2 驱动本机 Chrome。
+- 原始提示词：“阅读lab4，调用skill优化前端问卷页面”。用户随后确认范围为“填写页面为主，整体视觉系统同步”，视觉方向由 agent 按问卷题材确定。
+- 使用的技能：`frontend-design`（视觉方向、字体、布局与自我复核）与 `agent-browser`（真实浏览器操作）。
+- 生成的代码位置：`survey_app/static/app.css`（整表重写为分节可读样式并替换配色令牌）、`survey_app/static/app.js`（填写页渲染层：答题路径轨、进度行与必答标记、提示文案、核对编号、回执编号、加载与失败态）。`templates/index.html` 与 Python 后端未改。
+- 是否采纳与修改：整体采纳并逐项复核。AI 首版样式表漏掉统计页仍在用的 `.question-type`、`.fill-review` 基础间距，经选择器覆盖比对发现后补回；第 1 题为必答且无限制时提示为空，会留下无目标的 `aria-describedby`，改为无提示时不渲染该节点；AI 最初把“必答”标记放在题目行最右端，实测观感割裂，改为与进度行同组。
+- 实际发现的 AI 错误：一是首轮对比时未意识到样式表须重新加载页面才生效，阶段性“改版后”截图实为旧样式，已删除重拍；二是用 `#fill-restart` 定位按钮，而该按钮只有 `data-testid`，三次误判为“元素不存在”，属 AI 自身定位错误而非应用缺陷。
+- 未采纳的建议：选项字母编号与自定义单选框判定为无信息量的装饰，未采纳；不引入网络字体或前端构建工具，避免离线与依赖风险。
+- 实际验证命令与结果：`python scripts/check_workflow.py`（ERROR=0/WARN=0）；`python -m pytest tests --evidence results/local-run.json -q`（245 passed，退出码 0）；隔离实例 127.0.0.1:8005 与库 `lab4_ui_check_4f2a91c7b3d5` 的真实浏览器流程（改版前后截图、分支跳题、回改已答题、键盘焦点、console 与页面错误为空）。证据见 [改版证据](../results/ui-refresh/review.md)。
+- 未验证内容及影响：仅本机 Chrome、390×844 一档移动宽度；`prefers-reduced-motion` 只核对规则存在；其他操作系统的字体回退未验证。
+- 收尾处置：用户确认“按最佳解决方法办”后，AI 先逐字节快照 S7 时点的 manifest、打包检查与交付包，再按改后工作树重建 `dist/Lab4-stage1.zip`，并把 21 个业务文件的基线与工作树逐项比对（19 项一致、2 项为本次表现层改动、0 项缺失）。处置原则与结果见实验日志 EXP-013 续、[S7 快照说明](../results/S7/archive/README.md) 与 [基线复核](../results/ui-refresh/code-baseline-check.json)；AI 未改写 S7 门禁结论，也未删除任何原证据。
+- 学生本人贡献：任务与范围选择由用户提出，其余设计与实现为 agent 完成；对代码的理解、修改与最终取舍须由学生本人真实确认，本日志不代填。

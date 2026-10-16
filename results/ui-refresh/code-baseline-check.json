@@ -1,0 +1,127 @@
+{
+  "created_at": "2026-10-16T15:18:15.939605+08:00",
+  "scope": "Read-only comparison of the S7 business-file baseline with the current working tree.",
+  "baseline_file": "results/S7/code-baseline.json",
+  "baseline_application_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
+  "total_entries": 21,
+  "unchanged_count": 19,
+  "changed_count": 2,
+  "missing_count": 0,
+  "unchanged": [
+    {
+      "path": "environment.yml",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "pytest.ini",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/__init__.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/config.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/db.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/errors.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/main.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/models.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/questions.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/security.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/service.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/statistics.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/submissions.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "survey_app/templates/index.html",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "tests/conftest.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "tests/test_admin.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "tests/test_rules.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "tests/test_statistics.py",
+      "working_match": true,
+      "git_lf_match": true
+    },
+    {
+      "path": "tests/test_submissions.py",
+      "working_match": true,
+      "git_lf_match": true
+    }
+  ],
+  "changed": [
+    {
+      "path": "survey_app/static/app.css",
+      "baseline_working_sha256": "aad2e79da305e5d8678136faad76371efb28409fb3f7e5259ab8e1750f887ea2",
+      "current_working_sha256": "049f606f8a355654830bff4f37d28ec4248cb87b02688a15fcfcce7bbaaaae17",
+      "baseline_git_lf_sha256": "aad2e79da305e5d8678136faad76371efb28409fb3f7e5259ab8e1750f887ea2",
+      "current_git_lf_sha256": "049f606f8a355654830bff4f37d28ec4248cb87b02688a15fcfcce7bbaaaae17",
+      "reason": "EXP-013 填写页面前端改版（仅表现层）"
+    },
+    {
+      "path": "survey_app/static/app.js",
+      "baseline_working_sha256": "0fd13105f6bc42ea306402fabf2089f655db073c6f7a44a5c0adebbbb77d72b7",
+      "current_working_sha256": "85ff0b197d9f662d8e5951ff07099df81b21d1e5419ba3c1deb645f2ee9f6062",
+      "baseline_git_lf_sha256": "0fd13105f6bc42ea306402fabf2089f655db073c6f7a44a5c0adebbbb77d72b7",
+      "current_git_lf_sha256": "85ff0b197d9f662d8e5951ff07099df81b21d1e5419ba3c1deb645f2ee9f6062",
+      "reason": "EXP-013 填写页面前端改版（仅表现层）"
+    }
+  ],
+  "missing": [],
+  "conclusion": "仅下列文件在 S7 之后被用户授权的界面改版修改"
+}

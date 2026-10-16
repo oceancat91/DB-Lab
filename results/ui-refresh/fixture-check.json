@@ -1,0 +1,25 @@
+{
+  "check_database": "lab4_ui_check_4f2a91c7b3d5",
+  "business_database_untouched": true,
+  "collections": [
+    "responses",
+    "sessions",
+    "survey_versions",
+    "surveys",
+    "users"
+  ],
+  "surveys": [
+    {
+      "title": "数据库系统课程反馈问卷",
+      "status": "published",
+      "share_code_prefix": "HT5A…"
+    }
+  ],
+  "survey_version_snapshots": 1,
+  "response_count": 4,
+  "response_versions": [
+    1
+  ],
+  "index_count_surveys": 3,
+  "index_count_responses": 4
+}

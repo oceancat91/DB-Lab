@@ -1,6 +1,25 @@
-# MongoDB 在线问卷系统 · Lab4 第一阶段
+# 数据库课程实验 · MongoDB 在线问卷系统
 
-Lab4 是项目根目录。本项目按 [WORKFLOW.md](WORKFLOW.md) 和 [AGENTS.md](AGENTS.md) 顺序实施，只覆盖《大作业一第一阶段》。当前 S0–S7 全部验收通过，第一阶段实验已完成；已执行验收结果见 [测试报告](docs/TEST_REPORT.md)，实际状态见 [progress.json](progress.json)。
+仓库地址：<https://github.com/oceancat91/DB-Lab>
+
+数据库管理系统课程大作业第一阶段的完整实现：用 MongoDB 做持久化的在线问卷系统，包含账号与所有权隔离、问卷与四类题型的配置、服务端校验与可配置跳转、发布分享、登录后填写与提交，以及按真实数据自动生成的统计，并附真实数据库测试、实验日志与人工智能使用记录。
+
+仓库根目录即项目根目录，按 [WORKFLOW.md](WORKFLOW.md) 与 [AGENTS.md](AGENTS.md) 顺序实施，只覆盖《大作业一第一阶段》。当前 S0–S7 全部验收通过，最近一次改动是 2026-10-16 的填写页面改版；实际状态见 [progress.json](progress.json)，已执行验收结果见 [测试报告](docs/TEST_REPORT.md)。
+
+```powershell
+git clone https://github.com/oceancat91/DB-Lab.git
+cd DB-Lab
+```
+
+## 界面改版（2026-10-16）
+
+填写页面按“纸与墨”重做：问卷标题与题干用宋体系、界面正文用无衬线体系，主色改为松墨绿，朱砂红只保留给“必答”标记与回执编号；答题区左侧新增**答题路径轨**，按真实路径列出已答题目（可点回改）、当前题与“按回答继续”，跳过的题目以题号断档体现。改动只涉及 `survey_app/static/app.css` 与 `survey_app/static/app.js`，服务端、Schema、校验、跳转、提交与统计逻辑未变。
+
+![改版后的填写页：左侧路径轨与题干](results/ui-refresh/after/05-question-text-rail.png)
+
+![分支跳题：第 1 题选“手机”后跳到第 4 题，题号由 01 断档到 04](results/ui-refresh/after/11-branch-gap.png)
+
+改版前后对比截图、逐项检查与未验证范围见 [改版证据](results/ui-refresh/review.md)；改版过程、设计判断与 AI 记录见 [实验日志](docs/EXPERIMENT_LOG.md) EXP-013 与 [AI 使用记录](docs/AI_USAGE.md) AI-012。
 
 ## 功能与语义
 
@@ -12,7 +31,7 @@ Lab4 是项目根目录。本项目按 [WORKFLOW.md](WORKFLOW.md) 和 [AGENTS.md
 
 ## 运行
 
-需要 conda、MongoDB 6.0或兼容版本，且 mongod 在 PATH。全部命令在本文件所在目录的 PowerShell 执行。Python依赖由 conda 管理，不使用 pip。已验证版本见 [环境说明](docs/ENVIRONMENT.md)。
+需要 conda、MongoDB 6.0或兼容版本，且 mongod 在 PATH。全部命令在仓库根目录的 PowerShell 执行。Python依赖由 conda 管理，不使用 pip。已验证版本见 [环境说明](docs/ENVIRONMENT.md)。
 
 ```powershell
 conda env create --file environment.yml --yes
@@ -47,8 +66,8 @@ pytest自动新建lab4_test_api_UUID测试库，结束只清理该精确新库�
 ## 已执行验收
 
 - 第一阶段26组用例全部通过，见 [测试报告](docs/TEST_REPORT.md)。
-- 全量245项测试通过；独立新conda环境再次245/245，Schema43/43，23步真实HTTP及应用重启持久化通过。
-- 浏览器真实验证创建、四类校验、回改跳转、提交回执、匿名明细、整卷/单题统计及关闭。
+- 全量245项测试通过；独立新conda环境再次245/245，Schema43/43，23步真实HTTP及应用重启持久化通过；填写页面改版后245项再次通过。
+- 浏览器真实验证创建、四类校验、回改跳转、提交回执、匿名明细、整卷/单题统计及关闭；改版另做分支跳题、回改已答题与键盘焦点验证，见 [改版证据](results/ui-refresh/review.md)。
 - BSON备份恢复后3份答卷/2人、均值15及原回执一致，见 [恢复证据](results/S7/backup-restore.json)。
 - 四种10请求同时起跑用于验证并发正确性；此结果不代表容量或生产性能指标。
 
@@ -62,16 +81,19 @@ pytest自动新建lab4_test_api_UUID测试库，结束只清理该精确新库�
 - [系统与使用说明](docs/SYSTEM.md)、[数据库设计](docs/DATABASE.md)、[API](docs/API.md)、[关键逻辑](docs/LOGIC.md)、[环境](docs/ENVIRONMENT.md)。
 - [第一阶段完成报告](docs/REPORT_STAGE1.md)、[测试报告](docs/TEST_REPORT.md)、[基线与恢复说明](docs/BASELINE_STAGE1.md)。
 - [实验日志](docs/EXPERIMENT_LOG.md)、[AI使用记录](docs/AI_USAGE.md)及`results/S1`至`results/S7`、`results/acceptance`实际阶段证据。
+- [填写页改版证据](results/ui-refresh/review.md)与[S7 快照说明](results/S7/archive/README.md)。
 - [源作业Word](大作业一第一阶段.docx)和`references/`来源副本。
 
-`.env`、`.runtime/`、环境、Git内部文件及缓存不属于提交内容。`results/Lab4/`是历史重复包，不作为入口或当前交付物；Lab1–Lab3是独立实验，本项目未修改。最终提交四类材料为可运行代码/配置、设计说明、测试用例与真实结果、完整报告；S7交付门禁已通过，详见 [最终门禁](results/S7/gates.md)。
+`.env`、`.runtime/`、`dist/`、环境、Git内部文件及缓存不属于提交内容，因此克隆后没有本机会话密钥、没有运行时数据库、也没有现成压缩包。`results/Lab4/`是历史重复包，不作为入口或当前交付物；Lab1–Lab3是独立实验，本项目未修改。最终提交四类材料为可运行代码/配置、设计说明、测试用例与真实结果、完整报告；S7交付门禁已通过，详见 [最终门禁](results/S7/gates.md)。
 
 ## 打包与已知范围
 
-交付包为 `dist/Lab4-stage1.zip`，解压后入口是Lab4/README.md。配套 `.zip.sha256` 校验压缩包，`results/S7/manifest.json`记录每个提交文件的实际字节摘要；清单和打包检查记录不对自身递归求摘要。重建交付包可运行：
+交付包 `dist/Lab4-stage1.zip` 不入库，克隆后按需在本地生成，解压后入口是Lab4/README.md；同时生成配套 `.zip.sha256` 校验压缩包，`results/S7/manifest.json`记录每个提交文件的实际字节摘要，清单和打包检查记录不对自身递归求摘要：
 
 ```powershell
 python scripts/package_stage1.py
 ```
+
+该命令按当前工作树重建压缩包、清单和打包检查，因此每次重建都会得到新的摘要。S7 通过后用户追加了一次填写页面改版（见 [实验日志](docs/EXPERIMENT_LOG.md) EXP-013）：`dist/Lab4-stage1.zip` 已按改版后的工作树重建，改版只动 `survey_app/static/app.css` 与 `survey_app/static/app.js`；S7 时点的包与清单逐字节快照保留在 `dist/Lab4-stage1-s7-baseline.zip`（同样不入库）与 [S7 快照说明](results/S7/archive/README.md)，21 个业务文件的基线复核见 [基线复核](results/ui-refresh/code-baseline-check.json)。
 
 包中保留源Word、规范、代码、文档、真实测试/失败记录及合成夹具；排除本机配置、运行时数据库/备份、Git内部文件、环境和缓存。生产认证/TLS、容量压力、其他操作系统/浏览器与完整移动设备适配未验收。当前统计加载可能使滚动位置变化，人为畸形百分号分享URL尚无友好提示；正常生成链接完整链路已通过，详见 [代码复核](results/acceptance/final-code-review.md)。
