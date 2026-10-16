@@ -85,7 +85,7 @@ def inline(text: str) -> str:
     return re.sub(r"\*\*([^*]+)\*\*", lambda m: f"<strong>{m.group(1)}</strong>", text)
 
 
-def convert(markdown: str) -> str:
+def convert(markdown: str, name: str = "", student_id: str = "") -> str:
     lines = markdown.splitlines()
     body: list[str] = []
     headings: list[tuple[int, str]] = []
@@ -170,7 +170,11 @@ def convert(markdown: str) -> str:
         f'<li><span class="num">{html.escape(text.split(".")[0])}</span>'
         f'{inline(text.split(". ", 1)[-1])}</li>'
         for level, text in headings if level == 2 and text[:1].isdigit())
-    cover = """
+    blank = '<span class="fill"></span>'
+    author_fields = "".join(
+        f'<div><b>{label}</b>{html.escape(value) if value else blank}</div>'
+        for label, value in (("姓名", name), ("学号", student_id)))
+    cover = f"""
 <section class="cover">
   <div class="kicker">数据库管理系统 · 大作业一</div>
   <h1>MongoDB 在线问卷系统<br>第一阶段项目完成报告</h1>
@@ -178,8 +182,7 @@ def convert(markdown: str) -> str:
   <div class="meta">
     <div><b>课程</b>数据库管理系统</div>
     <div><b>项目</b>基于 MongoDB 的问卷系统开发（第一阶段）</div>
-    <div><b>姓名</b><span class="fill"></span></div>
-    <div><b>学号</b><span class="fill"></span></div>
+    {author_fields}
     <div><b>日期</b>2026 年 10 月 16 日</div>
   </div>
   <div class="note">本报告对应《大作业一第一阶段》“七、提交内容”第 4 项，覆盖项目目标、系统设计、MongoDB 设计、跳转设计、校验设计、AI 使用过程、测试结果、遇到的问题及解决办法。</div>
@@ -206,6 +209,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", default=str(SOURCE))
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
+    parser.add_argument("--name", default="", help="封面姓名；留空则打印空白填写行（不写入仓库）")
+    parser.add_argument("--student-id", default="", help="封面学号；留空则打印空白填写行（不写入仓库）")
     arguments = parser.parse_args()
 
     source, output = Path(arguments.source), Path(arguments.output)
@@ -219,7 +224,8 @@ def main() -> int:
 
     WORKDIR.mkdir(parents=True, exist_ok=True)
     page = WORKDIR / "report.html"
-    page.write_text(convert(source.read_text(encoding="utf-8")), encoding="utf-8")
+    page.write_text(convert(source.read_text(encoding="utf-8"), arguments.name, arguments.student_id),
+                    encoding="utf-8")
     output.parent.mkdir(parents=True, exist_ok=True)
     command = [str(binary), "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
                "--virtual-time-budget=4000", "--run-all-compositor-stages-before-draw",
