@@ -151,3 +151,9 @@ S6收尾：26/26组PASS；新conda、干净归档副本、独立MongoDB与HTTP�
 用户提示“继续”。中断前报告与SYSTEM已实际落盘，但恢复演示和交付包未完成；恢复时不把旧计划当成功。完整重读规范/状态/决策与测试计划，当前S7 active。首个流程检查因README已引用但BASELINE尚未落盘报1ERROR（results/S7/workflow-resume.txt）；先补真实基线说明并消除该结构错误，再运行恢复演示。根继续核验四类材料、21业务基线摘要、ZIP清单/秘密排除和真实解压结构检查，保留所有失败历史；除新增交付工具外业务代码不变。
 
 S7收尾实测：2026-10-16，backup-restore.json首轮PASS exit0；静止合成源snapshot五集合BSON恢复，文档/Schema/index相等，3份2人均值15、三原回执重放无写入，双精确UUID库清理PASS，sessions空不覆盖。报告与Word四类/九项审阅通过。归档预检156文件真实解压、清单SHA/字节全部匹配、当前文档链接0错、解压后workflow0，业务21文件未变；见unpacked-preflight.json。S7全部门禁据实通过并将current_stage设为complete；最后状态元数据变更后用同一工具重建和复核最终ZIP，最终摘要随包单独保存。原结构1ERROR与其修复0ERROR输出均保留，无未解释WARN。
+
+## EXP-012 本地站点连接恢复（2026-10-16 Asia/Shanghai，事前）
+
+用户报告http://127.0.0.1:8004/ ERR_CONNECTION_REFUSED。已完整重读规范/工作流/状态与运行文档，结构检查0ERROR/0WARN；S0-S7已完成，不新增阶段。只读核查MongoDB27084运行且dbPath确属本项目、lab4rs可写；8004无应用监听。原隐藏后台启动命令被工具策略拒绝执行，未产生进程或计划文件。现改用受管理终端启动现有conda环境的uvicorn，便于查看日志/停止；验证/health、首页及当前浏览器。禁止清库/改密钥，不更改受验业务代码；运行证据在.runtime，日志改变后刷新交付摘要。
+
+EXP-012实际结果：现有conda Python在受管理终端session80096启动uvicorn，PID20744；127.0.0.1:8004监听，/health真实HTTP200，status=ok/database=connected。没有改业务代码、清库、改密钥或重新安装依赖。浏览器URL安全策略拒绝获取当前错误页（协议检查未通过），未尝试替代浏览器/DOM旁路；因此本次不宣称页面视觉复测通过，用户需手动刷新。README补充进程需持续运行及连接拒绝/健康检查说明。日志和说明更新后重新打包、核验文件摘要；既有业务验收仍适用。self-improving判断no-delta：这是本项目进程运行状态及启动说明问题，不修改全局技能/规则。

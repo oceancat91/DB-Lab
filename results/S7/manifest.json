@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "created_at": "2026-10-16T13:52:04.694099+08:00",
+  "created_at": "2026-10-16T14:15:06.051669+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
   "self_exclusions": [
@@ -38,8 +38,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 6679,
-      "sha256": "11c6f4a3b8e3990dd0a52fae09ab49d0b8733f30a9ddc520b42952f7a55f18cf"
+      "bytes": 6955,
+      "sha256": "15263b0d11db818c574943b67322510abac67dbc9eea1eb26513a3775ac60c63"
     },
     {
       "path": "WORKFLOW.md",
@@ -48,8 +48,8 @@
     },
     {
       "path": "docs/AI_USAGE.md",
-      "bytes": 11831,
-      "sha256": "7bb37c56e1a24b79b82c8727d8799c8f488002b46b31e2a86d71764627c241a7"
+      "bytes": 12543,
+      "sha256": "474a09717ed6ad0e961a5bd4f1b9e3865ec0bc092d9a6e197a52e4331b2b01ff"
     },
     {
       "path": "docs/API.md",
@@ -78,8 +78,8 @@
     },
     {
       "path": "docs/EXPERIMENT_LOG.md",
-      "bytes": 21933,
-      "sha256": "d6777020f683318f86d28b8cf665e40d259239aa01d52022b99a6b24e547735f"
+      "bytes": 23338,
+      "sha256": "d025d15ee6b0b3a95745a722f3219410a4b1b65bc31581ba302acac6d92992be"
     },
     {
       "path": "docs/LOGIC.md",

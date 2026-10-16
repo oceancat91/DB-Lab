@@ -28,6 +28,8 @@ python -m uvicorn survey_app.main:app --host 127.0.0.1 --port 8004
 
 `.env` 由脚本生成随机会话密钥，已有文件不覆盖。配置变量为 MONGODB_URI、MONGODB_DATABASE、SESSION_SECRET、COOKIE_SECURE；环境变量优先于.env。使用其他端口或副本集时，启动及初始化分别传入 `-Port / -ReplicaSet` 和 `--port / --replica-set`，并同步连接串。本地实验使用HTTP与回环无认证实例，公网部署需要另行配置认证、TLS和访问控制。
 
+本地网页需要应用进程持续运行；若出现 `ERR_CONNECTION_REFUSED`，先确认上述uvicorn命令正在运行，启动后刷新浏览器。可访问 http://127.0.0.1:8004/health 检查应用及数据库连通；重启电脑后需要重新启动本地服务。
+
 停止应用按Ctrl+C。数据库仅在确认是本项目进程后停止；数据保留在.runtime。若已有同名conda环境，使用 `conda env update --file environment.yml`，不要盲目重建环境。
 
 ## 验证
