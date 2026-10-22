@@ -323,3 +323,9 @@
 - 未对并发 `POST /versions`、`POST /share` 做专门的并发夹具；一致性依赖唯一索引，未用真实并发请求验证（一阶段的并发夹具不覆盖新接口）。
 - 示例中“按代码构造”的响应没有对应的真实 HTTP 记录；只有标注“实际响应”的代码块可追溯到 [http-e2e.json](../results/stage2/http-e2e.json)。
 - 页面交互（点击、表单、弹窗）没有浏览器会话证据；只验证了 `/library` 与静态资源返回 200。
+
+## 补充（2026-10-22）：从题库加入时按钉住版本
+
+`POST /api/surveys/{survey_id}/questions/import` 的请求体新增可选 `bank_id`。版本选择顺序为：
+显式 `version` → 该题库条目钉住的 `question_version` → 题目当前版本。`bank_id` 必须属于当前用户，
+且该题必须在该题库中，否则返回 404；成功时响应仍是更新后的问卷草稿。

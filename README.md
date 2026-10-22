@@ -2,9 +2,12 @@
 
 仓库地址：<https://github.com/oceancat91/DB-Lab>
 
-数据库管理系统课程大作业第一阶段的完整实现：用 MongoDB 做持久化的在线问卷系统，包含账号与所有权隔离、问卷与四类题型的配置、服务端校验与可配置跳转、发布分享、登录后填写与提交，以及按真实数据自动生成的统计，并附真实数据库测试、实验日志与人工智能使用记录。
+数据库管理系统课程大作业，分两阶段交付，全部业务数据持久化在 MongoDB：
 
-仓库根目录即项目根目录，按 [WORKFLOW.md](WORKFLOW.md) 与 [AGENTS.md](AGENTS.md) 顺序实施，只覆盖《大作业一第一阶段》。当前 S0–S7 全部验收通过，最近一次改动是 2026-10-16 的填写页面改版；实际状态见 [progress.json](Lab4-1/progress.json)，已执行验收结果见 [测试报告](Lab4-1/docs/TEST_REPORT.md)。
+- **一阶段（`Lab4-1/`）**：在线问卷系统基线——账号与所有权隔离、问卷与四类题型配置、服务端校验与可配置跳转、发布分享、登录后填写与提交、按真实数据生成的统计。
+- **二阶段（`Lab4-2/`）**：可复用题目库——题目作为独立实体与不可变版本、题目级共享、题库、查看题目被哪些问卷使用、跨问卷单题统计。
+
+两阶段共用本目录下的 [AGENTS.md](AGENTS.md)、[WORKFLOW.md](WORKFLOW.md) 与本文，阶段目录内不再放这三份文件。步骤与门禁见 WORKFLOW（一阶段 S0–S7、二阶段 T0–T7），各阶段状态见各自目录下的 `progress.json`，验收结果分别见 [一阶段测试报告](Lab4-1/docs/TEST_REPORT.md) 与 [二阶段测试报告](Lab4-2/docs/TEST_REPORT.md)。
 
 ```powershell
 git clone https://github.com/oceancat91/DB-Lab.git
@@ -143,3 +146,14 @@ python scripts/migrate_question_library.py --apply
 python -m pytest tests --evidence results/stage2/pytest.json -q
 python scripts/package_stage2.py                       # 生成 dist/Lab4-stage2.zip
 ```
+
+## 一键检查
+
+两个阶段的结构检查与全量测试可以用一个脚本跑完（先激活 conda 环境）：
+
+```powershell
+.\scripts\check_all.ps1              # 结构检查 + 两阶段 pytest
+.\scripts\check_all.ps1 -SkipTests   # 只跑结构检查
+```
+
+脚本按顺序执行、汇总退出码，任一失败即返回 1；结构检查只核对记录，不证明业务行为。

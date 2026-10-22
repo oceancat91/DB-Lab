@@ -459,3 +459,27 @@ def test_concurrent_new_versions_keep_a_contiguous_history(client, client_factor
     versions = [row["version"] for row in detail["versions"]]
     assert versions == list(range(1, len(versions) + 1)), f"version history has a gap: {versions}"
     assert detail["current_version"] == max(versions)
+
+
+def test_import_from_bank_uses_the_pinned_version(client):
+    """Picking a question out of a bank honours that bank entry's pin, not the newest version."""
+    question = create_question(client)
+    bank_id = client.post("/api/banks", json={"name": "钉版题库"}).json()["id"]
+    client.post(f"/api/banks/{bank_id}/items", json={"question_id": question["id"], "version": 1})
+    new_version(client, question["id"], title="题库之后又更新了")
+
+    pinned = create_survey(client, "用题库钉住版本")
+    imported = client.post(f"/api/surveys/{pinned['id']}/questions/import",
+                           json={"question_id": question["id"], "bank_id": bank_id})
+    assert imported.status_code == 201, imported.text
+    assert imported.json()["questions"][0]["question_version"] == 1
+
+    explicit = create_survey(client, "显式指定版本")
+    imported2 = client.post(f"/api/surveys/{explicit['id']}/questions/import",
+                            json={"question_id": question["id"], "bank_id": bank_id, "version": 2})
+    assert imported2.json()["questions"][0]["question_version"] == 2
+
+    missing = create_survey(client, "题库里没有这题")
+    rejected = client.post(f"/api/surveys/{missing['id']}/questions/import",
+                           json={"question_id": question["id"], "bank_id": str(uuid4())})
+    assert rejected.status_code == 404

@@ -122,6 +122,8 @@ class BankVersionInput(InputModel):
 class ImportQuestionInput(InputModel):
     question_id: str = Field(min_length=1, max_length=64, pattern=r'^[A-Za-z0-9_-]+$', strict=True)
     version: StrictInt | None = Field(default=None, ge=1)
+    bank_id: str | None = Field(default=None, min_length=1, max_length=64,
+                                pattern=r'^[A-Za-z0-9_-]+$', strict=True)
 
 
 class RevisionInput(InputModel):

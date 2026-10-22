@@ -497,13 +497,22 @@ class LibraryService:
 
     # ---------------------------------------------------------------- survey integration
     def import_into_survey(self, survey_id: str, user_id: str, question_id: str,
-                           version: int | None = None) -> dict:
+                           version: int | None = None, bank_id: str | None = None) -> dict:
         self._require_surveys()
         survey = self.surveys.owned(survey_id, user_id)
         if survey["status"] != "draft":
             raise DomainError(409, "immutable", "发布后不能修改题目")
         entity = self._accessible(question_id, user_id)
-        pinned = version or entity["current_version"]
+        pinned = version
+        if pinned is None and bank_id is not None:
+            # Picking from a bank uses the version that bank entry pins, not "whatever is newest".
+            self._bank(bank_id, user_id)
+            item = self.db.question_bank_items.find_one({"bank_id": bank_id, "question_id": question_id})
+            if item is None:
+                raise DomainError(404, "not_found", "该题不在指定题库中")
+            pinned = item["question_version"]
+        if pinned is None:
+            pinned = entity["current_version"]
         version_doc = self._version(question_id, pinned)
         draft = deepcopy(survey["draft"])
         if any(question.get("id") == question_id for question in draft["questions"]):

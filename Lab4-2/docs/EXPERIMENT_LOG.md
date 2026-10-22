@@ -129,3 +129,22 @@ ormalize_question_refs 原来在列表推导里逐题查 question_shares，已�
 实测：全量 python -m pytest tests --evidence results/stage2/pytest.json -q 得 **262 passed**（245 一阶段 + 17 二阶段），exit 0；其中二阶段新增 	est_usage_scope_hides_other_owners_surveys 与 	est_concurrent_new_versions_keep_a_contiguous_history 两项。
 
 仍未处理（下一轮）：题库条目 pin 与“加入问卷”默认版本仍未打通；题目删除/归档、分享链接、CI 均未做；二阶段报告尚无 PDF/Word；README.md 正文叙事仍以一阶段为主（链接已修）；一阶段旧提交中的本人姓名未重写（待本人决定）。
+
+## 修复轮（2026-10-22 第二轮）：题库 pin、报告载体、README 与统一检查
+
+1. **题库 pin 打通**：`import_into_survey` 新增可选 `bank_id`，未显式给版本时使用题库条目钉住的版本
+   （顺序：显式 version → 题库 pin → current_version）；接口 `POST /api/surveys/{id}/questions/import`
+   与请求模型同步。测试 `test_import_from_bank_uses_the_pinned_version`：建题 → 入题库钉 v1 → 出新版本 v2 →
+   用 `bank_id` 加入得到 v1、显式 `version=2` 得到 v2、不在题库中的 `bank_id` 返回 404。
+2. **二阶段报告 PDF/Word**：把一阶段的生成脚本复制到 `Lab4-2/scripts/` 并改源文件与封面（第二阶段、
+   2026-10-22、仓库链接），生成 `dist/Lab4-stage2-report.pdf`（752575 字节、8 页、1 个链接注释）与
+   `dist/Lab4-stage2-report.docx`（53923 字节、103 段、13 张表、12 个标题、页脚含 PAGE 域），
+   内容检查 8 项全 PASS。
+3. **README 改为两阶段叙事**：开头改为“两阶段交付”的总述并分别指向 `Lab4-1/`、`Lab4-2/` 的测试报告，
+   不再写成“只覆盖第一阶段”。
+4. **统一检查脚本**：新增 `Lab4/scripts/check_all.ps1`，依次跑两个阶段的结构检查与全量测试并汇总退出码；
+   不写死解释器路径（默认 PATH 上的 `python`，可用 `-Python` 覆盖），`-SkipTests` 只跑结构检查。
+
+实测：`pytest tests/test_library.py` 17 项通过；二阶段报告生成与检查见上；`check_all.ps1` 实跑结果见
+本轮命令输出。尚未处理：历史中本人姓名的重写（待本人决定）、题目删除/归档与分享链接（需求外，未做）、
+题目库登录后的浏览器交互验证（受工具限制，见 EXP-107）。

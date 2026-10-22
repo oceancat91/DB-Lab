@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_at": "2026-10-22T19:25:40.682278+08:00",
+  "created_at": "2026-10-22T19:36:52.102378+08:00",
   "layout": "shared governance documents at archive root; second stage under Lab4-2/",
   "scope": "Exact submitted bytes for the second stage; first stage ships separately.",
   "self_exclusions": [
@@ -37,13 +37,13 @@
     },
     {
       "path": "Lab4-2/docs/AI_USAGE.md",
-      "bytes": 13736,
-      "sha256": "d4e45a18fb52408305c6af560e6b3c223b4ab43fcb3794d2076f0967f5449eaf"
+      "bytes": 15349,
+      "sha256": "d062324b0be494bc1da11db394e7b1d71015dade69b91a58fda64433696f44f7"
     },
     {
       "path": "Lab4-2/docs/API.md",
-      "bytes": 22227,
-      "sha256": "038a6bd67a179cc68151f2af42cf6168e4ef4cd05d5d43fde580894c534b1189"
+      "bytes": 22962,
+      "sha256": "78a81bf1f643483cf80c04182d685267bc74c4cbf9726ac53ea1a9dbf21a8b69"
     },
     {
       "path": "Lab4-2/docs/DATABASE.md",
@@ -57,13 +57,13 @@
     },
     {
       "path": "Lab4-2/docs/EXPERIMENT_LOG.md",
-      "bytes": 20169,
-      "sha256": "88c852c5419022b198fbb55630c5efb693d649213557e9b87088f773b7daac4d"
+      "bytes": 21978,
+      "sha256": "2c160ef8ce10dbe585b386b022852e66cdc55204fc4cfd8af1f2edee3b16dc24"
     },
     {
       "path": "Lab4-2/docs/LOGIC.md",
-      "bytes": 15788,
-      "sha256": "d65f54ca64c7b9e40805c0a6315973d9e9ab7490960d21760c9df2277b0cb7ec"
+      "bytes": 16357,
+      "sha256": "7a6b321e4f6996ad437c0db22363fec23fdf07e2789ea28ed33532c0759c77f1"
     },
     {
       "path": "Lab4-2/docs/REPORT_STAGE2.md",
@@ -191,9 +191,14 @@
       "sha256": "84ed00b3e2060405c97a7e283def368d4e2fdfe863545dd28838b4fb87c0176b"
     },
     {
-      "path": "Lab4-2/results/stage2/pytest.json",
+      "path": "Lab4-2/results/stage2/pytest-20261022T193532974621.json",
       "bytes": 247898,
       "sha256": "6df0014b860c56f13a20ec941bdc0abfaf061ed8f074c8ee8263fc45ec29070d"
+    },
+    {
+      "path": "Lab4-2/results/stage2/pytest.json",
+      "bytes": 248622,
+      "sha256": "bb985fdb31ef039392a871b9e192a27f88425e668b8abcc1efef47d38d5bf46a"
     },
     {
       "path": "Lab4-2/results/stage2/schema-check.json",
@@ -214,6 +219,16 @@
       "path": "Lab4-2/scripts/browser_smoke.py",
       "bytes": 10375,
       "sha256": "a7ee3883e0fe23f8377caaab9fdf9ea7a6ad02591f0010580e63dd93163ed425"
+    },
+    {
+      "path": "Lab4-2/scripts/build_report_docx.py",
+      "bytes": 13632,
+      "sha256": "b291f1337a7ee002bc0922975a436d7a75cfaa177318adb7436270d6d8cdbe23"
+    },
+    {
+      "path": "Lab4-2/scripts/build_report_pdf.py",
+      "bytes": 11437,
+      "sha256": "73038de164b085e73262bfb929d917f42864286560bdef8a1fb6d67ad7e10c4f"
     },
     {
       "path": "Lab4-2/scripts/check_schema.py",
@@ -277,18 +292,18 @@
     },
     {
       "path": "Lab4-2/survey_app/library.py",
-      "bytes": 33341,
-      "sha256": "e856818302b6b4150da491c2b73c11a53ed14f4e4f1b0ec871248e38f56eb6c9"
+      "bytes": 33869,
+      "sha256": "78c4c46b2ccc565d3e4f18e004d01a76d173e0ee280715c2478a377e5d38edbe"
     },
     {
       "path": "Lab4-2/survey_app/main.py",
-      "bytes": 14161,
-      "sha256": "d22239398a341dc0222daf1a0631790b09363fb48420a06da483df0aa7332d59"
+      "bytes": 14175,
+      "sha256": "4b413d2dba2fb8b2f029bb1b9f43a87bd502f4e5cc0c36a8ea0ea392c4216ad1"
     },
     {
       "path": "Lab4-2/survey_app/models.py",
-      "bytes": 4596,
-      "sha256": "96d28e41127c808ed444f67472102a50e6bbafb2cec74d07e3c24e993d3f432b"
+      "bytes": 4745,
+      "sha256": "9742711ab6e83f8fd414ea27b8b17ec4c13188c187ed783fc155b75ac0e6ab76"
     },
     {
       "path": "Lab4-2/survey_app/questions.py",
@@ -357,8 +372,8 @@
     },
     {
       "path": "Lab4-2/tests/test_library.py",
-      "bytes": 23292,
-      "sha256": "5fdedeb2a06da332b8740eacb74e6a8f60bff3492d3b702a0401dc6ec9b6bef4"
+      "bytes": 24668,
+      "sha256": "df2a9a61eee88ae85f432d1a2e5067e25172fcaa88ce9dd48ad36c2948c33d4d"
     },
     {
       "path": "Lab4-2/tests/test_migration.py",
@@ -387,8 +402,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 12870,
-      "sha256": "276914f17068e797d8e77d4e1c62d029529fa207de0be0c6e5306fdf4f6ca08e"
+      "bytes": 13441,
+      "sha256": "6c6de6af2da7c230346d89ea813b6698a004b10527d99d53041a94bf52fd0490"
     },
     {
       "path": "WORKFLOW.md",

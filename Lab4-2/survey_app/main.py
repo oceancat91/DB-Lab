@@ -280,7 +280,7 @@ def create_app(settings: Settings | None = None):
     @app.post('/api/surveys/{survey_id}/questions/import', status_code=201)
     def import_question(survey_id: str, body: ImportQuestionInput, request: Request):
         return library(request).import_into_survey(survey_id, user(request)['_id'],
-                                                   body.question_id, body.version)
+                                                   body.question_id, body.version, body.bank_id)
 
     @app.post('/api/surveys/{survey_id}/questions/{question_id}/revision')
     def revise_question(survey_id: str, question_id: str, body: RevisionInput, request: Request):

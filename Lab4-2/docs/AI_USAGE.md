@@ -98,3 +98,18 @@ AI 错误与修正：
 - 实际发现的 AI 错误：a) agent-browser 在 Windows 管道下 fill/click 失效且 screenshot/errors 挂起，agent 连续两次等到超时；b) agent 一开始把“未登录时显示登录面板”当作脚本成功的间接证据是对的，但随后在数据库里看到的两条同标题题目重复记录属同一批 HTTP 运行产物，未误记为浏览器产物（已按 created_at 核对）。
 - 未验证内容及影响：登录后交互全部未验证；题目库页面仍只有 HTTP 与自动化测试证据。
 - 学生贡献：无（本次为验证尝试，未产生交付内容）。
+
+## AI-106 第二轮修复：题库 pin、报告载体、README、统一检查
+
+- 日期：2026-10-22，Asia/Shanghai。触发：用户要求“按顺序完成修复”，随后指出我把“上下文容量”当成事实陈述。
+- agent 产物：`library.py` 的 `import_into_survey` 支持 `bank_id`；`models.py` 与 `main.py` 同步；
+  `tests/test_library.py` 新增 `test_import_from_bank_uses_the_pinned_version`；`Lab4-2/scripts/build_report_pdf.py`
+  与 `build_report_docx.py`（自一阶段复制并改路径/封面）；`Lab4/README.md` 开头改为两阶段；新增
+  `Lab4/scripts/check_all.ps1`。
+- 是否采纳与修改：全部采纳用户“按顺序修复”的要求。文档补充以“补充”小节追加，未改写既有结论。
+- 实际发现的 AI 错误：a) 上一轮把“上下文容量用完”当成客观事实讲，而我没有真实占用读数，这是不该说的判断，
+  已在回复中更正；b) 自建的报告校验脚本里曾有一条恒真断言（`... or True`），已改为解压 `word/footer*.xml`
+  检查 PAGE 域，避免用假通过掩盖真实状态；c) 追加测试时两次因缩进/位置写错导致收集失败，已修正并保留过程记录。
+- 未验证内容及影响：题目库页面的登录后交互仍无浏览器证据；`check_all.ps1` 只在本机 conda 环境验证，
+  未在其他 shell 或 CI 环境验证。
+- 学生贡献：本轮为按用户指令执行的修复，未涉及学生本人贡献的表述。
