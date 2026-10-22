@@ -1,11 +1,11 @@
-{
+﻿{
   "schema_version": 1,
   "stage_folder": "Lab4-2",
   "source": {
     "file": "大作业一：需求变更.docx",
     "sha256": "D9E5BDD8594810923570495CB22B0D8A992889FFF9B140E1607C700CB008DF1D"
   },
-  "current_stage": "T7",
+  "current_stage": "complete",
   "stages": [
     {
       "id": "T0",

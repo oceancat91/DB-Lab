@@ -148,6 +148,7 @@
 
 - 所有集合启用 `validationLevel: strict`、`validationAction: error` 的 `$jsonSchema`；`additionalProperties: false`，`required` 列出除显式可选外的全部字段（`_schema` 构造，`db.py:26-32`）。写入多余字段会被数据库拒绝，应用层另有 `extra='forbid'`（[models.py](../survey_app/models.py)）双重把关。
 - 新集合中没有任何可选字段；`surveys.draft` 仍是可选（发布时 `$unset`），因此一阶段的“已发布形态没有 draft”不变。
+- `questions._id` 与 `question_versions.question_id` 必须是 UUID 形式的字符串，因此一阶段用短题号（如 `q1`）写下的问卷题目**不能**成为实体，迁移只能报告 `skipped_non_uuid` 并让它们留在问卷内；这类问卷仍可填写、可统计，但不会出现在题目库。
 - `options`、`validation`、`derived_from` 只约束到“对象/对象数组”这一层：选项数量、边界相容性、血缘内部字段由应用层校验（`questions.check_definition`），数据库不重复实现业务规则。
 - 题目副本上的 `question_version` 没有加进 `$jsonSchema`：它在 `OBJECT_ARRAY` 里，Schema 不深入数组元素；校验由 `questions.py:196-201` 完成（必须是不小于 1 的整数，布尔值被拒）。这是第二阶段**不需要**提升 `schema_version` 的原因——新字段是可选的、且落在不受 Schema 深入约束的位置。
 - 应用层还复核“副本内容是否等于所声称版本”（D18）。数据库无法表达这种跨文档约束，因此它是服务端逻辑，不是 Schema。
@@ -160,11 +161,11 @@
 现状：一阶段的题目只存在于 `surveys.draft.questions` 与 `survey_versions.questions` 的副本里，没有 `questions` 实体；使用情况与跨问卷统计按题目 ID 反查，因此**不迁移也能查**，但没有可管理的题目、版本与共享。迁移脚本 [migrate_question_library.py](../scripts/migrate_question_library.py) 负责补齐实体：
 
 1. `initialize_schema(db)`：先建/同步集合与索引，保证写入目标存在。
-2. `collect(db)`：扫描全部 `surveys`（草稿形态）与 `survey_versions`（快照），按题目 ID 归并；所有者取所在问卷的 `owner_id`；同一 ID 出现不同内容时记入 `conflicts`，不选边。
+2. `collect(db)`：扫描全部 `surveys`（草稿形态）与 `survey_versions`（快照），按题目 ID 归并；所有者取所在问卷的 `owner_id`。非 UUID 的历史题号（如一阶段文档示例里的 `q1`）无法满足 `questions._id` 的 UUID 校验，记入 `skipped_non_uuid` 并保留在原问卷里；同一 ID 在不同问卷中内容不同时记入 `content_variants`，脚本自带说明“不同问卷引用不同版本时内嵌内容本就不同，不是迁移冲突”，两种情况都不猜测、不覆盖。
 3. 逐条处理：已有实体 → `skipped_existing` 计数（幂等）；定义不合法（`check_definition` 抛错）→ 记入 `invalid`，不猜内容；否则准备 `questions`（`origin=migrated`、`current_version=1`）与 `question_versions`（`version=1`、`note="由第一阶段内嵌题目迁移"`）两个文档。
 4. `--dry-run` 只统计不写库；`--apply` 才插入，单条失败记入 `failed` 并继续其他条目。
 5. 问卷与快照文档**从不被改写**：脚本没有对 `surveys`/`survey_versions` 的任何写操作。自动化用例用“对 surveys + survey_versions 全文档做 SHA-256 指纹”证明迁移前后逐字节相同（`tests/test_migration.py::test_migration_backfills_legacy_questions_without_rewriting_surveys`）。
-6. 运行命令与默认输出：`python scripts/migrate_question_library.py --dry-run` / `--apply`，默认写 `results/stage2/migration.json`，可用 `--output` 改路径。仓库当前**没有**该文件，说明 CLI 的落盘结果未保留；迁移行为目前只有 pytest 用例可作为证据（未运行，见 [TEST_REPORT.md](TEST_REPORT.md)）。
+6. 运行命令与落盘：`python scripts/migrate_question_library.py --dry-run` / `--apply`，默认写 `results/stage2/migration.json`，可用 `--output` 改路径。仓库里的 [migration.json](../results/stage2/migration.json) 是**对已含实体的配置库执行 `--apply`** 的结果：`questions_found=2`、`created=0`、`skipped_existing=2`、`applied=true`、`skipped_non_uuid=[]`，说明重复执行不会重复建实体（幂等），但它不证明“首次回填”也正确；首次回填与“问卷逐字节不变”的证明在 `tests/test_migration.py`（其结果见 [TEST_REPORT.md](TEST_REPORT.md) 与 [pytest.json](../results/stage2/pytest.json)）。
 7. 回滚方式：问卷文档未被改写，所以回滚只需删除本次新建的 `questions` 与 `question_versions` 文档（按报告中列出的题目 ID）。没有提供回滚脚本，需要手工执行并先备份；本文不声称已演练。
 
 ## 7. 未验证与已知限制
@@ -172,5 +173,5 @@
 - 所有索引只核对了定义与调用点，没有对真实数据集跑 `explain`，`ix_questions_owner_title` 是否能被未锚定正则利用尚未确认。
 - 使用情况与跨问卷统计的反查规模未做压力测试；它们会随“命中快照数 × 每题答卷数”增长。
 - `questions.status` 的 `archived` 值有定义、无写入路径；`ix_sessions_user` 仍未被使用。
-- 迁移脚本对“同一题目 ID 在不同问卷里内容不同”只报告不修复，这类历史数据的统计口径仍然按 ID 合并，可能混入不同题目定义的回答（与 [REPORT_STAGE2.md](REPORT_STAGE2.md) 第 9 节的 ID 复用问题同源）。
+- 迁移脚本对“同一题目 ID 在不同问卷里内容不同”只报告不修复，这类历史数据的统计口径仍然按 ID 合并，可能混入不同题目定义的回答（与 [REPORT_STAGE2.md](REPORT_STAGE2.md) 第 10 节的 ID 复用问题同源）。
 - 数据库层没有外键：`question_shares.question_id`、`question_bank_items.question_id` 指向不存在的题目时数据库不会拒绝，只能靠应用层保证；当前没有删除题目的接口，因此不会主动产生孤儿引用。

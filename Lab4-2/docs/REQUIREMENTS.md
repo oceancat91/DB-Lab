@@ -4,7 +4,9 @@
 
 任务说明中提到的抽取文本 `.runtime/audit-stage2/stage2-word-text.txt` 在当前工作树中不存在（`.runtime` 下只有 `mongo/`、`stage2/e2e_http.py`、`mongod.pid`、`mongod.log`）。因此本文的原文引用直接来自上述 docx 正文抽取，不是转述二手文本；这一点按“不补造来源”的纪律单独说明。
 
-第一阶段需求 R01–R14 的定义、验收与真实结果见 [Lab4-1 需求清单](../../Lab4-1/docs/REQUIREMENTS.md)，本文只新增 R15–R22，不重述一阶段行为。阶段二新增决定的编号为 D11–D18，见 [DECISIONS.md](DECISIONS.md)；用例见 [TEST_PLAN.md](TEST_PLAN.md) 与 [TEST_REPORT.md](TEST_REPORT.md)。
+第一阶段需求 R01–R14 的定义、验收与真实结果见一阶段文档 `Lab4-1/docs/REQUIREMENTS.md`（阶段目录之间不互相链接，避免跨阶段路径；公共文件 [WORKFLOW.md](../../WORKFLOW.md) 第 13 节给出两阶段的步骤划分），本文只新增 R15–R22，不重述一阶段行为。阶段二新增决定的编号为 D11–D18，见 [DECISIONS.md](DECISIONS.md)；用例见 [TEST_PLAN.md](TEST_PLAN.md) 与 [TEST_REPORT.md](TEST_REPORT.md)。
+
+阶段步骤按 T0–T7 执行（T0 需求阅读与规划、T1 数据模型、T2 服务与 API、T3 页面、T4 测试、T5 一阶段数据迁移、T6 端到端 HTTP、T7 报告与交付），门禁记录在 `results/stage2/gates-t0.md` 至 `gates-t7.md`；本文的“实施”字段用实验日志编号 EXP-101–EXP-106 对应同一批工作。
 
 ## 来源分层：原文措辞、项目决策与未知
 
@@ -127,7 +129,7 @@
 
 自动化测试：`::test_two_surveys_can_pin_different_versions_and_usage_lists_both`（两条使用记录，已发布行 `editable=false`、草稿行 `editable=true`，各自题目版本正确）。
 
-未覆盖与已知边界：使用情况**不做可见范围过滤**——被共享者调用同一接口也能看到所有者问卷的标题与状态，这与 R22 的“被共享者只看自己问卷”不一致，见 D17 与 [REPORT_STAGE2.md](REPORT_STAGE2.md) 第 9 节；接口没有分页或条数上限。
+未覆盖与已知边界：使用情况**不做可见范围过滤**——被共享者调用同一接口也能看到所有者问卷的标题与状态，这与 R22 的“被共享者只看自己问卷”不一致，见 D17 与 [REPORT_STAGE2.md](REPORT_STAGE2.md) 第 10 节；接口没有分页或条数上限。
 
 ### R21 建立题目库（题库）（原“七”）
 
@@ -151,7 +153,7 @@
 
 自动化测试：`::test_cross_survey_statistics_aggregate_one_question`（3 份问卷 3 条回答、`scope=all surveys`、按版本 2/1 分桶；被共享者 `scope=own surveys only` 且只统计自己 1 份）、`::test_cross_survey_statistics_of_number_and_text`（数字均值 25、文本值重复保留）。
 
-未覆盖与已知边界：只统计已发布快照里的回答（草稿不能填写，因此无回答可统计）；没有分页、没有时间范围、没有按问卷版本过滤的参数；`by_question_version` 的键是 Python `str()` 结果，本地修改（无 `question_version`）的题目会得到字符串 `"None"`，而这个分支没有自动化用例覆盖（详见 [REPORT_STAGE2.md](REPORT_STAGE2.md) 第 9 节）。
+未覆盖与已知边界：只统计已发布快照里的回答（草稿不能填写，因此无回答可统计）；没有分页、没有时间范围、没有按问卷版本过滤的参数；`by_question_version` 的键是 Python `str()` 结果，本地修改（无 `question_version`）的题目会得到字符串 `"None"`，而这个分支没有自动化用例覆盖（详见 [REPORT_STAGE2.md](REPORT_STAGE2.md) 第 10 节）。
 
 ## 与第一阶段的关系
 
