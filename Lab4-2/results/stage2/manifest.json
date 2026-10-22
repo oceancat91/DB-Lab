@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_at": "2026-10-22T19:36:52.102378+08:00",
+  "created_at": "2026-10-22T19:46:26.613803+08:00",
   "layout": "shared governance documents at archive root; second stage under Lab4-2/",
   "scope": "Exact submitted bytes for the second stage; first stage ships separately.",
   "self_exclusions": [
@@ -37,38 +37,38 @@
     },
     {
       "path": "Lab4-2/docs/AI_USAGE.md",
-      "bytes": 15349,
-      "sha256": "d062324b0be494bc1da11db394e7b1d71015dade69b91a58fda64433696f44f7"
+      "bytes": 16977,
+      "sha256": "7bb0d8955cf5456fe71ceeeb3dbe41b3ef3b10ab07da37e291193d80823c0c53"
     },
     {
       "path": "Lab4-2/docs/API.md",
-      "bytes": 22962,
-      "sha256": "78a81bf1f643483cf80c04182d685267bc74c4cbf9726ac53ea1a9dbf21a8b69"
+      "bytes": 24064,
+      "sha256": "c49bee456c1787251c7d646e82f0942ab9d1534be9bafde7596f8a70ed00bd6c"
     },
     {
       "path": "Lab4-2/docs/DATABASE.md",
-      "bytes": 17647,
-      "sha256": "36be68cb54a035c8cd2afa7829c60b1afafd1d14f7a7b57d40899d52c84a139e"
+      "bytes": 18469,
+      "sha256": "0301ff22004002dd83653bdfe0d8be711fa1912c4b916308515b766757a8a645"
     },
     {
       "path": "Lab4-2/docs/DECISIONS.md",
-      "bytes": 13864,
-      "sha256": "cbbb3c1bfb6de05ec75fd8cb86784ccfc97518305ad73999bb9ef4523823a2bd"
+      "bytes": 15203,
+      "sha256": "6f33c56ada308291043fe3fa206beaf518346f54590028d50a1f5c9a5e663058"
     },
     {
       "path": "Lab4-2/docs/EXPERIMENT_LOG.md",
-      "bytes": 21978,
-      "sha256": "2c160ef8ce10dbe585b386b022852e66cdc55204fc4cfd8af1f2edee3b16dc24"
+      "bytes": 24361,
+      "sha256": "248605a881b02751f09efbafc2e12eef3277b3adfe92f5827d8f1a3055a5aeb8"
     },
     {
       "path": "Lab4-2/docs/LOGIC.md",
-      "bytes": 16357,
-      "sha256": "7a6b321e4f6996ad437c0db22363fec23fdf07e2789ea28ed33532c0759c77f1"
+      "bytes": 17177,
+      "sha256": "e1e6ec361024c3f7e1b88f23506cc8a123e808e5d3d7e516ae75fcd6592aaea9"
     },
     {
       "path": "Lab4-2/docs/REPORT_STAGE2.md",
-      "bytes": 28109,
-      "sha256": "bb6c95235e0898bd13a43cb7af6673458d60cf9b0d11d95ab5c7b116c17edb06"
+      "bytes": 28809,
+      "sha256": "ca7797b44bb9b112d73ed541d4a329bff45aad3a1bd9422a6d4d9b0f907dcff3"
     },
     {
       "path": "Lab4-2/docs/REQUIREMENTS.md",
@@ -82,13 +82,13 @@
     },
     {
       "path": "Lab4-2/docs/TEST_PLAN.md",
-      "bytes": 13922,
-      "sha256": "ce63dc59ed78f752ddcfe6f7a580d93e8dc421e96557bfb0010798e4936ad189"
+      "bytes": 14938,
+      "sha256": "d4cc7377fe3320c47a01d9d8e611a8ec564b80a04dbc7dd4caee0c68850e88b7"
     },
     {
       "path": "Lab4-2/docs/TEST_REPORT.md",
       "bytes": 13646,
-      "sha256": "6d5a1c0f3303abc9bc1965c795968d7e009f27d394e423738c3e822cc2ad06a5"
+      "sha256": "98a04a30aa2da1331b498456d1f189fac83a73f3e80fa051b72ee5d2aeec5122"
     },
     {
       "path": "Lab4-2/environment.yml",
@@ -111,9 +111,29 @@
       "sha256": "9ab02e4adccaef0f57cff764532b10a35f5a5d34f90037625e8a5ec17f09ab45"
     },
     {
+      "path": "Lab4-2/results/stage2/browser/01-library.png",
+      "bytes": 40328,
+      "sha256": "ee138448c4cbee792787cc976d87607a87f323983071bc13bf00b79cd3a9f0e7"
+    },
+    {
+      "path": "Lab4-2/results/stage2/browser/02-detail.png",
+      "bytes": 60540,
+      "sha256": "d1776b7b4842764cf72198c9bfa5bb9de182342c39c0a77623a560fabdd592ba"
+    },
+    {
+      "path": "Lab4-2/results/stage2/browser/03-statistics.png",
+      "bytes": 53990,
+      "sha256": "02bb7824b7143457c69e90b1adb81b0a5546e323486ffb447a01a304da68f1a4"
+    },
+    {
       "path": "Lab4-2/results/stage2/browser/library-anonymous.png",
       "bytes": 17921,
       "sha256": "4cb471f8068d4be841d23bea32393e18ae9daabf285b07dbd542325b9cfbc50d"
+    },
+    {
+      "path": "Lab4-2/results/stage2/browser/report.json",
+      "bytes": 1025,
+      "sha256": "01edca2ba03f8c04abd2dbf6e074ade3e646a060c9652a89cb91a7f73edf2c08"
     },
     {
       "path": "Lab4-2/results/stage2/environment.json",
@@ -137,8 +157,8 @@
     },
     {
       "path": "Lab4-2/results/stage2/gates-t3.md",
-      "bytes": 644,
-      "sha256": "9a3c8c86a7705a1be86fb9b516f6643b64da9a3e46fb4ccad8a9aacca5fb2ed2"
+      "bytes": 908,
+      "sha256": "347e848439c79c81d92ae1dd325fd87c38b1024e3c880e11a20cfab17cc49e05"
     },
     {
       "path": "Lab4-2/results/stage2/gates-t4.md",
@@ -196,24 +216,44 @@
       "sha256": "6df0014b860c56f13a20ec941bdc0abfaf061ed8f074c8ee8263fc45ec29070d"
     },
     {
-      "path": "Lab4-2/results/stage2/pytest.json",
+      "path": "Lab4-2/results/stage2/pytest-20261022T194256716204.json",
       "bytes": 248622,
       "sha256": "bb985fdb31ef039392a871b9e192a27f88425e668b8abcc1efef47d38d5bf46a"
     },
     {
-      "path": "Lab4-2/results/stage2/schema-check.json",
+      "path": "Lab4-2/results/stage2/pytest-20261022T194503847551.json",
+      "bytes": 249927,
+      "sha256": "0f8cde55505dbd9d37de60e4a8d4bc0af9df837b2918d5054013afaa1a0b048d"
+    },
+    {
+      "path": "Lab4-2/results/stage2/pytest.json",
+      "bytes": 249959,
+      "sha256": "8f83e98f3b722e650fc41e12c59d35718f480e88368d381736b2728304f6dd9c"
+    },
+    {
+      "path": "Lab4-2/results/stage2/schema-check-20261022T194259014378.json",
       "bytes": 25667,
       "sha256": "e4e11f5329afcf97c8f259d346d722b74934368b3c1a3837177e683384c11ce9"
     },
     {
+      "path": "Lab4-2/results/stage2/schema-check.json",
+      "bytes": 27545,
+      "sha256": "ad8ae1206b909e69a45fe14efab4cb46dc62780ea51224c82c6c881238cea0a1"
+    },
+    {
       "path": "Lab4-2/results/stage2/submission-review.json",
-      "bytes": 1524,
-      "sha256": "65c6e13e5ca1369ab10c20e4000090840f685a617e6b9c58778e802a0aa21c1d"
+      "bytes": 1620,
+      "sha256": "8c90d0374a061a665e9a09a3ccb11ce70f139fb05ad74707249ac562abe45c60"
     },
     {
       "path": "Lab4-2/scripts/backup_restore_demo.py",
       "bytes": 15315,
       "sha256": "614fcc90a7ea0eccb1f2ff19a603871020c3b7f152e1a613ff06a4b7f1235f9a"
+    },
+    {
+      "path": "Lab4-2/scripts/browser_e2e.mjs",
+      "bytes": 9550,
+      "sha256": "4263957c8a6e063effc88585680e90a96929dc8d9b6d8b5b1b3bba4ed84ab986"
     },
     {
       "path": "Lab4-2/scripts/browser_smoke.py",
@@ -282,8 +322,8 @@
     },
     {
       "path": "Lab4-2/survey_app/db.py",
-      "bytes": 8300,
-      "sha256": "ebc345922805203e3a47395ba9d95fd1ca8f40721c5f781b6da96ab13671eeb3"
+      "bytes": 8773,
+      "sha256": "c300d97cbdb8b0ce2529c8c3191eb6dce70c5a0442354e814f5985f016b98a3f"
     },
     {
       "path": "Lab4-2/survey_app/errors.py",
@@ -292,18 +332,18 @@
     },
     {
       "path": "Lab4-2/survey_app/library.py",
-      "bytes": 33869,
-      "sha256": "78c4c46b2ccc565d3e4f18e004d01a76d173e0ee280715c2478a377e5d38edbe"
+      "bytes": 38574,
+      "sha256": "21f7cf5034cf4116a1ac2d6a241c3460806080a01d46ec03ae2b9f1ea986be4f"
     },
     {
       "path": "Lab4-2/survey_app/main.py",
-      "bytes": 14175,
-      "sha256": "4b413d2dba2fb8b2f029bb1b9f43a87bd502f4e5cc0c36a8ea0ea392c4216ad1"
+      "bytes": 15494,
+      "sha256": "7cda96ff7cea2a3113e9a51fc5d3de891ad17cfa3ecc9c2807bc1fe5b5ae1f60"
     },
     {
       "path": "Lab4-2/survey_app/models.py",
-      "bytes": 4745,
-      "sha256": "9742711ab6e83f8fd414ea27b8b17ec4c13188c187ed783fc155b75ac0e6ab76"
+      "bytes": 4884,
+      "sha256": "dcfdce902adb5be5328f9a86719f0512f08989b1d5d550fe4ae895708a54c650"
     },
     {
       "path": "Lab4-2/survey_app/questions.py",
@@ -372,8 +412,8 @@
     },
     {
       "path": "Lab4-2/tests/test_library.py",
-      "bytes": 24668,
-      "sha256": "df2a9a61eee88ae85f432d1a2e5067e25172fcaa88ce9dd48ad36c2948c33d4d"
+      "bytes": 27258,
+      "sha256": "8d12c3059e63722f0997da7cf95bf2f6b937a4cea31da3ff8ad787a2f06e5463"
     },
     {
       "path": "Lab4-2/tests/test_migration.py",

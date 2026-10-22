@@ -100,6 +100,11 @@ SCHEMAS = {
         "question_version": {**INTEGER, "minimum": 1},
         "added_by": UUID, "added_at": DATE, "schema_version": SCHEMA_VERSION,
     }),
+    "question_share_links": _schema({
+        "_id": UUID, "token_hash": HASH, "question_id": UUID, "owner_id": UUID,
+        "created_at": DATE, "revoked_at": {"bsonType": ["date", "null"]},
+        "schema_version": SCHEMA_VERSION,
+    }),
 }
 
 # Names are stable so a repeated initializer verifies the same definitions.
@@ -143,6 +148,10 @@ INDEXES = {
     "question_bank_items": [
         ([("bank_id", ASCENDING), ("question_id", ASCENDING)], {"name": "uq_bank_items_pair", "unique": True}),
         ([("question_id", ASCENDING)], {"name": "ix_bank_items_question"}),
+    ],
+    "question_share_links": [
+        ([("token_hash", ASCENDING)], {"name": "uq_share_links_token", "unique": True}),
+        ([("question_id", ASCENDING), ("created_at", DESCENDING)], {"name": "ix_share_links_question"}),
     ],
 }
 

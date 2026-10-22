@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-10-22T11:42:05.504Z",
+  "base": "http://127.0.0.1:8012",
+  "chrome": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "screenshots": [
+    "01-library.png",
+    "02-detail.png",
+    "03-statistics.png"
+  ],
+  "steps": [
+    {
+      "step": "页面内注册与登录",
+      "ok": true,
+      "detail": "{\"created\":201,\"logged\":200}"
+    },
+    {
+      "step": "登录后进入题目库",
+      "ok": true
+    },
+    {
+      "step": "填写并提交新建题目表单",
+      "ok": true,
+      "detail": "option rows=2"
+    },
+    {
+      "step": "新题目出现在列表中",
+      "ok": true,
+      "detail": "浏览器验证题"
+    },
+    {
+      "step": "点击题目打开详情与版本历史",
+      "ok": true
+    },
+    {
+      "step": "跨问卷统计面板可打开",
+      "ok": true,
+      "detail": "OK"
+    },
+    {
+      "step": "页面脚本无未捕获异常",
+      "ok": true,
+      "detail": "0"
+    }
+  ],
+  "passed": 7,
+  "failed": 0,
+  "status": "PASS"
+}

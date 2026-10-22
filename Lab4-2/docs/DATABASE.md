@@ -175,3 +175,16 @@
 - `questions.status` 的 `archived` 值有定义、无写入路径；`ix_sessions_user` 仍未被使用。
 - 迁移脚本对“同一题目 ID 在不同问卷里内容不同”只报告不修复，这类历史数据的统计口径仍然按 ID 合并，可能混入不同题目定义的回答（与 [REPORT_STAGE2.md](REPORT_STAGE2.md) 第 10 节的 ID 复用问题同源）。
 - 数据库层没有外键：`question_shares.question_id`、`question_bank_items.question_id` 指向不存在的题目时数据库不会拒绝，只能靠应用层保证；当前没有删除题目的接口，因此不会主动产生孤儿引用。
+
+## 补充（2026-10-22 第二轮）：question_share_links
+
+| 字段 | 类型 | 说明 |
+| --- | --- | --- |
+| `_id` | UUID | 链接 id |
+| `token_hash` | 64 位十六进制 | `sha256(token)`，唯一索引；明文不落库 |
+| `question_id` | UUID | 关联题目 |
+| `owner_id` | UUID | 创建者 |
+| `created_at` | date | 创建时间 |
+| `revoked_at` | date/null | 吊销时间；归档时批量写入 |
+
+索引：`uq_share_links_token`（唯一，按摘要查链接）、`ix_share_links_question`（按题目列链接）。归档通过 `update_many` 一次性吊销，因此“链接可用”等价于 `revoked_at == null`。

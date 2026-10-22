@@ -12,8 +12,10 @@ Design notes (see docs/DATABASE.md):
 
 from __future__ import annotations
 
+import hashlib
 import math
 import re
+import secrets
 from copy import deepcopy
 from uuid import uuid4
 
@@ -184,11 +186,92 @@ class LibraryService:
         docs = self.db.questions.find(query).sort("updated_at", -1).limit(200)
         return [self._entity_payload(doc, viewer_id=user_id) for doc in docs]
 
+    def set_status(self, question_id: str, user_id: str, status: str) -> dict:
+        """Archive or restore a stored question.
+
+        Archiving never deletes versions, so published surveys and statistics keep working; it
+        only stops the question from being offered for new use and revokes its share links.
+        """
+        if status not in {"active", "archived"}:
+            raise DomainError(422, "validation", "状态必须是 active 或 archived")
+        self._accessible(question_id, user_id, owner_only=True)
+        updated = self.db.questions.find_one_and_update(
+            {"_id": question_id, "owner_id": user_id},
+            {"$set": {"status": status, "updated_at": now_utc()}}, return_document=ReturnDocument.AFTER)
+        if updated is None:
+            raise DomainError(404, "not_found", "题目不存在")
+        if status == "archived":
+            self.db.question_share_links.update_many(
+                {"question_id": question_id, "revoked_at": None},
+                {"$set": {"revoked_at": now_utc()}})
+        return self.detail(question_id, user_id)
+
+    def create_share_link(self, question_id: str, user_id: str) -> dict:
+        entity = self._accessible(question_id, user_id, owner_only=True)
+        if entity["status"] != "active":
+            raise DomainError(409, "archived", "已归档的题目不能创建分享链接")
+        token = secrets.token_urlsafe(24)
+        link = {"_id": str(uuid4()), "token_hash": hashlib.sha256(token.encode()).hexdigest(),
+                "question_id": question_id, "owner_id": user_id, "created_at": now_utc(),
+                "revoked_at": None, "schema_version": 1}
+        self.db.question_share_links.insert_one(link)
+        return {"id": link["_id"], "token": token, "path": f"/api/share-links/{token}",
+                "question_id": question_id}
+
+    def share_links(self, question_id: str, user_id: str) -> list[dict]:
+        self._accessible(question_id, user_id, owner_only=True)
+        rows = []
+        for link in self.db.question_share_links.find({"question_id": question_id}).sort("created_at", -1):
+            rows.append({"id": link["_id"], "created_at": link["created_at"].isoformat(),
+                         "revoked": link.get("revoked_at") is not None})
+        return rows
+
+    def revoke_share_link(self, question_id: str, user_id: str, link_id: str) -> dict:
+        self._accessible(question_id, user_id, owner_only=True)
+        result = self.db.question_share_links.update_one(
+            {"_id": link_id, "question_id": question_id, "revoked_at": None},
+            {"$set": {"revoked_at": now_utc()}})
+        if result.modified_count == 0:
+            raise DomainError(404, "not_found", "分享链接不存在或已失效")
+        return {"question_id": question_id, "link_id": link_id, "revoked": True}
+
+    def _link_by_token(self, token: str) -> dict:
+        digest = hashlib.sha256(token.encode()).hexdigest()
+        link = self.db.question_share_links.find_one({"token_hash": digest})
+        if link is None or link.get("revoked_at") is not None:
+            raise DomainError(404, "not_found", "分享链接不存在或已失效")
+        return link
+
+    def share_link_preview(self, token: str) -> dict:
+        link = self._link_by_token(token)
+        entity = self._question(link["question_id"])
+        if entity["status"] != "active":
+            raise DomainError(409, "archived", "该题已归档")
+        owner = self.db.users.find_one({"_id": entity["owner_id"]}, {"username": 1})
+        return {"question_id": entity["_id"], "title": entity["title"], "type": entity["type"],
+                "current_version": entity["current_version"],
+                "owner_name": owner["username"] if owner else ""}
+
+    def claim_share_link(self, token: str, user_id: str) -> dict:
+        link = self._link_by_token(token)
+        entity = self._question(link["question_id"])
+        if entity["status"] != "active":
+            raise DomainError(409, "archived", "该题已归档")
+        if entity["owner_id"] == user_id:
+            return self.detail(entity["_id"], user_id)
+        try:
+            self.db.question_shares.insert_one({
+                "_id": str(uuid4()), "question_id": entity["_id"], "owner_id": entity["owner_id"],
+                "grantee_id": user_id, "created_at": now_utc(), "schema_version": 1})
+        except DuplicateKeyError:
+            pass  # claiming an already claimed link is idempotent
+        return self.detail(entity["_id"], user_id)
+
     def shared_with_me(self, user_id: str) -> list[dict]:
         shares = self.db.question_shares.find({"grantee_id": user_id}).sort("created_at", -1).limit(200)
         rows = []
         for share in shares:
-            doc = self.db.questions.find_one({"_id": share["question_id"]})
+            doc = self.db.questions.find_one({"_id": share["question_id"], "status": "active"})
             if doc is None:
                 continue
             owner = self.db.users.find_one({"_id": doc["owner_id"]}, {"username": 1})
@@ -503,6 +586,8 @@ class LibraryService:
         if survey["status"] != "draft":
             raise DomainError(409, "immutable", "发布后不能修改题目")
         entity = self._accessible(question_id, user_id)
+        if entity["status"] != "active":
+            raise DomainError(409, "archived", "该题已归档，不能再加入问卷")
         pinned = version
         if pinned is None and bank_id is not None:
             # Picking from a bank uses the version that bank entry pins, not "whatever is newest".

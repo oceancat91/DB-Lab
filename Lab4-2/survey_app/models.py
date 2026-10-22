@@ -129,3 +129,7 @@ class ImportQuestionInput(InputModel):
 class RevisionInput(InputModel):
     mode: str = Field(min_length=1, max_length=16, pattern=r'^(draft_only|new_version|fork)$', strict=True)
     question: QuestionInput
+
+
+class QuestionStatusInput(InputModel):
+    status: str = Field(min_length=1, max_length=16, pattern=r'^(active|archived)$', strict=True)

@@ -5,10 +5,10 @@
     "R13"
   ],
   "timezone": "Asia/Shanghai",
-  "started_at": "2026-10-22T18:13:20.364479+08:00",
+  "started_at": "2026-10-22T19:42:59.014378+08:00",
   "seed": 20261015,
   "command": "python scripts/check_schema.py",
-  "database": "lab4_test_schema_a2259475ccde4d10b805d64bd2ca3084",
+  "database": "lab4_test_schema_3ab907313fb14dcea2e0da6a6bb5d5c3",
   "scope": "field validators/indexes only; no account, rule or submission API acceptance",
   "environment": {
     "python": "3.11.17",
@@ -34,6 +34,7 @@
       "expected": [
         "question_bank_items",
         "question_banks",
+        "question_share_links",
         "question_shares",
         "question_versions",
         "questions",
@@ -46,6 +47,7 @@
       "actual": [
         "question_bank_items",
         "question_banks",
+        "question_share_links",
         "question_shares",
         "question_versions",
         "questions",
@@ -113,6 +115,12 @@
     },
     {
       "id": "validator_question_bank_items",
+      "expected": "exact strict/error field schema",
+      "actual": "matching",
+      "status": "PASS"
+    },
+    {
+      "id": "validator_question_share_links",
       "expected": "exact strict/error field schema",
       "actual": "matching",
       "status": "PASS"
@@ -666,6 +674,60 @@
       "status": "PASS"
     },
     {
+      "id": "index_uq_share_links_token",
+      "expected": {
+        "key": [
+          [
+            "token_hash",
+            1
+          ]
+        ],
+        "name": "uq_share_links_token",
+        "unique": true
+      },
+      "actual": {
+        "v": 2,
+        "key": [
+          [
+            "token_hash",
+            1
+          ]
+        ],
+        "unique": true
+      },
+      "status": "PASS"
+    },
+    {
+      "id": "index_ix_share_links_question",
+      "expected": {
+        "key": [
+          [
+            "question_id",
+            1
+          ],
+          [
+            "created_at",
+            -1
+          ]
+        ],
+        "name": "ix_share_links_question"
+      },
+      "actual": {
+        "v": 2,
+        "key": [
+          [
+            "question_id",
+            1
+          ],
+          [
+            "created_at",
+            -1
+          ]
+        ]
+      },
+      "status": "PASS"
+    },
+    {
       "id": "valid_document_users",
       "expected": "one valid fixture inserted/read back",
       "actual": true,
@@ -909,7 +971,8 @@
         "question_versions": 0,
         "question_shares": 0,
         "question_banks": 0,
-        "question_bank_items": 0
+        "question_bank_items": 0,
+        "question_share_links": 0
       },
       "actual": {
         "users": 1,
@@ -921,14 +984,15 @@
         "question_versions": 0,
         "question_shares": 0,
         "question_banks": 0,
-        "question_bank_items": 0
+        "question_bank_items": 0,
+        "question_share_links": 0
       },
       "status": "PASS"
     }
   ],
   "cleanup": {
     "status": "PASS",
-    "database": "lab4_test_schema_a2259475ccde4d10b805d64bd2ca3084",
+    "database": "lab4_test_schema_3ab907313fb14dcea2e0da6a6bb5d5c3",
     "remaining_collections": []
   },
   "indexes": {
@@ -1277,15 +1341,49 @@
           ]
         ]
       }
+    },
+    "question_share_links": {
+      "_id_": {
+        "v": 2,
+        "key": [
+          [
+            "_id",
+            1
+          ]
+        ]
+      },
+      "uq_share_links_token": {
+        "v": 2,
+        "key": [
+          [
+            "token_hash",
+            1
+          ]
+        ],
+        "unique": true
+      },
+      "ix_share_links_question": {
+        "v": 2,
+        "key": [
+          [
+            "question_id",
+            1
+          ],
+          [
+            "created_at",
+            -1
+          ]
+        ]
+      }
     }
   },
   "ttl_scope": "expires_at TTL index definition verified; asynchronous expiration timing is not claimed",
   "status": "PASS",
   "exit_code": 0,
-  "finished_at": "2026-10-22T18:13:21.364181+08:00",
+  "finished_at": "2026-10-22T19:43:00.079863+08:00",
   "source_sha256": {
     "survey_app/config.py": "342b03246efdf5c946a1744eaedd5090c5716284dbe8b4d9485879307b80a449",
-    "survey_app/db.py": "ebc345922805203e3a47395ba9d95fd1ca8f40721c5f781b6da96ab13671eeb3",
+    "survey_app/db.py": "c300d97cbdb8b0ce2529c8c3191eb6dce70c5a0442354e814f5985f016b98a3f",
     "scripts/init_db.py": "2361a49f44e5f85d99c862a2884ea1c2a030ee5b688ddc16faa0b70e4b7b0d0a",
     "scripts/check_schema.py": "00b3229b254854afe12abb1a3d6b2465e0f9c4c100f2d57dfc9928d15a2deded"
   }

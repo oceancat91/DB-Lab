@@ -14,7 +14,7 @@
 | 真实 HTTP | **34/34 步通过**（两名用户、三份问卷、版本/恢复/共享/题库/fork/统计） | [http-e2e.json](../results/stage2/http-e2e.json) |
 | 一阶段数据迁移 | 问卷文档逐字节不变；对已含实体的库重复执行 `created=0`、`skipped_existing=2` | [migration.json](../results/stage2/migration.json)、`tests/test_migration.py` |
 | 失败记录 | 两次运行各 1 项失败（同一迁移用例），原始结果保留，修复后重跑通过 | [存档 1](../results/stage2/pytest-20261022T181406663390.json)、[存档 2](../results/stage2/pytest-20261022T181551828673.json) |
-| 页面 | `/library` 与三个静态资源、`/health` 均 200；无截图、无交互式浏览器会话 | [gates-t3.md](../results/stage2/gates-t3.md)、[TEST_REPORT.md](TEST_REPORT.md) 第 6 节 |
+| 页面 | 真实 Chrome（CDP）跑通登录、新建题目、列表、详情与版本历史、跨问卷统计，7/7 步通过并留 3 张截图 | [browser/report.json](../results/stage2/browser/report.json)、[详情截图](../results/stage2/browser/02-detail.png) |
 | 结构检查 | 文档、链接、需求/用例追踪通过；剩余 3 项 ERROR 在文档范围外（交付清单、T6 门禁、进度状态） | 本报告第 9 节 |
 
 ## 1. 项目目标与需求变更
@@ -182,7 +182,7 @@ Schema 校验沿用 strict/error 的 `$jsonSchema`，`additionalProperties:false
 
 只读核验（[gates-t3.md](../results/stage2/gates-t3.md) 与本次文档整理的复验）：`/library` 返回 200（4,880 字节 HTML），`/static/library.js` 200（23,051 字节）、`/static/library.css` 200（3,644 字节）、`/static/app.css` 200（32,802 字节）、`/health` 200（`{"status":"ok","database":"connected"}`），`node --check survey_app/static/library.js` 退出码 0。页面复用一阶段的 `app.css` 设计令牌，没有引入前端框架，也没有改动 `app.js`。
 
-**没有截图，也没有执行登录后的交互式浏览器会话**：表单提交、恢复按钮、共享弹窗、题库“更新版本”按钮、统计面板渲染都没有在浏览器里点过。页面证据只到“能返回 200、脚本语法正确、接口在 pytest 与 HTTP 脚本中可用”，不构成界面可用的证明。
+**浏览器验证已完成**：用 Chrome DevTools Protocol 驱动真实 Chrome，在页面内完成注册与登录，打开 `/library`，填写并提交“新建题目”表单（由页面脚本自己的提交处理），列表出现该题，点击打开详情与版本历史，打开跨问卷统计面板；7/7 步通过、无未捕获脚本异常，见 [browser/report.json](../results/stage2/browser/report.json) 与三张截图。仍未在浏览器里点击的部分：恢复旧版本按钮、共享表单提交、题库“更新版本”按钮、加入问卷的下拉选择。
 
 ## 8. 测试设计与真实结果
 
@@ -238,7 +238,7 @@ Schema 校验沿用 strict/error 的 `$jsonSchema`，`additionalProperties:false
 
 **功能限制**：没有题目删除/归档、题库共享、授权分级、历史压缩、问卷第二版、发布后改版、统计分页或时间过滤。“恢复”只能恢复已有版本，不能把恢复指定为新题目的 v1（那是另存）。
 
-**界面**：没有截图、没有交互式浏览器会话；只验证页面与资源 200、脚本语法正确。表单校验提示、恢复/共享/统计的渲染与可用性未验证。
+**界面**：登录后主流程已在真实 Chrome 中验证（建题、列表、详情、版本历史、统计面板，7/7 通过并截图）。未在浏览器里点击的部分为恢复按钮、共享表单、题库更新版本、加入问卷选择框；表单校验提示的呈现也未逐项截图。
 
 **并发**：二阶段没有并发夹具。追加版本的并发只由 `(question_id, version)` 唯一索引与事务支持，没有用真实并发请求证明；共享/题库的并发同理。另有一处代码阅读发现的不一致窗口：版本实体条件更新没有检查 `matched_count`，极端异常路径下可能出现“版本已插入、`current_version` 未推进”，未构造复现。
 

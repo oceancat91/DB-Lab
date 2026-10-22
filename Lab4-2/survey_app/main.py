@@ -14,8 +14,8 @@ from .db import create_client, initialize_schema
 from .errors import DomainError
 from .library import LibraryService
 from .models import (BankInput, BankItemInput, BankPatch, BankVersionInput, Credentials, DeadlineInput,
-                     DraftInput, ImportQuestionInput, Metadata, PublishInput, QuestionInput, NextInput,
-                     RevisionInput, ShareInput, SubmitInput)
+                     DraftInput, ImportQuestionInput, Metadata, PublishInput, QuestionInput,
+                     QuestionStatusInput, NextInput, RevisionInput, ShareInput, SubmitInput)
 from .security import COOKIE_NAME, new_session, public_user, session_user, token_digest
 from .service import SurveyService
 
@@ -224,6 +224,31 @@ def create_app(settings: Settings | None = None):
     def question_fork(question_id: str, body: QuestionInput, request: Request,
                       version: int | None = None):
         return library(request).fork(question_id, user(request)['_id'], version, body.model_dump())
+
+    @app.patch('/api/questions/{question_id}')
+    def question_status(question_id: str, body: QuestionStatusInput, request: Request):
+        return library(request).set_status(question_id, user(request)['_id'], body.status)
+
+    @app.post('/api/questions/{question_id}/share-links', status_code=201)
+    def question_share_link_create(question_id: str, request: Request):
+        return library(request).create_share_link(question_id, user(request)['_id'])
+
+    @app.get('/api/questions/{question_id}/share-links')
+    def question_share_link_list(question_id: str, request: Request):
+        return library(request).share_links(question_id, user(request)['_id'])
+
+    @app.delete('/api/questions/{question_id}/share-links/{link_id}')
+    def question_share_link_revoke(question_id: str, link_id: str, request: Request):
+        return library(request).revoke_share_link(question_id, user(request)['_id'], link_id)
+
+    @app.get('/api/share-links/{token}')
+    def share_link_preview(token: str, request: Request):
+        user(request)
+        return library(request).share_link_preview(token)
+
+    @app.post('/api/share-links/{token}/claim', status_code=201)
+    def share_link_claim(token: str, request: Request):
+        return library(request).claim_share_link(token, user(request)['_id'])
 
     @app.get('/api/questions/{question_id}/usage')
     def question_usage(question_id: str, request: Request):

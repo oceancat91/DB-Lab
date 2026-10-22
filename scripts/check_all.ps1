@@ -1,10 +1,11 @@
-﻿# 一次跑完两个阶段的检查与测试。
+# Run both stages' structural checks and test suites in one pass.
 #
-#   先激活 conda 环境（conda activate lab4-survey），然后在 Lab4 目录执行：
-#       .\scripts\check_all.ps1
-#       .\scripts\check_all.ps1 -SkipTests      # 只跑结构检查
+#   conda activate lab4-survey
+#   .\scripts\check_all.ps1
+#   .\scripts\check_all.ps1 -SkipTests
 #
-# 脚本不写死解释器路径：默认使用当前 PATH 上的 python，可用 -Python 指定。
+# The file is deliberately ASCII-only so Windows PowerShell 5.1 and pwsh 7 read it the same way
+# regardless of BOM. Chinese documentation lives in README.md.
 param(
     [string]$Python = 'python',
     [switch]$SkipTests
@@ -29,23 +30,24 @@ function Invoke-Step {
     Write-Output ("--- {0}: exit {1} ---" -f $Name, $code)
 }
 
-Invoke-Step -Name '一阶段结构检查' -WorkDir (Join-Path $root 'Lab4-1') -Arguments @('scripts/check_workflow.py')
-Invoke-Step -Name '二阶段结构检查' -WorkDir (Join-Path $root 'Lab4-2') -Arguments @('scripts/check_workflow.py')
+Invoke-Step -Name 'privacy-scan' -WorkDir $root -Arguments @('scripts/check_private_data.py')
+Invoke-Step -Name 'stage-1-checker' -WorkDir (Join-Path $root 'Lab4-1') -Arguments @('scripts/check_workflow.py')
+Invoke-Step -Name 'stage-2-checker' -WorkDir (Join-Path $root 'Lab4-2') -Arguments @('scripts/check_workflow.py')
 
 if (-not $SkipTests) {
-    Invoke-Step -Name '一阶段全量测试' -WorkDir (Join-Path $root 'Lab4-1') `
+    Invoke-Step -Name 'stage-1-tests' -WorkDir (Join-Path $root 'Lab4-1') `
         -Arguments @('-m', 'pytest', 'tests', '-q')
-    Invoke-Step -Name '二阶段全量测试' -WorkDir (Join-Path $root 'Lab4-2') `
+    Invoke-Step -Name 'stage-2-tests' -WorkDir (Join-Path $root 'Lab4-2') `
         -Arguments @('-m', 'pytest', 'tests', '-q')
 }
 
 Write-Output ''
-Write-Output '=== 汇总 ==='
-$results | ForEach-Object { "{0,-16} exit {1}" -f $_.Step, $_.ExitCode } | Write-Output
+Write-Output '=== summary ==='
+$results | ForEach-Object { "{0,-18} exit {1}" -f $_.Step, $_.ExitCode } | Write-Output
 $failed = @($results | Where-Object { $_.ExitCode -ne 0 })
 if ($failed.Count -gt 0) {
-    Write-Output ("失败步骤: " + (($failed | ForEach-Object { $_.Step }) -join '、'))
+    Write-Output ("failed steps: " + (($failed | ForEach-Object { $_.Step }) -join ', '))
     exit 1
 }
-Write-Output '全部步骤通过；结构检查不证明业务行为，测试结果以各自输出为准。'
+Write-Output 'All steps passed. Structural checks do not prove behaviour; see each test log.'
 exit 0

@@ -172,3 +172,17 @@
 - 使用情况/统计在大量问卷下的响应时间与分页。
 - 非 UUID 题号迁移（`skipped_non_uuid`）与 `content_variants` 的实际分支：脚本有实现，自动化未构造。
 - 浏览器交互（点击、弹窗、恢复按钮、统计面板渲染）。
+
+### TC-L10 归档与恢复
+
+- 步骤：建题 → 加入一份草稿 → 生成分享链接 → 归档 → 检查列表/加入/链接/草稿 → 恢复
+- 输入：`PATCH /api/questions/{id}` 两次（archived、active）
+- 预期：归档后“我的题目”为空、新加入返回 409、分享链接 404、已加入草稿不受影响；恢复后重新出现在列表
+- 实现：`tests/test_library.py::test_archiving_hides_a_question_and_blocks_new_use`
+
+### TC-L11 分享链接的预览、领取与吊销
+
+- 步骤：所有者生成链接 → 另一账号预览 → 领取两次 → 查看共享列表 → 所有者吊销 → 再次预览
+- 输入：`POST /api/questions/{id}/share-links`、`GET/POST /api/share-links/{token}`
+- 预期：预览含标题与所有者名；首次领取 201 且 `owned=false`；重复领取仍 201（幂等）；共享列表出现该题；吊销后预览 404，非所有者吊销返回 404
+- 实现：`tests/test_library.py::test_share_link_preview_claim_and_revoke`

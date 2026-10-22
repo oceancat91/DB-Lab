@@ -483,3 +483,50 @@ def test_import_from_bank_uses_the_pinned_version(client):
     rejected = client.post(f"/api/surveys/{missing['id']}/questions/import",
                            json={"question_id": question["id"], "bank_id": str(uuid4())})
     assert rejected.status_code == 404
+
+
+def test_archiving_hides_a_question_and_blocks_new_use(client):
+    question = create_question(client)
+    survey = create_survey(client, "归档前的问卷")
+    import_question(client, survey, question["id"])
+    link = client.post(f"/api/questions/{question['id']}/share-links").json()
+    assert link["token"]
+
+    archived = client.patch(f"/api/questions/{question['id']}", json={"status": "archived"})
+    assert archived.status_code == 200, archived.text
+    assert archived.json()["status"] == "archived"
+    assert client.get("/api/questions").json() == []
+    draft = client.get(f"/api/surveys/{survey['id']}").json()
+    assert draft["questions"][0]["id"] == question["id"], "已加入的草稿不受归档影响"
+
+    other = create_survey(client, "归档后的问卷")
+    rejected = client.post(f"/api/surveys/{other['id']}/questions/import",
+                           json={"question_id": question["id"]})
+    assert rejected.status_code == 409
+    assert client.get(f"/api/share-links/{link['token']}").status_code == 404
+    assert client.post(f"/api/questions/{question['id']}/share-links").status_code == 409
+
+    restored = client.patch(f"/api/questions/{question['id']}", json={"status": "active"})
+    assert restored.json()["status"] == "active"
+    assert [row["id"] for row in client.get("/api/questions").json()] == [question["id"]]
+
+
+def test_share_link_preview_claim_and_revoke(client, client_factory):
+    question = create_question(client)
+    link = client.post(f"/api/questions/{question['id']}/share-links").json()
+    with client_factory() as mate:
+        register_login(mate)
+        preview = mate.get(f"/api/share-links/{link['token']}").json()
+        assert preview["title"] == "你的年龄段" and preview["owner_name"]
+        claimed = mate.post(f"/api/share-links/{link['token']}/claim")
+        assert claimed.status_code == 201, claimed.text
+        assert claimed.json()["owned"] is False
+        again = mate.post(f"/api/share-links/{link['token']}/claim")
+        assert again.status_code == 201, "重复领取必须幂等"
+        assert [row["id"] for row in mate.get("/api/questions/shared").json()] == [question["id"]]
+        assert mate.delete(f"/api/questions/{question['id']}/share-links/{link['id']}").status_code == 404
+
+    revoked = client.delete(f"/api/questions/{question['id']}/share-links/{link['id']}")
+    assert revoked.status_code == 200
+    assert client.get(f"/api/share-links/{link['token']}").status_code == 404
+    assert client.get(f"/api/questions/{question['id']}/share-links").json()[0]["revoked"] is True

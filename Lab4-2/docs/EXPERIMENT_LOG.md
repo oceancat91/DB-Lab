@@ -148,3 +148,24 @@ ormalize_question_refs 原来在列表推导里逐题查 question_shares，已�
 实测：`pytest tests/test_library.py` 17 项通过；二阶段报告生成与检查见上；`check_all.ps1` 实跑结果见
 本轮命令输出。尚未处理：历史中本人姓名的重写（待本人决定）、题目删除/归档与分享链接（需求外，未做）、
 题目库登录后的浏览器交互验证（受工具限制，见 EXP-107）。
+
+## 修复轮（2026-10-22 第三轮）：浏览器验证、归档与分享链接、隐私防护
+
+1. **真实浏览器验证**：`agent-browser` 在本机不可用（EXP-107），改用 Chrome DevTools Protocol 自建驱动
+   （`scripts/browser_e2e.mjs`，Node 24 原生 WebSocket + fetch，无第三方依赖）：headless Chrome + 独立 profile →
+   页面内注册/登录 → 打开 `/library` → 填写并提交新建题目表单 → 列表出现 → 点开详情与版本历史 → 打开跨问卷统计面板。
+   结果 **7/7 步通过、0 未捕获脚本异常**，截图 [01-library.png]、[02-detail.png]、[03-statistics.png] 与
+   [report.json] 存于 `results/stage2/browser/`。仍未点击的：恢复按钮、共享表单、题库更新版本、加入问卷下拉。
+2. **归档**（`PATCH /api/questions/{id}`）：只改状态不删版本；归档后从列表消失、拒绝新加入、批量吊销分享链接，
+   已加入草稿与已发布快照不受影响；`test_archiving_hides_a_question_and_blocks_new_use` 覆盖。
+3. **分享链接**（`question_share_links`）：令牌只存 SHA-256 摘要，登录用户可预览并领取，领取写入 `question_shares`
+   且幂等；吊销/归档后立即失效；`test_share_link_preview_claim_and_revoke` 覆盖预览、重复领取、吊销与非所有者越权。
+4. **隐私防护**（对应“重写历史”项，采用不重写方案）：新增 `Lab4/scripts/check_private_data.py` 扫描受控文件中的
+   学号样式、私钥、令牌、导出文件名前缀与 Office 锁文件；姓名通过未跟踪的 `Lab4/.private-names` 登记（已加入
+   `Lab4/.gitignore`）。首轮扫描报 5 处，全部是误报：`.gitignore` 里的忽略模式本身、以及 UUID 十六进制串里恰好出现的
+   11 位数字；已分别改为跳过忽略文件、并收紧边界排除十六进制上下文，复扫 0 命中。
+5. **一键检查接入隐私扫描**，并把脚本改成纯 ASCII（每次编辑都会丢 BOM，导致 Windows PowerShell 5.1 读成乱码报语法错误；
+   ASCII 后不再依赖 BOM）。
+
+实测：全量 `pytest` **265 passed**（245 一阶段 + 20 二阶段）；Schema/索引检查 **61 项 PASS**；`check_all.ps1`
+四个步骤（隐私扫描、两阶段检查器）全部 exit 0；二阶段报告 PDF/DOCX 已按新内容重新生成。

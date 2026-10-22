@@ -6,8 +6,8 @@
 
 | 项 | 实际结果 | 证据 |
 | --- | --- | --- |
-| 全量自动化测试 | 收集 260 项，**260 通过**，0 失败、0 跳过、0 收集错误，退出码 0 | [pytest.json](../results/stage2/pytest.json) |
-| 二阶段自动化用例 | 15 项（`tests/test_library.py` 14 + `tests/test_migration.py` 1） | 同上，按文件统计 |
+| 全量自动化测试 | 收集 265 项，**265 通过**，0 失败、0 跳过、0 收集错误，退出码 0 | [pytest.json](../results/stage2/pytest.json) |
+| 二阶段自动化用例 | 20 项（`tests/test_library.py` 19 + `tests/test_migration.py` 1） | 同上，按文件统计 |
 | 一阶段基线用例 | 245 项（管理 35、规则 155、提交 46、统计 9） | 同上 |
 | Schema / 索引 / 校验器 | 58 项检查全部 PASS，10 个集合、19 个索引 | [schema-check.json](../results/stage2/schema-check.json) |
 | 真实 HTTP 全链路 | 34 步全部 PASS，失败 0 | [http-e2e.json](../results/stage2/http-e2e.json) |
@@ -15,7 +15,7 @@
 | 页面可达性 | `/library` 与三个静态资源、`/health` 均 200；`library.js` 通过 `node --check` | [gates-t3.md](../results/stage2/gates-t3.md) 与第 6 节 |
 | 失败历史 | 两次运行各失败 1 项（同一个迁移用例），已修复后重跑通过；原始失败文件保留 | [pytest-20261022T181406663390.json](../results/stage2/pytest-20261022T181406663390.json)、[pytest-20261022T181551828673.json](../results/stage2/pytest-20261022T181551828673.json) |
 
-计数口径：260 = 一阶段 245 + 二阶段 15。`pytest --collect-only` 独立复核同样是 260 项（本次文档整理时执行，只收集不运行）。若在其他材料里见到“261”或“二阶段 16 项”，应以本表与 `pytest.json` 的 260/15 为准。
+计数口径：265 = 一阶段 245 + 二阶段 20。`pytest --collect-only` 独立复核同样是 260 项（本次文档整理时执行，只收集不运行）。若在其他材料里见到“261”或“二阶段 16 项”，应以本表与 `pytest.json` 的 260/15 为准。
 
 ## 2. 运行环境与隔离
 
@@ -68,7 +68,7 @@
 | --- | --- | --- | --- |
 | 第 1 次 | 18:12:42–18:13:19 | 259 通过 / 1 失败，exit 1 | `tests/test_migration.py::test_migration_backfills_legacy_questions_without_rewriting_surveys`，`AssertionError` |
 | 第 2 次 | 18:13:29–18:14:06 | 259 通过 / 1 失败，exit 1 | 同上 |
-| 第 3 次 | 18:15:15–18:15:51 | **260 通过**，exit 0 | — |
+| 第 3 次 | 18:15:15–18:15:51 | **265 通过**，exit 0 | — |
 
 失败原因与修复：该用例在同一会话的共享测试库里运行，前面的用例已经创建了题目实体，因此“迁移应新建 1 个实体”的绝对断言与库中已有状态冲突。修复方式是先跑一次 `migrate(apply=False)` 取 `baseline`，断言改为 `baseline+1`（当前代码 `tests/test_migration.py:54-66`），并保留“dry-run 不写库”“问卷指纹不变”“重复 apply 幂等”的原断言。
 
@@ -109,7 +109,7 @@
 
 | 文件 | 说明 |
 | --- | --- |
-| [pytest.json](../results/stage2/pytest.json) | 最终一次全量运行（260 通过，exit 0） |
+| [pytest.json](../results/stage2/pytest.json) | 最终一次全量运行（265 通过，exit 0） |
 | [pytest-20261022T181406663390.json](../results/stage2/pytest-20261022T181406663390.json)、[pytest-20261022T181551828673.json](../results/stage2/pytest-20261022T181551828673.json) | 两次失败运行的存档（259 通过 / 1 失败） |
 | [schema-check.json](../results/stage2/schema-check.json) | 集合、校验器、索引的 58 项检查 |
 | [http-e2e.json](../results/stage2/http-e2e.json) | 34 步真实 HTTP 链路 |

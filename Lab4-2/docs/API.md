@@ -329,3 +329,16 @@
 `POST /api/surveys/{survey_id}/questions/import` 的请求体新增可选 `bank_id`。版本选择顺序为：
 显式 `version` → 该题库条目钉住的 `question_version` → 题目当前版本。`bank_id` 必须属于当前用户，
 且该题必须在该题库中，否则返回 404；成功时响应仍是更新后的问卷草稿。
+
+## 补充（2026-10-22 第二轮）：归档与分享链接
+
+| 方法 | 路径 | 权限 | 说明 |
+| --- | --- | --- | --- |
+| PATCH | `/api/questions/{id}` | 所有者 | 请求体 `{"status": "active"\|"archived"}`；归档会同时吊销该题所有分享链接 |
+| POST | `/api/questions/{id}/share-links` | 所有者 | 生成一次性分享令牌，返回 `{id, token, path}`；已归档题目返回 409 |
+| GET | `/api/questions/{id}/share-links` | 所有者 | 列出链接（只返回 id、创建时间、是否吊销），不返回令牌 |
+| DELETE | `/api/questions/{id}/share-links/{link_id}` | 所有者 | 吊销链接 |
+| GET | `/api/share-links/{token}` | 任意登录用户 | 预览题目（标题、题型、当前版本、所有者名） |
+| POST | `/api/share-links/{token}/claim` | 任意登录用户 | 领取共享授权，重复领取幂等；令牌失效或题目归档返回 404/409 |
+
+令牌只以 SHA-256 摘要存库，明文只在创建响应里出现一次；归档题目不能再被分享或加入问卷，但已加入的草稿与已发布快照不受影响。
