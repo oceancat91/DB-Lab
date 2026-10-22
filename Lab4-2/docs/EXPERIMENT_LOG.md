@@ -96,3 +96,15 @@ T7 不是独立工作包，而是本次文档整理：补齐 [SYSTEM.md](SYSTEM.
 - 两次失败运行的结果文件保留为 `pytest-20261022T181406663390.json` 与 `pytest-20261022T181551828673.json`，没有删除或改名成通过。
 - 题库 PATCH 的 422 与测试自身三处断言错误没有独立的原始输出文件，本文件明确标注为“作者记录、原始输出未保留”，不把它们写成有落盘证据的失败。
 - 所有“PASS”都指向具体证据文件；没有证据的项写“未验证”。
+
+## EXP-107 题目库页面的浏览器核验尝试（2026-10-22 Asia/Shanghai）
+
+目标：在真实浏览器中走一遍“注册 → 打开 /library → 新建题目”，补上 EXP-103 声明的未验证项。
+
+执行：用 agent-browser（会话 lab4-stage2-ui）依次 open /、click #register-tab、fill #username/#password、click #auth-submit，再 open /library、fill #question-title 与两个选项、click #question-submit；截图与页面文本读取各尝试一次。
+
+实际结果：**交互流程未完成**。agent-browser 的 fill/click 返回的是命令用法文本而非执行结果，screenshot 与 errors 子命令在 Windows 管道下挂起并被终止；随后直接查询业务库确认：users 仍为 4、questions 仍为 3，且三条题目的 created_at 全部是 HTTP 全链路运行时的 10:11（UTC），没有 EXP-107 期间的写入。因此不能声称注册或建题在浏览器里成功。
+
+有效证据：改用 Chrome 无头模式抓取未登录视图，得到 results/stage2/browser/library-anonymous.png（1280x900）。该截图显示顶栏“问卷工作台 / 我的问卷 / 题目库（当前）”、面板“登录后管理题目库”与“去登录”按钮——说明页面 HTML 与 CSS 正常加载，library.js 也已执行：登录面板正是脚本在 /api/auth/me 返回 401 后切换出来的，说明 fetch 与路由可用。
+
+未验证（与 EXP-103 一致，不因本次尝试而改变）：登录后的题目列表、新建表单提交、版本/共享/统计面板等交互行为仍无浏览器证据，只有 HTTP 与自动化测试证据。工具限制已记录：agent-browser 在该 Windows 环境下的输出管道会挂起，后续同类验证应改用其他方式（例如自带 Playwright 或 Chrome CDP 直连）。

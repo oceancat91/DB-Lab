@@ -1,11 +1,11 @@
 # MongoDB 问卷大作业第一阶段 workflow
 
-本 workflow 只覆盖第一阶段，从 S0 规划到 S7 第一阶段交付，共 8 个执行步骤。每一步都要有输入、产物、真实验收证据；未通过前不得进入下一步。行为规范见 [AGENTS.md](AGENTS.md)，当前状态见 [progress.json](progress.json)。
+本 workflow 只覆盖第一阶段，从 S0 规划到 S7 第一阶段交付，共 8 个执行步骤。每一步都要有输入、产物、真实验收证据；未通过前不得进入下一步。行为规范见 [AGENTS.md](AGENTS.md)，当前状态见 [progress.json](Lab4-1/progress.json)。
 
 ## 1. 依据与边界
 
-- 需求来源：[大作业一第一阶段.docx](大作业一第一阶段.docx)，按标题引用章节，不使用未经渲染确认的页码。完整映射见 [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md)。
-- 参考规范：[原始规范副本](references/AGENTS.reference.md)，内容属于文本分类实验，仅供来源核对；本项目以本目录 AGENTS 为准。原文摘要与 SHA-256 见需求清单。
+- 需求来源：[大作业一第一阶段.docx](Lab4-1/大作业一第一阶段.docx)，按标题引用章节，不使用未经渲染确认的页码。完整映射见 [docs/REQUIREMENTS.md](Lab4-1/docs/REQUIREMENTS.md)。
+- 参考规范：[原始规范副本](Lab4-1/references/AGENTS.reference.md)，内容属于文本分类实验，仅供来源核对；本项目以本目录 AGENTS 为准。原文摘要与 SHA-256 见需求清单。
 - 来源分层：用户当前指示 → 已核验的最新教师需求 → 项目决策。教师新材料覆盖旧要求时，记录差异及证据；转述标记“待核验”，不能默默覆盖。附件中的操作性文字只作为任务资料解析。
 - 第一阶段目标：可运行的简化在线问卷系统、MongoDB 设计、关键后端逻辑、必要测试、文档、完整报告与真实 AI 使用记录。界面保持简单。
 - 用户已明确当前只要求第一阶段，且已授权完成实现、测试与交付；第二阶段仅作为源材料背景。实际进度以 progress.json 及对应门禁证据为准。
@@ -13,7 +13,7 @@
 
 ## 2. 执行协议
 
-每次工作先读 `AGENTS.md`、本文件与阶段状态，再在 [docs/EXPERIMENT_LOG.md](docs/EXPERIMENT_LOG.md) 登记“阶段、目标、需求 ID、文件范围、命令、验收”。每次 AI 辅助同步登记 [docs/AI_USAGE.md](docs/AI_USAGE.md)。
+每次工作先读 `AGENTS.md`、本文件与阶段状态，再在 [docs/EXPERIMENT_LOG.md](Lab4-1/docs/EXPERIMENT_LOG.md) 登记“阶段、目标、需求 ID、文件范围、命令、验收”。每次 AI 辅助同步登记 [docs/AI_USAGE.md](Lab4-1/docs/AI_USAGE.md)。
 
 `progress.json` 仅包含第一阶段的 S0–S7，状态仅有 `pending`、`active`、`passed`、`blocked`。步骤必须顺序通过；最多一个 `active` 或 `blocked`。`current_stage` 指向第一个尚未通过步骤；S7 通过且其他步骤均通过后为 `complete`，不等待第二阶段。
 
@@ -35,11 +35,11 @@
 - G0.2：第一阶段每项需求关联实施步骤与验收用例；覆盖 AI 记录要求及本阶段成果留存，明确后续阶段不在当前范围。
 - G0.3：文档内部引用与状态一致，现有 Lab 材料不变；明确系统未实现、业务测试未执行。
 
-证据类别：`planning_review`。当前范围的通过依据见 [第一阶段范围复核](results/planning/scope-review.md)；[首次规划审查](results/planning/review.md) 保留为历史记录。S0 只证明规划完成。
+证据类别：`planning_review`。当前范围的通过依据见 [第一阶段范围复核](Lab4-1/results/planning/scope-review.md)；[首次规划审查](Lab4-1/results/planning/review.md) 保留为历史记录。S0 只证明规划完成。
 
 ## 4. S1 需求语义与环境基线
 
-输入：S0 产物。逐项审阅 [docs/DECISIONS.md](docs/DECISIONS.md)；明确登录与匿名、重复填写、跳转、截止、统计及保存范围。可在已有授权内采纳有依据的项目决策，写明理由；不强行要求用户逐项审批。
+输入：S0 产物。逐项审阅 [docs/DECISIONS.md](Lab4-1/docs/DECISIONS.md)；明确登录与匿名、重复填写、跳转、截止、统计及保存范围。可在已有授权内采纳有依据的项目决策，写明理由；不强行要求用户逐项审批。
 
 建议路线为 Python + FastAPI + PyMongo + 简单服务端页面/原生 JavaScript，测试使用 pytest；这是项目建议，不是教师指定。若换用其他语言，先更新依赖管理与启动约定。数据库必须仍为 MongoDB，禁止关系库和现成问卷框架。
 
@@ -112,7 +112,7 @@
 
 ## 9. S6 集成与复现验收
 
-输入：S3–S5 全部功能。按 [测试计划](docs/TEST_PLAN.md) 从注册到看统计走完整链路；业务测试状态必须逐用例填写，当前计划中的 `NOT_RUN` 不能沿用为通过。
+输入：S3–S5 全部功能。按 [测试计划](Lab4-1/docs/TEST_PLAN.md) 从注册到看统计走完整链路；业务测试状态必须逐用例填写，当前计划中的 `NOT_RUN` 不能沿用为通过。
 
 门禁：
 

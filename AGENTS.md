@@ -2,7 +2,7 @@
 
 本文件所在的 Lab4 即项目根目录。先读取本目录的 `AGENTS.md`、`WORKFLOW.md` 和 `progress.json`，命令均在本目录执行；`results/Lab4/` 是历史包，不作为当前项目入口。
 
-本文件适用于本目录内的 MongoDB 问卷大作业第一阶段。Lab1、Lab2、Lab3 是已有独立实验材料；未经本次任务授权，不读取其私人配置、不修改其内容。本项目的步骤与门禁由 [WORKFLOW.md](WORKFLOW.md) 定义，需求依据见 [需求清单](docs/REQUIREMENTS.md)。
+本文件适用于本目录内的 MongoDB 问卷大作业第一阶段。Lab1、Lab2、Lab3 是已有独立实验材料；未经本次任务授权，不读取其私人配置、不修改其内容。本项目的步骤与门禁由 [WORKFLOW.md](WORKFLOW.md) 定义，需求依据见 [需求清单](Lab4-1/docs/REQUIREMENTS.md)。
 
 ## 1. 每次开始工作的顺序
 

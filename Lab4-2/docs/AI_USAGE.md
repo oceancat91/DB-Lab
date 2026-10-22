@@ -89,3 +89,12 @@ AI 错误与修正：
 未验证项：
 学生贡献（仅本人可确认）：
 ```
+
+## AI-105 浏览器核验尝试与其失败
+
+- 日期：2026-10-22，Asia/Shanghai。触发：父 agent 为补齐 EXP-103 的未验证项而尝试浏览器验证。
+- agent 产物：无功能改动；新增 results/stage2/browser/library-anonymous.png（Chrome 无头截图）与 docs/EXPERIMENT_LOG.md 的 EXP-107。
+- 是否采纳与修改：不采纳 agent-browser 的执行结果，因为其输出为命令用法文本、流程未落库；改以截图作为“页面可渲染、脚本已执行”的有限证据。
+- 实际发现的 AI 错误：a) agent-browser 在 Windows 管道下 fill/click 失效且 screenshot/errors 挂起，agent 连续两次等到超时；b) agent 一开始把“未登录时显示登录面板”当作脚本成功的间接证据是对的，但随后在数据库里看到的两条同标题题目重复记录属同一批 HTTP 运行产物，未误记为浏览器产物（已按 created_at 核对）。
+- 未验证内容及影响：登录后交互全部未验证；题目库页面仍只有 HTTP 与自动化测试证据。
+- 学生贡献：无（本次为验证尝试，未产生交付内容）。
