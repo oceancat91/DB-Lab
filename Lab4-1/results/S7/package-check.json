@@ -1,12 +1,12 @@
 {
   "status": "PASS",
-  "time": "2026-10-16T23:27:09.992922+08:00",
+  "time": "2026-10-22T18:04:00.349439+08:00",
   "command": "python scripts/package_stage1.py",
   "scope": "ZIP integrity, exact manifest bytes, entries and actual local secret exclusion; no business tests run.",
-  "manifest_file_count": 222,
-  "zip_file_count": 224,
+  "manifest_file_count": 223,
+  "zip_file_count": 225,
   "checks": [
-    "unique safe Lab4 paths",
+    "unique safe archive paths",
     "CRC",
     "all manifest SHA256 and byte counts",
     "runtime/cache/credentials excluded",

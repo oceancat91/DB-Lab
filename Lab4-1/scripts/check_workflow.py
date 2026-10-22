@@ -13,10 +13,12 @@ from urllib.parse import unquote, urlsplit
 
 
 ROOT = Path(__file__).resolve().parent.parent
+SHARED_ROOT = ROOT.parent  # AGENTS.md / WORKFLOW.md / README.md live one level up
+SHARED = ("AGENTS.md", "WORKFLOW.md", "README.md")
 SOURCE_FILE = "大作业一第一阶段.docx"
 SOURCE_SHA256 = "88AF590B01A4265C31B5DA1F2D44F0BB833F4D8FA8C0852478963420B9D685EC"
 REQUIRED = (
-    "AGENTS.md", "WORKFLOW.md", "README.md", "progress.json",
+    "progress.json",
     "docs/REQUIREMENTS.md", "docs/DECISIONS.md", "docs/TEST_PLAN.md",
     "docs/EXPERIMENT_LOG.md", "docs/AI_USAGE.md", "results/planning/review.md",
 )
@@ -65,6 +67,9 @@ def safe_path(value: object, context: str, base: Path = ROOT) -> Path | None:
         return None
     try:
         path = (base / normalized).resolve()
+        if path.parent == SHARED_ROOT.resolve() and path.name in SHARED:
+            # The three governance documents are shared by both stages and live one level up.
+            return path
         relative = path.relative_to(ROOT)
         if any(re.fullmatch(r"lab\d+", part, re.IGNORECASE)
                for part in relative.parts):
@@ -295,6 +300,11 @@ def main() -> int:
         if hasattr(stream, "reconfigure"):
             stream.reconfigure(encoding="utf-8", errors="replace")
     print("流程结构检查（只读）：不运行应用、不连接数据库，不证明功能、测试真实性或阶段验收通过。")
+    print(f"阶段目录：{ROOT.name}；公共文件目录：{SHARED_ROOT.name}")
+    for name in SHARED:
+        path = SHARED_ROOT / name
+        if not path.is_file() or path.stat().st_size == 0:
+            error(f"公共文件缺失或为空：{SHARED_ROOT.name}/{name}")
     documents: dict[str, str] = {}
     for name in REQUIRED:
         path = nonempty_file(name, "必需文件")

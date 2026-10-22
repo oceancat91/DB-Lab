@@ -77,7 +77,7 @@ flowchart LR
 
 ## 6. 配置、启动与错误处理
 
-Lab4 是运行根目录，完整安装与启动命令以 [README](../README.md) 和 [环境说明](ENVIRONMENT.md) 为准。Python 依赖从 `environment.yml` 使用 conda 创建，不使用 pip。`scripts/configure_env.py` 从示例生成本地 `.env` 和随机会话密钥，已有文件不覆盖；操作系统环境变量优先于 `.env`。`SESSION_SECRET` 不能保留示例占位符。
+Lab4 是运行根目录，完整安装与启动命令以 [README](../../README.md) 和 [环境说明](ENVIRONMENT.md) 为准。Python 依赖从 `environment.yml` 使用 conda 创建，不使用 pip。`scripts/configure_env.py` 从示例生成本地 `.env` 和随机会话密钥，已有文件不覆盖；操作系统环境变量优先于 `.env`。`SESSION_SECRET` 不能保留示例占位符。
 
 本地默认 MongoDB 绑定回环地址27084、副本集lab4rs、业务库lab4_survey，应用HTTP端口8004；数据目录为当前项目的`.runtime/mongo`。初始化脚本核对实际目录归属，不清空业务数据，也不使用旧Lab的27017。`.env`、`.runtime`、conda环境和缓存不属于提交物。
 

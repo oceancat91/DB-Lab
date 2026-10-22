@@ -8,3 +8,5 @@ __pycache__/
 dist/
 results/Lab4/
 ~$*
+*.zip
+2026_ECNU_*.pdf
