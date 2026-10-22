@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "stage": "second",
+  "reviewed_at": "2026-10-22T19:00:00+08:00",
+  "deliverables": {
+    "code_and_config": [
+      {"path": "survey_app/library.py", "note": "题目实体、版本、共享、题库、使用情况、跨问卷统计"},
+      {"path": "survey_app/db.py", "note": "五个新集合的 strict/error 校验与索引"},
+      {"path": "survey_app/main.py", "note": "题目/题库/问卷集成路由与 /library 页面"},
+      {"path": "survey_app/templates/library.html", "note": "题目库页面"},
+      {"path": "environment.yml", "note": "conda 依赖定义"},
+      {"path": ".env.example", "note": "占位符配置"}
+    ],
+    "design_documents": ["docs/SYSTEM.md", "docs/DATABASE.md", "docs/API.md", "docs/LOGIC.md"],
+    "tests": ["docs/TEST_PLAN.md", "docs/TEST_REPORT.md", "tests/test_library.py", "tests/test_migration.py"],
+    "report": ["docs/REPORT_STAGE2.md", "docs/AI_USAGE.md", "docs/EXPERIMENT_LOG.md"]
+  },
+  "evidence": {
+    "pytest": "results/stage2/pytest.json",
+    "schema": "results/stage2/schema-check.json",
+    "http_end_to_end": "results/stage2/http-e2e.json",
+    "migration": "results/stage2/migration.json"
+  },
+  "known_limits": [
+    "题目库页面只做了 HTTP 可达性与静态资源检查，未执行完整交互式浏览器流程",
+    "跨问卷统计只覆盖已发布问卷的答卷，草稿没有答卷",
+    "非 UUID 的一阶段题目 id（如 q1）无法成为题目实体，迁移脚本会列出并跳过"
+  ],
+  "status": "PASS"
+}

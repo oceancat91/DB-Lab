@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>问卷工作台</title>
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="问卷工作台首页"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>问卷工作台</a>
+    <div id="account" class="account" hidden><span id="current-user" data-testid="current-user"></span><button id="logout" class="button quiet" type="button" data-testid="logout">退出登录</button></div>
+  </header>
+  <main id="main" tabindex="-1">
+    <div id="feedback" class="feedback" role="status" aria-live="polite" hidden data-testid="feedback"></div>
+    <section id="auth-view" class="auth-layout" aria-labelledby="auth-heading" hidden>
+      <div class="auth-intro"><h1>把问题整理好，<br>再分享给大家。</h1><p>在这里创建和管理自己的问卷。填写分享问卷，也请先登录。</p><div class="intro-note"><strong>你的问卷，由你管理</strong><p>草稿可反复编辑；发布后题目固定，仍可调整截止时间或关闭问卷。</p></div></div>
+      <div class="auth-panel"><div class="auth-tabs" role="group" aria-label="账号操作"><button id="login-tab" class="tab active" type="button" aria-pressed="true">登录</button><button id="register-tab" class="tab" type="button" aria-pressed="false">注册账号</button></div><h2 id="auth-heading">登录工作台</h2><p id="auth-description" class="muted">使用你的账号继续。</p><form id="auth-form" data-testid="auth-form"><label class="field">用户名<input id="username" name="username" autocomplete="username" required minlength="3" maxlength="32" data-testid="username"><small>3–32 个字符，前后空白会忽略。</small></label><label class="field">密码<input id="password" name="password" type="password" autocomplete="current-password" required minlength="8" maxlength="128" data-testid="password"><small>8–128 个字符。</small></label><button id="auth-submit" class="button primary full" type="submit" data-testid="auth-submit">登录</button></form></div>
+    </section>
+    <section id="workspace" class="workspace" hidden aria-label="我的问卷工作台">
+      <aside class="survey-sidebar"><div class="sidebar-heading"><h1>我的问卷</h1><button id="new-survey" type="button" class="button primary compact" data-testid="new-survey">新建问卷</button></div><p class="sidebar-note">这里只显示你创建的问卷。</p><div id="survey-list" class="survey-list" data-testid="survey-list"></div><button id="refresh-surveys" class="button quiet refresh" type="button">刷新列表</button><a class="button quiet refresh" href="/library" data-testid="open-library">题目库</a></aside>
+      <div id="empty-editor" class="empty-editor"><div class="empty-lines" aria-hidden="true"></div><h2>从一份新问卷开始</h2><p>新建草稿，添加题目，再设置回答校验与跳转。</p><button id="empty-create" class="button primary" type="button">新建问卷</button></div>
+      <article id="editor" class="editor" hidden aria-labelledby="editor-title" data-testid="editor">
+        <div class="editor-heading"><div><div id="editor-status" class="status-line"></div><h2 id="editor-title">编辑问卷</h2><p id="editor-summary" class="muted"></p></div><span id="dirty-indicator" class="dirty-indicator" hidden>有未保存修改</span></div>
+        <form id="survey-form" data-testid="survey-form">
+          <section class="editor-section" aria-labelledby="metadata-heading"><div class="section-heading"><h3 id="metadata-heading">问卷信息</h3></div><label class="field">问卷标题<input id="survey-title" name="title" required data-testid="survey-title"></label><label class="field">填写说明<textarea id="survey-description" name="description" rows="3" placeholder="告诉填写者这份问卷的用途和注意事项。" data-testid="survey-description"></textarea></label><div class="policy-fields"><label class="check-label"><input id="allow-anonymous" type="checkbox" data-testid="allow-anonymous"><span>对创建者匿名<small>仍须登录，结果中不显示填写者账号。</small></span></label><label class="check-label"><input id="allow-repeat" type="checkbox" data-testid="allow-repeat"><span>允许多次填写<small>关闭时，同一账号只能成功提交一次。</small></span></label></div></section>
+          <section class="editor-section" aria-labelledby="questions-heading"><div class="section-heading"><div><h3 id="questions-heading">题目</h3><p class="muted">按显示顺序排列；发布后不能修改。</p></div><span id="question-count" class="count"></span></div><div id="questions" class="questions" data-testid="questions"></div><div id="add-questions" class="add-questions" aria-label="添加题目"><span>添加题目</span><button type="button" class="button secondary" data-add-type="single" data-testid="add-single">单选题</button><button type="button" class="button secondary" data-add-type="multi" data-testid="add-multi">多选题</button><button type="button" class="button secondary" data-add-type="text" data-testid="add-text">文本题</button><button type="button" class="button secondary" data-add-type="number" data-testid="add-number">数字题</button></div></section>
+          <section class="editor-section" aria-labelledby="rules-heading"><div class="section-heading"><div><h3 id="rules-heading">条件跳转</h3><p class="muted">仅跳到后面的题目。数字越小优先级越高；未命中时按顺序继续。</p></div><button id="add-rule" class="button secondary" type="button" data-testid="add-rule">添加规则</button></div><div id="rules" class="rules" data-testid="rules"></div></section>
+          <div id="draft-actions" class="editor-actions"><p>发布会固定题目、匿名及重复填写设置。</p><div><button id="save-survey" class="button secondary" type="submit" data-testid="save-survey">保存草稿</button><button id="publish-survey" class="button primary" type="button" data-testid="publish-survey">发布问卷</button></div></div>
+        </form>
+        <section class="editor-section lifecycle" aria-labelledby="deadline-heading"><div class="section-heading"><div><h3 id="deadline-heading">截止与开放状态</h3><p class="muted">时间均为北京时间（UTC+08:00）。留空表示不设截止。</p></div></div><div class="deadline-row"><label class="field">截止时间<input id="survey-deadline" type="datetime-local" data-testid="survey-deadline"></label><button id="save-deadline" class="button secondary" type="button" data-testid="save-deadline">保存截止时间</button><button id="close-survey" class="button danger" type="button" data-testid="close-survey" hidden>关闭问卷</button></div><p id="closed-note" class="muted" hidden>问卷已关闭，本阶段不支持重新开放。</p></section>
+        <section id="share-section" class="editor-section share-section" hidden aria-labelledby="share-heading"><h3 id="share-heading">分享给填写者</h3><p class="muted">填写者打开链接后需先登录。</p><div class="share-row"><input id="share-url" aria-label="问卷分享链接" readonly data-testid="share-url"><button id="copy-share" class="button secondary" type="button" data-testid="copy-share">复制链接</button><a id="open-share" class="button primary" target="_blank" rel="noopener noreferrer" data-testid="open-share">打开分享页</a></div></section>
+        <section id="results-section" class="editor-section results-section" hidden aria-labelledby="results-heading" data-testid="results-section">
+          <div class="section-heading"><div><h3 id="results-heading">回答与统计</h3><p class="muted">仅统计成功提交的答卷；提交次数与去重人数分别计算。</p></div><button id="refresh-results" class="button secondary" type="button" data-testid="refresh-results">刷新结果</button></div>
+          <div class="results-tabs" role="group" aria-label="查看问卷结果"><button id="statistics-tab" class="tab active" type="button" aria-pressed="true" data-testid="statistics-tab">统计</button><button id="responses-tab" class="tab" type="button" aria-pressed="false" data-testid="responses-tab">答卷明细</button></div>
+          <label id="statistics-filter" class="field statistics-filter">统计范围<select id="statistics-question" data-testid="statistics-question"><option value="">整卷所有题目</option></select></label>
+          <div id="results-content" aria-live="polite" data-testid="results-content"></div>
+        </section>
+      </article>
+    </section>
+    <section id="fill-view" class="fill-view" hidden aria-labelledby="fill-title" data-testid="fill-view"><a href="/" class="back-link">返回我的问卷</a><div id="fill-content"></div></section>
+  </main>
+  <dialog id="create-dialog" aria-labelledby="create-heading"><form id="create-form" data-testid="create-form"><div class="dialog-heading"><h2 id="create-heading">新建问卷</h2><button id="cancel-create" class="button quiet" type="button">取消</button></div><p class="muted">先填写问卷信息，随后添加题目。发布前都可以修改。</p><label class="field">问卷标题<input id="create-title" required autofocus data-testid="create-title"></label><label class="field">填写说明<textarea id="create-description" rows="3" data-testid="create-description"></textarea></label><div class="create-policy"><label class="check-label"><input id="create-anonymous" type="checkbox" checked data-testid="create-anonymous"><span>对创建者匿名<small>仍须登录，结果中不显示填写者账号。</small></span></label><label class="check-label"><input id="create-repeat" type="checkbox" data-testid="create-repeat"><span>允许多次填写<small>关闭时，同一账号只能成功提交一次。</small></span></label></div><button id="create-submit" class="button primary full" type="submit" data-testid="create-submit">创建草稿</button></form></dialog>
+  <noscript><p class="noscript">请启用 JavaScript 后使用问卷工作台。</p></noscript>
+</body>
+</html>

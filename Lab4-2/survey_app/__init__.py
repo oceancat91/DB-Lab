@@ -1,0 +1,1 @@
+"""MongoDB questionnaire application package."""

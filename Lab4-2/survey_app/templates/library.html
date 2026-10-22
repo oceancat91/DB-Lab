@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>题目库 · 问卷工作台</title>
+<link rel="stylesheet" href="/static/app.css">
+<link rel="stylesheet" href="/static/library.css">
+</head>
+<body class="library-page">
+<header class="topbar">
+  <a class="brand" href="/">问卷工作台</a>
+  <nav class="topnav">
+    <a href="/">我的问卷</a>
+    <a href="/library" class="active" aria-current="page">题目库</a>
+  </nav>
+  <div id="account" class="account" hidden>
+    <span id="current-user" data-testid="current-user"></span>
+    <button id="logout" class="button quiet" type="button">退出登录</button>
+  </div>
+</header>
+
+<main class="library-shell">
+  <section id="auth-panel" class="auth-layout" hidden>
+    <div class="auth-panel">
+      <h1>登录后管理题目库</h1>
+      <p class="muted">题目、版本与共享记录只对已登录账号开放。</p>
+      <a class="button primary full" href="/">去登录</a>
+    </div>
+  </section>
+
+  <div id="library-body" hidden>
+    <aside class="library-sidebar">
+      <section class="panel">
+        <div class="section-heading"><h2>新建题目</h2></div>
+        <form id="question-form" data-testid="question-form">
+          <label class="field">题型
+            <select id="question-type" data-testid="question-type">
+              <option value="single">单选题</option>
+              <option value="multi">多选题</option>
+              <option value="text">文本题</option>
+              <option value="number">数字题</option>
+            </select>
+          </label>
+          <label class="field">题干<input id="question-title" required maxlength="500" data-testid="question-title" placeholder="例如：你的年龄段"></label>
+          <div id="options-field" class="field">
+            <span>选项</span>
+            <div id="option-list" class="option-list"></div>
+            <button id="add-option" class="button quiet" type="button">添加选项</button>
+          </div>
+          <div id="number-fields" class="field-row" hidden>
+            <label class="field">最小值<input id="number-min" type="number" step="any"></label>
+            <label class="field">最大值<input id="number-max" type="number" step="any"></label>
+            <label class="check-label"><input id="number-integer" type="checkbox"><span>只允许整数</span></label>
+          </div>
+          <div id="text-fields" class="field-row" hidden>
+            <label class="field">最短长度<input id="text-min" type="number" min="0" value="0"></label>
+            <label class="field">最长长度<input id="text-max" type="number" min="1" value="200"></label>
+          </div>
+          <label class="check-label"><input id="question-required" type="checkbox"><span>默认必答</span></label>
+          <label class="field">修改说明<input id="question-note" maxlength="200" placeholder="写进版本历史，可留空"></label>
+          <button id="question-submit" class="button primary full" type="submit" data-testid="question-submit">保存到题目库</button>
+        </form>
+        <p id="form-error" class="error" role="alert" hidden></p>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading"><h2>题库</h2><span id="bank-count" class="count"></span></div>
+        <form id="bank-form" class="inline-form">
+          <input id="bank-name" required maxlength="100" placeholder="题库名称" aria-label="题库名称">
+          <button class="button secondary" type="submit">新建</button>
+        </form>
+        <div id="bank-list" class="stack" data-testid="bank-list"></div>
+      </section>
+    </aside>
+
+    <section class="library-main">
+      <div class="section-heading">
+        <div><h2>题目</h2><p class="muted">题目以版本保存：修改会生成新版本，已发布问卷继续引用旧版本。</p></div>
+        <div class="filter-row">
+          <label class="field compact-field">搜索<input id="question-search" placeholder="按题干搜索"></label>
+          <button id="refresh-questions" class="button quiet" type="button">刷新</button>
+        </div>
+      </div>
+      <div class="tabs" role="group" aria-label="题目来源">
+        <button class="tab active" data-scope="mine" type="button" aria-pressed="true">我的题目</button>
+        <button class="tab" data-scope="shared" type="button" aria-pressed="false">共享给我的</button>
+      </div>
+      <div id="question-list" class="question-list" data-testid="question-list"></div>
+      <section id="detail" class="panel detail" hidden aria-live="polite"></section>
+      <section id="stats-panel" class="panel stats-panel" hidden aria-live="polite"></section>
+    </section>
+  </div>
+</main>
+<script src="/static/library.js" defer></script>
+</body>
+</html>

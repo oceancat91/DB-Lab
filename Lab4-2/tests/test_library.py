@@ -1,0 +1,410 @@
+"""Second stage: stored questions, versions, sharing, banks, usage and cross-survey statistics."""
+
+from __future__ import annotations
+
+from datetime import datetime, timezone
+from uuid import uuid4
+
+import pytest
+from pymongo.errors import DuplicateKeyError
+
+from conftest import register_login, unique_username
+
+
+@pytest.fixture(autouse=True)
+def signed_in(client):
+    """Every test in this module needs an authenticated owner client."""
+    return register_login(client)
+
+
+def question_payload(**overrides) -> dict:
+    payload = {"type": "single", "title": "你的年龄段", "required": True,
+               "options": [{"id": "a", "label": "18-25"}, {"id": "b", "label": "26-35"}],
+               "validation": {}, "note": ""}
+    payload.update(overrides)
+    return payload
+
+
+def create_question(client, **overrides) -> dict:
+    response = client.post("/api/questions", json=question_payload(**overrides))
+    assert response.status_code == 201, response.text
+    return response.json()
+
+
+def new_version(client, question_id: str, **overrides) -> dict:
+    response = client.post(f"/api/questions/{question_id}/versions", json=question_payload(**overrides))
+    assert response.status_code == 201, response.text
+    return response.json()
+
+
+def create_survey(client, title: str = "合成问卷") -> dict:
+    response = client.post("/api/surveys", json={"title": title, "description": "第二阶段测试",
+                                                 "allow_anonymous": True, "allow_repeat": True,
+                                                 "closes_at": None})
+    assert response.status_code == 201, response.text
+    return response.json()
+
+
+def import_question(client, survey: dict, question_id: str, version: int | None = None) -> dict:
+    body = {"question_id": question_id}
+    if version is not None:
+        body["version"] = version
+    response = client.post(f"/api/surveys/{survey['id']}/questions/import", json=body)
+    assert response.status_code == 201, response.text
+    return response.json()
+
+
+def publish(client, survey: dict) -> dict:
+    latest = client.get(f"/api/surveys/{survey['id']}").json()
+    response = client.post(f"/api/surveys/{survey['id']}/publish", json={"revision": latest["revision"]})
+    assert response.status_code == 200, response.text
+    return response.json()
+
+
+def submit_answer(client, survey: dict, answers: dict, request_id: str = "req-1") -> dict:
+    fill = client.get(f"/api/fill/{survey['share_code']}")
+    assert fill.status_code == 200, fill.text
+    response = client.post(f"/api/fill/{survey['share_code']}/submit",
+                           json={"version": fill.json()["version"], "request_id": request_id,
+                                 "answers": answers})
+    assert response.status_code == 200, response.text
+    return response.json()
+
+
+# ---------------------------------------------------------------- R15 stored questions
+def test_question_creation_listing_and_validation(client, db):
+    created = create_question(client)
+    assert created["current_version"] == 1
+    assert created["owned"] is True
+    assert created["current"]["title"] == "你的年龄段"
+    assert created["current"]["version"] == 1
+
+    listed = client.get("/api/questions").json()
+    assert [row["id"] for row in listed] == [created["id"]]
+    assert client.get("/api/questions", params={"type": "text"}).json() == []
+    assert client.get("/api/questions", params={"q": "年龄"}).json()[0]["id"] == created["id"]
+    assert client.get("/api/questions", params={"q": "不存在的题"}).json() == []
+
+    # The same definition rules as a survey question: one option is not allowed.
+    bad = client.post("/api/questions", json=question_payload(options=[{"id": "a", "label": "唯一"}]))
+    assert bad.status_code == 422
+    assert db.questions.count_documents({}) == 1
+
+    unknown_field = client.post("/api/questions", json={**question_payload(), "owner_id": "spoof"})
+    assert unknown_field.status_code == 422
+
+
+def test_versions_are_append_only_and_restorable(client, db):
+    question = create_question(client)
+    question_id = question["id"]
+    updated = new_version(client, question_id, title="你的年龄段（细分为三段）",
+                          options=[{"id": "a", "label": "18-25"}, {"id": "b", "label": "26-35"},
+                                   {"id": "c", "label": "36 以上"}])
+    assert updated["current_version"] == 2
+    versions = {row["version"]: row for row in updated["versions"]}
+    assert sorted(versions) == [1, 2]
+    assert versions[2]["derived_from"] == {"question_id": question_id, "version": 1}
+    # v1 stays byte-identical in the database: no in-place edit ever happens.
+    original = db.question_versions.find_one({"question_id": question_id, "version": 1})
+    assert original["title"] == "你的年龄段"
+    assert len(original["options"]) == 2
+
+    restored = client.post(f"/api/questions/{question_id}/versions/1/restore")
+    assert restored.status_code == 201
+    assert restored.json()["current_version"] == 3
+    restored_version = db.question_versions.find_one({"question_id": question_id, "version": 3})
+    assert restored_version["restored_from"] == 1
+    assert restored_version["title"] == "你的年龄段"
+    assert restored_version["options"] == original["options"]
+
+    with pytest.raises(DuplicateKeyError):
+        db.question_versions.insert_one({**original, "_id": str(uuid4())})
+
+
+def test_question_of_another_owner_is_not_visible(client, client_factory):
+    owner = create_question(client)
+    with client_factory() as other:
+        register_login(other)
+        assert other.get(f"/api/questions/{owner['id']}").status_code == 404
+        assert other.post(f"/api/questions/{owner['id']}/versions",
+                          json=question_payload(title="越权修改")).status_code == 404
+        assert other.get(f"/api/questions/{owner['id']}/statistics").status_code == 404
+
+
+# ---------------------------------------------------------------- R16 sharing
+def test_sharing_allows_reuse_but_not_modification(client, client_factory, db):
+    owner = create_question(client)
+    question_id = owner["id"]
+    with client_factory() as colleague:
+        colleague_user = register_login(colleague)
+        shared = client.post(f"/api/questions/{question_id}/shares",
+                             json={"username": colleague_user["username"]})
+        assert shared.status_code == 201, shared.text
+
+        overview = colleague.get("/api/questions/shared").json()
+        assert [row["id"] for row in overview] == [question_id]
+        assert overview[0]["shared_with_me"] is True and overview[0]["owned"] is False
+        assert colleague.get(f"/api/questions/{question_id}").status_code == 200
+
+        survey = create_survey(colleague, "同事的问卷")
+        imported = import_question(colleague, survey, question_id)
+        assert imported["questions"][0]["question_version"] == 1
+
+        # A grantee may use and even fork the question, but never append a version.
+        assert colleague.post(f"/api/questions/{question_id}/versions",
+                              json=question_payload(title="同事改题")).status_code == 404
+        forked = colleague.post(f"/api/questions/{question_id}/fork",
+                                json=question_payload(title="同事的副本"))
+        assert forked.status_code == 201
+        assert forked.json()["owner_id"] == colleague_user["id"]
+        assert db.question_versions.find_one({"question_id": forked.json()["id"],
+                                              "version": 1})["derived_from"] == {
+            "question_id": question_id, "version": 1}
+
+        removed = client.delete(f"/api/questions/{question_id}/shares/{colleague_user['id']}")
+        assert removed.status_code == 200
+        assert colleague.get("/api/questions/shared").json() == []
+        assert colleague.get(f"/api/questions/{question_id}").status_code == 404
+
+    duplicate = client.post(f"/api/questions/{question_id}/shares",
+                            json={"username": unique_username()})
+    assert duplicate.status_code == 404  # unknown recipient
+
+
+# ---------------------------------------------------------------- R17 published questions freeze
+def test_published_question_snapshot_survives_new_versions(client, db):
+    question = create_question(client)
+    survey = create_survey(client, "已发布问卷")
+    import_question(client, survey, question["id"])
+    published = publish(client, survey)
+    assert published["questions"][0]["question_version"] == 1
+
+    new_version(client, question["id"], title="改过的题目", options=[{"id": "a", "label": "甲"},
+                                                                    {"id": "b", "label": "乙"}])
+    stored = client.get(f"/api/surveys/{survey['id']}").json()
+    assert stored["questions"][0]["title"] == "你的年龄段"
+    assert stored["questions"][0]["question_version"] == 1
+    assert db.survey_versions.find_one({"survey_id": survey["id"], "version": 1})["questions"][0][
+        "title"] == "你的年龄段"
+
+    frozen = client.put(f"/api/surveys/{survey['id']}", json={
+        "title": survey["title"], "description": "第二阶段测试", "allow_anonymous": True,
+        "allow_repeat": True, "closes_at": None, "revision": stored["revision"],
+        "questions": stored["questions"], "rules": []})
+    assert frozen.status_code == 409
+
+    second = create_survey(client, "新问卷")
+    imported = import_question(client, second, question["id"])
+    assert imported["questions"][0]["title"] == "改过的题目"
+    assert imported["questions"][0]["question_version"] == 2
+
+
+def test_client_cannot_claim_a_version_it_does_not_match(client):
+    question = create_question(client)
+    survey = create_survey(client)
+    imported = import_question(client, survey, question["id"])
+    forged = imported["questions"][0]
+    forged["title"] = "伪造的标题"
+    forged["question_version"] = 1
+    saved = client.put(f"/api/surveys/{survey['id']}", json={
+        "title": survey["title"], "description": "第二阶段测试", "allow_anonymous": True,
+        "allow_repeat": True, "closes_at": None, "revision": imported["revision"],
+        "questions": [forged], "rules": []})
+    assert saved.status_code == 200
+    assert "question_version" not in saved.json()["questions"][0]
+
+
+# ---------------------------------------------------------------- R19/R20 versions and usage
+def test_two_surveys_can_pin_different_versions_and_usage_lists_both(client, db):
+    question = create_question(client)
+    first = create_survey(client, "旧版本问卷")
+    import_question(client, first, question["id"], version=1)
+    publish(client, first)
+
+    new_version(client, question["id"], title="新版本题目")
+    second = create_survey(client, "新版本问卷")
+    import_question(client, second, question["id"], version=2)
+
+    usage = client.get(f"/api/questions/{question['id']}/usage").json()
+    assert usage["usage_count"] == 2
+    rows = {(row["survey_id"], row["status"]): row for row in usage["usages"]}
+    assert rows[(first["id"], "published")]["question_version"] == 1
+    assert rows[(first["id"], "published")]["editable"] is False
+    assert rows[(second["id"], "draft")]["question_version"] == 2
+    assert rows[(second["id"], "draft")]["editable"] is True
+
+
+def test_revision_modes_change_only_what_they_should(client, db):
+    question = create_question(client)
+    survey = create_survey(client)
+    imported = import_question(client, survey, question["id"])
+    question_id = question["id"]
+
+    local = client.post(f"/api/surveys/{survey['id']}/questions/{question_id}/revision",
+                        json={"mode": "draft_only", "question": question_payload(title="只改本卷")})
+    assert local.status_code == 200, local.text
+    assert local.json()["questions"][0]["title"] == "只改本卷"
+    assert "question_version" not in local.json()["questions"][0]
+    assert db.questions.find_one({"_id": question_id})["current_version"] == 1
+
+    added = client.post(f"/api/surveys/{survey['id']}/questions/{question_id}/revision",
+                        json={"mode": "new_version", "question": question_payload(title="新版本")})
+    assert added.status_code == 200, added.text
+    assert added.json()["questions"][0]["question_version"] == 2
+    assert db.questions.find_one({"_id": question_id})["current_version"] == 2
+
+    forked = client.post(f"/api/surveys/{survey['id']}/questions/{question_id}/revision",
+                         json={"mode": "fork", "question": question_payload(title="分叉题")})
+    assert forked.status_code == 200, forked.text
+    forked_question = forked.json()["questions"][0]
+    assert forked_question["id"] != question_id
+    assert forked_question["title"] == "分叉题"
+    assert db.questions.find_one({"_id": question_id})["current_version"] == 2
+
+
+def test_fork_with_rules_rewrites_the_reference(client):
+    question = create_question(client)
+    survey = create_survey(client)
+    imported = import_question(client, survey, question["id"])
+    questions = imported["questions"] + [
+        {"id": "tail", "type": "text", "title": "补充说明", "required": False,
+         "options": [], "validation": {"min_length": 0, "max_length": 100}}]
+    rules = [{"source": question["id"], "op": "eq", "value": "a", "target": "tail", "priority": 1}]
+    saved = client.put(f"/api/surveys/{survey['id']}", json={
+        "title": survey["title"], "description": "第二阶段测试", "allow_anonymous": True,
+        "allow_repeat": True, "closes_at": None, "revision": imported["revision"],
+        "questions": questions, "rules": rules})
+    assert saved.status_code == 200, saved.text
+
+    forked = client.post(f"/api/surveys/{survey['id']}/questions/{question['id']}/revision",
+                         json={"mode": "fork", "question": question_payload(title="分叉并改跳转")})
+    assert forked.status_code == 200, forked.text
+    new_id = forked.json()["questions"][0]["id"]
+    assert forked.json()["rules"][0]["source"] == new_id
+
+
+# ---------------------------------------------------------------- R21 banks
+def test_bank_items_pin_versions_and_can_be_updated(client, db):
+    bank = client.post("/api/banks", json={"name": "常用题", "description": "年龄与性别"})
+    assert bank.status_code == 201
+    bank_id = bank.json()["id"]
+    assert client.post("/api/banks", json={"name": "常用题"}).status_code == 409
+
+    question = create_question(client)
+    added = client.post(f"/api/banks/{bank_id}/items", json={"question_id": question["id"]})
+    assert added.status_code == 201, added.text
+    item = added.json()["items"][0]
+    assert item["question_version"] == 1 and item["outdated"] is False
+    assert client.post(f"/api/banks/{bank_id}/items",
+                       json={"question_id": question["id"]}).status_code == 409
+
+    new_version(client, question["id"], title="题库里的题更新了")
+    bank_view = client.get(f"/api/banks/{bank_id}").json()
+    assert bank_view["items"][0]["outdated"] is True
+    assert bank_view["items"][0]["question_version"] == 1
+
+    repinned = client.patch(f"/api/banks/{bank_id}/items/{question['id']}")
+    assert repinned.status_code == 200, repinned.text
+    assert repinned.json()["items"][0]["question_version"] == 2
+    assert repinned.json()["items"][0]["outdated"] is False
+
+    removed = client.delete(f"/api/banks/{bank_id}/items/{question['id']}")
+    assert removed.json()["items"] == []
+    assert client.get("/api/banks").json()[0]["items"] == 0
+
+
+# ---------------------------------------------------------------- R22 cross-survey statistics
+def test_cross_survey_statistics_aggregate_one_question(client, client_factory):
+    question = create_question(client)
+    first = create_survey(client, "问卷一")
+    import_question(client, first, question["id"], version=1)
+    publish(client, first)
+    submit_answer(client, first, {question["id"]: "a"})
+
+    second = create_survey(client, "问卷二")
+    import_question(client, second, question["id"], version=1)
+    publish(client, second)
+    submit_answer(client, second, {question["id"]: "b"})
+
+    new_version(client, question["id"], title="第三段年龄",
+                options=[{"id": "a", "label": "18-25"}, {"id": "b", "label": "26-35"},
+                         {"id": "c", "label": "36 以上"}])
+    third = create_survey(client, "问卷三")
+    import_question(client, third, question["id"], version=2)
+    publish(client, third)
+    submit_answer(client, third, {question["id"]: "c"})
+
+    stats = client.get(f"/api/questions/{question['id']}/statistics").json()
+    assert stats["survey_count"] == 3
+    assert stats["total_answered"] == 3
+    assert stats["scope"] == "all surveys"
+    options = {row["id"]: row["count"] for row in stats["aggregate"]["by_type"]["single"]["options"]}
+    assert options == {"a": 1, "b": 1, "c": 1}
+    assert set(stats["by_question_version"]) == {"1", "2"}
+    assert stats["by_question_version"]["1"]["answered"] == 2
+    assert stats["by_question_version"]["2"]["answered"] == 1
+
+    # A grantee only aggregates over their own surveys, never over the owner's data.
+    with client_factory() as colleague:
+        colleague_user = register_login(colleague)
+        client.post(f"/api/questions/{question['id']}/shares", json={"username": colleague_user["username"]})
+        mine = create_survey(colleague, "同事问卷")
+        import_question(colleague, mine, question["id"], version=2)
+        publish(colleague, mine)
+        submit_answer(colleague, mine, {question["id"]: "a"})
+        colleague_stats = colleague.get(f"/api/questions/{question['id']}/statistics").json()
+        assert colleague_stats["scope"] == "own surveys only"
+        assert colleague_stats["survey_count"] == 1
+        assert colleague_stats["total_answered"] == 1
+
+
+def test_cross_survey_statistics_of_number_and_text(client):
+    number = create_question(client, type="number", title="你的年龄",
+                             options=[], validation={"min_value": 0, "max_value": 120,
+                                                     "integer_only": True})
+    text = create_question(client, type="text", title="你的城市", options=[],
+                           validation={"min_length": 0, "max_length": 50})
+    survey = create_survey(client, "混合题")
+    import_question(client, survey, number["id"])
+    imported = import_question(client, survey, text["id"])
+    publish(client, survey)
+    submit_answer(client, survey, {number["id"]: 20, text["id"]: "上海"})
+    submit_answer(client, survey, {number["id"]: 30, text["id"]: "上海"}, request_id="req-2")
+
+    number_stats = client.get(f"/api/questions/{number['id']}/statistics").json()
+    payload = number_stats["aggregate"]["by_type"]["number"]
+    assert payload["count"] == 2 and payload["mean"] == 25
+    text_stats = client.get(f"/api/questions/{text['id']}/statistics").json()
+    assert text_stats["aggregate"]["by_type"]["text"]["values"].count("上海") == 2
+
+
+def test_import_rejects_duplicates_and_published_surveys(client):
+    question = create_question(client)
+    survey = create_survey(client)
+    import_question(client, survey, question["id"])
+    duplicate = client.post(f"/api/surveys/{survey['id']}/questions/import",
+                            json={"question_id": question["id"]})
+    assert duplicate.status_code == 409
+    publish(client, survey)
+    late = client.post(f"/api/surveys/{survey['id']}/questions/import",
+                       json={"question_id": question["id"]})
+    assert late.status_code == 409
+
+
+def test_share_pairs_and_bank_items_are_unique(client, db):
+    question = create_question(client)
+    now = datetime.now(timezone.utc)
+    grantee = str(uuid4())
+    share = {"_id": str(uuid4()), "question_id": question["id"], "owner_id": question["owner_id"],
+             "grantee_id": grantee, "created_at": now, "schema_version": 1}
+    db.question_shares.insert_one(dict(share))
+    with pytest.raises(DuplicateKeyError):
+        db.question_shares.insert_one({**share, "_id": str(uuid4())})
+
+    bank_id = client.post("/api/banks", json={"name": "唯一性题库"}).json()["id"]
+    client.post(f"/api/banks/{bank_id}/items", json={"question_id": question["id"]})
+    with pytest.raises(DuplicateKeyError):
+        db.question_bank_items.insert_one({
+            "_id": str(uuid4()), "bank_id": bank_id, "question_id": question["id"],
+            "question_version": 1, "added_by": question["owner_id"], "added_at": now,
+            "schema_version": 1})

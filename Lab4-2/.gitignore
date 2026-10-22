@@ -1,0 +1,12 @@
+.runtime/
+.env
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+.venv/
+dist/
+results/Lab4/
+~$*
+*.zip
+2026_ECNU_*.pdf

@@ -99,3 +99,47 @@ python scripts/package_stage1.py
 该命令按当前工作树重建压缩包、清单和打包检查，因此每次重建都会得到新的摘要。S7 通过后用户追加了一次填写页面改版（见 [实验日志](docs/EXPERIMENT_LOG.md) EXP-013）：`dist/Lab4-stage1.zip` 已按改版后的工作树重建，改版只动 `survey_app/static/app.css` 与 `survey_app/static/app.js`；S7 时点的包与清单逐字节快照保留在 `dist/Lab4-stage1-s7-baseline.zip`（同样不入库）与 [S7 快照说明](results/S7/archive/README.md)，21 个业务文件的基线复核见 [基线复核](results/ui-refresh/code-baseline-check.json)。
 
 包中保留源Word、规范、代码、文档、真实测试/失败记录及合成夹具；排除本机配置、运行时数据库/备份、Git内部文件、环境和缓存。生产认证/TLS、容量压力、其他操作系统/浏览器与完整移动设备适配未验收。当前统计加载可能使滚动位置变化，人为畸形百分号分享URL尚无友好提示；正常生成链接完整链路已通过，详见 [代码复核](results/acceptance/final-code-review.md)。
+
+## 两阶段仓库结构
+
+本仓库按课程要求分阶段交付，三个阶段要素共用同一份治理文件：
+
+```
+Lab4/
+├── AGENTS.md      公共：实验行为规范（两阶段共用）
+├── WORKFLOW.md    公共：一阶段 S0–S7 与二阶段 T0–T7 的步骤与门禁
+├── README.md      公共：本文件
+├── Lab4-1/        第一阶段：问卷系统基线（账号、问卷、校验跳转、提交统计）
+└── Lab4-2/        第二阶段：可复用题目库（题目实体、版本、共享、题库、跨问卷统计）
+```
+
+两个阶段各自含 `progress.json`、`environment.yml`、`survey_app/`、`tests/`、`scripts/`、`docs/` 与 `results/`，
+可单独打包：一阶段包 = 三个公共文件 + `Lab4-1/`，二阶段包 = 三个公共文件 + `Lab4-2/`。
+
+## 第二阶段：可复用题目库
+
+依据《大作业一：需求变更》实现八项变更：
+
+1. 题目作为独立实体保存，一份问卷可从已有题目中选择，一题可被多份问卷使用。
+2. 题目可共享给其他用户；被共享者可复用，但不能修改原题（只能另存为自己的新题）。
+3. 已发布问卷的题目不可修改：修改题目只会生成新版本，旧问卷继续引用旧版本。
+4. 题目有版本历史，可查看、可恢复（恢复同样追加新版本，不改写历史）。
+5. 同一题目的多个版本可共存，不同问卷可钉住不同版本。
+6. 可查看某题被哪些问卷使用（草稿与已发布分开列出，已发布的标注不可改）。
+7. 可建立题库并钉住题目版本，题目更新后题库条目可显式更新到新版本。
+8. 可按题目维度跨问卷统计答案分布（所有者看全部问卷，被共享者只看自己的问卷）。
+
+数据模型见 [Lab4-2/docs/DATABASE.md](Lab4-2/docs/DATABASE.md)，接口见 [Lab4-2/docs/API.md](Lab4-2/docs/API.md)，
+关键逻辑见 [Lab4-2/docs/LOGIC.md](Lab4-2/docs/LOGIC.md)，测试见 [Lab4-2/docs/TEST_REPORT.md](Lab4-2/docs/TEST_REPORT.md)。
+
+```powershell
+cd Lab4-2
+conda activate lab4-survey
+python scripts/init_db.py
+python -m uvicorn survey_app.main:app --host 127.0.0.1 --port 8004
+# 题目库页面：http://127.0.0.1:8004/library
+python scripts/migrate_question_library.py --dry-run   # 一阶段内嵌题目回填，先看报告
+python scripts/migrate_question_library.py --apply
+python -m pytest tests --evidence results/stage2/pytest.json -q
+python scripts/package_stage2.py                       # 生成 dist/Lab4-stage2.zip
+```

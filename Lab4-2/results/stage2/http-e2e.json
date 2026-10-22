@@ -1,0 +1,1216 @@
+{
+  "generated_at": "2026-10-22T10:11:44.802887+00:00",
+  "base_url": "http://127.0.0.1:8012",
+  "steps": [
+    {
+      "step": "注册 u_owner_bbe2874859",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "8885ba6f-ccfc-49c8-a021-fb9be6c32b3c",
+        "username": "u_owner_bbe2874859",
+        "created_at": "2026-10-22T10:11:43.797572+00:00"
+      }
+    },
+    {
+      "step": "登录 u_owner_bbe2874859",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "id": "8885ba6f-ccfc-49c8-a021-fb9be6c32b3c",
+        "username": "u_owner_bbe2874859",
+        "created_at": "2026-10-22T10:11:43.797000+00:00"
+      }
+    },
+    {
+      "step": "注册 u_mate_bbe2874859",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "08c2d726-5107-40b8-8544-b1d0b1e58061",
+        "username": "u_mate_bbe2874859",
+        "created_at": "2026-10-22T10:11:44.013406+00:00"
+      }
+    },
+    {
+      "step": "登录 u_mate_bbe2874859",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "id": "08c2d726-5107-40b8-8544-b1d0b1e58061",
+        "username": "u_mate_bbe2874859",
+        "created_at": "2026-10-22T10:11:44.013000+00:00"
+      }
+    },
+    {
+      "step": "创建题目",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+        "owner_id": "8885ba6f-ccfc-49c8-a021-fb9be6c32b3c",
+        "type": "single",
+        "title": "你的年龄段",
+        "current_version": 1,
+        "status": "active",
+        "origin": "created",
+        "created_at": "2026-10-22T10:11:44.108000+00:00",
+        "updated_at": "2026-10-22T10:11:44.108000+00:00",
+        "owned": true,
+        "shared_with_me": false,
+        "share_count": 0,
+        "bank_count": 0,
+        "current": {
+          "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+          "version": 1,
+          "type": "single",
+          "title": "你的年龄段",
+          "required": true,
+          "options": [
+            {
+              "id": "a",
+              "label": "18-25"
+            },
+            {
+              "id": "b",
+              "label": "26-35"
+            }
+          ],
+          "validation": {},
+          "note": "初版",
+          "derived_from": null,
+          "supersedes": null,
+          "restored_from": null,
+          "created_at": "2026-10-22T10:11:44.109000+00:00"
+        },
+        "versions": [
+          {
+            "version": 1,
+            "note": "初版",
+            "created_at": "2026-10-22T10:11:44.109000+00:00",
+            "derived_from": null,
+            "restored_from": null,
+            "supersedes": null
+          }
+        ],
+        "banks": [],
+        "shares": []
+      }
+    },
+    {
+      "step": "新建版本 v2",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+        "owner_id": "8885ba6f-ccfc-49c8-a021-fb9be6c32b3c",
+        "type": "single",
+        "title": "你的年龄段（三段）",
+        "current_version": 2,
+        "status": "active",
+        "origin": "created",
+        "created_at": "2026-10-22T10:11:44.108000+00:00",
+        "updated_at": "2026-10-22T10:11:44.154000+00:00",
+        "owned": true,
+        "shared_with_me": false,
+        "share_count": 0,
+        "bank_count": 0,
+        "current": {
+          "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+          "version": 2,
+          "type": "single",
+          "title": "你的年龄段（三段）",
+          "required": true,
+          "options": [
+            {
+              "id": "a",
+              "label": "18-25"
+            },
+            {
+              "id": "b",
+              "label": "26-35"
+            },
+            {
+              "id": "c",
+              "label": "36 以上"
+            }
+          ],
+          "validation": {},
+          "note": "增加第三段",
+          "derived_from": {
+            "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "version": 1
+          },
+          "supersedes": 1,
+          "restored_from": null,
+          "created_at": "2026-10-22T10:11:44.153000+00:00"
+        },
+        "versions": [
+          {
+            "version": 1,
+            "note": "初版",
+            "created_at": "2026-10-22T10:11:44.109000+00:00",
+            "derived_from": null,
+            "restored_from": null,
+            "supersedes": null
+          },
+          {
+            "version": 2,
+            "note": "增加第三段",
+            "created_at": "2026-10-22T10:11:44.153000+00:00",
+            "derived_from": {
+              "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+              "version": 1
+            },
+            "restored_from": null,
+            "supersedes": 1
+          }
+        ],
+        "banks": [],
+        "shares": []
+      }
+    },
+    {
+      "step": "恢复 v1",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+        "owner_id": "8885ba6f-ccfc-49c8-a021-fb9be6c32b3c",
+        "type": "single",
+        "title": "你的年龄段",
+        "current_version": 3,
+        "status": "active",
+        "origin": "created",
+        "created_at": "2026-10-22T10:11:44.108000+00:00",
+        "updated_at": "2026-10-22T10:11:44.175000+00:00",
+        "owned": true,
+        "shared_with_me": false,
+        "share_count": 0,
+        "bank_count": 0,
+        "current": {
+          "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+          "version": 3,
+          "type": "single",
+          "title": "你的年龄段",
+          "required": true,
+          "options": [
+            {
+              "id": "a",
+              "label": "18-25"
+            },
+            {
+              "id": "b",
+              "label": "26-35"
+            }
+          ],
+          "validation": {},
+          "note": "恢复自 v1",
+          "derived_from": {
+            "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "version": 1
+          },
+          "supersedes": 2,
+          "restored_from": 1,
+          "created_at": "2026-10-22T10:11:44.175000+00:00"
+        },
+        "versions": [
+          {
+            "version": 1,
+            "note": "初版",
+            "created_at": "2026-10-22T10:11:44.109000+00:00",
+            "derived_from": null,
+            "restored_from": null,
+            "supersedes": null
+          },
+          {
+            "version": 2,
+            "note": "增加第三段",
+            "created_at": "2026-10-22T10:11:44.153000+00:00",
+            "derived_from": {
+              "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+              "version": 1
+            },
+            "restored_from": null,
+            "supersedes": 1
+          },
+          {
+            "version": 3,
+            "note": "恢复自 v1",
+            "created_at": "2026-10-22T10:11:44.175000+00:00",
+            "derived_from": {
+              "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+              "version": 1
+            },
+            "restored_from": 1,
+            "supersedes": 2
+          }
+        ],
+        "banks": [],
+        "shares": []
+      },
+      "current_version": 3
+    },
+    {
+      "step": "共享给同事",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+        "owner_id": "8885ba6f-ccfc-49c8-a021-fb9be6c32b3c",
+        "type": "single",
+        "title": "你的年龄段",
+        "current_version": 3,
+        "status": "active",
+        "origin": "created",
+        "created_at": "2026-10-22T10:11:44.108000+00:00",
+        "updated_at": "2026-10-22T10:11:44.175000+00:00",
+        "owned": true,
+        "shared_with_me": false,
+        "share_count": 1,
+        "bank_count": 0,
+        "current": {
+          "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+          "version": 3,
+          "type": "single",
+          "title": "你的年龄段",
+          "required": true,
+          "options": [
+            {
+              "id": "a",
+              "label": "18-25"
+            },
+            {
+              "id": "b",
+              "label": "26-35"
+            }
+          ],
+          "validation": {},
+          "note": "恢复自 v1",
+          "derived_from": {
+            "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "version": 1
+          },
+          "supersedes": 2,
+          "restored_from": 1,
+          "created_at": "2026-10-22T10:11:44.175000+00:00"
+        },
+        "versions": [
+          {
+            "version": 1,
+            "note": "初版",
+            "created_at": "2026-10-22T10:11:44.109000+00:00",
+            "derived_from": null,
+            "restored_from": null,
+            "supersedes": null
+          },
+          {
+            "version": 2,
+            "note": "增加第三段",
+            "created_at": "2026-10-22T10:11:44.153000+00:00",
+            "derived_from": {
+              "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+              "version": 1
+            },
+            "restored_from": null,
+            "supersedes": 1
+          },
+          {
+            "version": 3,
+            "note": "恢复自 v1",
+            "created_at": "2026-10-22T10:11:44.175000+00:00",
+            "derived_from": {
+              "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+              "version": 1
+            },
+            "restored_from": 1,
+            "supersedes": 2
+          }
+        ],
+        "banks": [],
+        "shares": [
+          {
+            "user_id": "08c2d726-5107-40b8-8544-b1d0b1e58061",
+            "username": "u_mate_bbe2874859"
+          }
+        ]
+      }
+    },
+    {
+      "step": "同事看到共享题",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": [
+        {
+          "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+          "owner_id": "8885ba6f-ccfc-49c8-a021-fb9be6c32b3c",
+          "type": "single",
+          "title": "你的年龄段",
+          "current_version": 3,
+          "status": "active",
+          "origin": "created",
+          "created_at": "2026-10-22T10:11:44.108000+00:00",
+          "updated_at": "2026-10-22T10:11:44.175000+00:00",
+          "owned": false,
+          "shared_with_me": true,
+          "share_count": 1,
+          "bank_count": 0,
+          "owner_name": "u_owner_bbe2874859"
+        }
+      ]
+    },
+    {
+      "step": "同事越权建版本被拒",
+      "expected": 404,
+      "actual": 404,
+      "ok": true,
+      "body": {
+        "error": {
+          "code": "not_found",
+          "message": "题目不存在或无权操作"
+        }
+      }
+    },
+    {
+      "step": "问卷一 建卷",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "e328cd5d-df08-4060-a799-5bafb3b6ffaa",
+        "title": "问卷一",
+        "description": "二阶段 HTTP 校验",
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "status": "draft",
+        "revision": 0,
+        "version": null,
+        "share_code": "8dSdnDZXXQqHPMSd",
+        "share_url": "/survey/8dSdnDZXXQqHPMSd",
+        "questions": [],
+        "rules": [],
+        "created_at": "2026-10-22T10:11:44.289199+00:00",
+        "updated_at": "2026-10-22T10:11:44.289199+00:00"
+      }
+    },
+    {
+      "step": "问卷一 从题库加入 v1",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "e328cd5d-df08-4060-a799-5bafb3b6ffaa",
+        "title": "问卷一",
+        "description": "二阶段 HTTP 校验",
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "status": "draft",
+        "revision": 1,
+        "version": null,
+        "share_code": "8dSdnDZXXQqHPMSd",
+        "share_url": "/survey/8dSdnDZXXQqHPMSd",
+        "questions": [
+          {
+            "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "type": "single",
+            "title": "你的年龄段",
+            "required": true,
+            "options": [
+              {
+                "id": "a",
+                "label": "18-25"
+              },
+              {
+                "id": "b",
+                "label": "26-35"
+              }
+            ],
+            "validation": {},
+            "question_version": 1
+          }
+        ],
+        "rules": [],
+        "created_at": "2026-10-22T10:11:44.289000+00:00",
+        "updated_at": "2026-10-22T10:11:44.312000+00:00"
+      }
+    },
+    {
+      "step": "问卷一 发布",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "id": "e328cd5d-df08-4060-a799-5bafb3b6ffaa",
+        "title": "问卷一",
+        "description": "二阶段 HTTP 校验",
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "status": "published",
+        "revision": 2,
+        "version": 1,
+        "share_code": "8dSdnDZXXQqHPMSd",
+        "share_url": "/survey/8dSdnDZXXQqHPMSd",
+        "questions": [
+          {
+            "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "type": "single",
+            "title": "你的年龄段",
+            "required": true,
+            "options": [
+              {
+                "id": "a",
+                "label": "18-25"
+              },
+              {
+                "id": "b",
+                "label": "26-35"
+              }
+            ],
+            "validation": {},
+            "question_version": 1
+          }
+        ],
+        "rules": [],
+        "created_at": "2026-10-22T10:11:44.289000+00:00",
+        "updated_at": "2026-10-22T10:11:44.325000+00:00"
+      }
+    },
+    {
+      "step": "问卷一 打开填写",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "title": "问卷一",
+        "description": "二阶段 HTTP 校验",
+        "version": 1,
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "questions": [
+          {
+            "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "type": "single",
+            "title": "你的年龄段",
+            "required": true,
+            "options": [
+              {
+                "id": "a",
+                "label": "18-25"
+              },
+              {
+                "id": "b",
+                "label": "26-35"
+              }
+            ],
+            "validation": {},
+            "question_version": 1
+          }
+        ],
+        "rules": []
+      }
+    },
+    {
+      "step": "问卷一 提交",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "id": "3f54c8a8-e14e-483b-aecd-52abb76f6eda",
+        "submitted_at": "2026-10-22T10:11:44.370000+00:00",
+        "replayed": false
+      }
+    },
+    {
+      "step": "问卷二 建卷",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "b467e646-2823-4abe-ad16-269ee115def8",
+        "title": "问卷二",
+        "description": "二阶段 HTTP 校验",
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "status": "draft",
+        "revision": 0,
+        "version": null,
+        "share_code": "EHiIO_OYdY0ZYkWF",
+        "share_url": "/survey/EHiIO_OYdY0ZYkWF",
+        "questions": [],
+        "rules": [],
+        "created_at": "2026-10-22T10:11:44.385394+00:00",
+        "updated_at": "2026-10-22T10:11:44.385394+00:00"
+      }
+    },
+    {
+      "step": "问卷二 从题库加入 v2",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "b467e646-2823-4abe-ad16-269ee115def8",
+        "title": "问卷二",
+        "description": "二阶段 HTTP 校验",
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "status": "draft",
+        "revision": 1,
+        "version": null,
+        "share_code": "EHiIO_OYdY0ZYkWF",
+        "share_url": "/survey/EHiIO_OYdY0ZYkWF",
+        "questions": [
+          {
+            "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "type": "single",
+            "title": "你的年龄段（三段）",
+            "required": true,
+            "options": [
+              {
+                "id": "a",
+                "label": "18-25"
+              },
+              {
+                "id": "b",
+                "label": "26-35"
+              },
+              {
+                "id": "c",
+                "label": "36 以上"
+              }
+            ],
+            "validation": {},
+            "question_version": 2
+          }
+        ],
+        "rules": [],
+        "created_at": "2026-10-22T10:11:44.385000+00:00",
+        "updated_at": "2026-10-22T10:11:44.402000+00:00"
+      }
+    },
+    {
+      "step": "问卷二 发布",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "id": "b467e646-2823-4abe-ad16-269ee115def8",
+        "title": "问卷二",
+        "description": "二阶段 HTTP 校验",
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "status": "published",
+        "revision": 2,
+        "version": 1,
+        "share_code": "EHiIO_OYdY0ZYkWF",
+        "share_url": "/survey/EHiIO_OYdY0ZYkWF",
+        "questions": [
+          {
+            "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "type": "single",
+            "title": "你的年龄段（三段）",
+            "required": true,
+            "options": [
+              {
+                "id": "a",
+                "label": "18-25"
+              },
+              {
+                "id": "b",
+                "label": "26-35"
+              },
+              {
+                "id": "c",
+                "label": "36 以上"
+              }
+            ],
+            "validation": {},
+            "question_version": 2
+          }
+        ],
+        "rules": [],
+        "created_at": "2026-10-22T10:11:44.385000+00:00",
+        "updated_at": "2026-10-22T10:11:44.425000+00:00"
+      }
+    },
+    {
+      "step": "问卷二 打开填写",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "title": "问卷二",
+        "description": "二阶段 HTTP 校验",
+        "version": 1,
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "questions": [
+          {
+            "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "type": "single",
+            "title": "你的年龄段（三段）",
+            "required": true,
+            "options": [
+              {
+                "id": "a",
+                "label": "18-25"
+              },
+              {
+                "id": "b",
+                "label": "26-35"
+              },
+              {
+                "id": "c",
+                "label": "36 以上"
+              }
+            ],
+            "validation": {},
+            "question_version": 2
+          }
+        ],
+        "rules": []
+      }
+    },
+    {
+      "step": "问卷二 提交",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "id": "bca64a1d-20d8-47db-883d-8ee0135ea65a",
+        "submitted_at": "2026-10-22T10:11:44.457000+00:00",
+        "replayed": false
+      }
+    },
+    {
+      "step": "同事问卷 建卷",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "7ec18beb-cc73-4c33-839f-4458ab7cacc8",
+        "title": "同事问卷",
+        "description": "二阶段 HTTP 校验",
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "status": "draft",
+        "revision": 0,
+        "version": null,
+        "share_code": "TWaRQrUeUpOBsnrW",
+        "share_url": "/survey/TWaRQrUeUpOBsnrW",
+        "questions": [],
+        "rules": [],
+        "created_at": "2026-10-22T10:11:44.488204+00:00",
+        "updated_at": "2026-10-22T10:11:44.488204+00:00"
+      }
+    },
+    {
+      "step": "同事问卷 从题库加入 v1",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "7ec18beb-cc73-4c33-839f-4458ab7cacc8",
+        "title": "同事问卷",
+        "description": "二阶段 HTTP 校验",
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "status": "draft",
+        "revision": 1,
+        "version": null,
+        "share_code": "TWaRQrUeUpOBsnrW",
+        "share_url": "/survey/TWaRQrUeUpOBsnrW",
+        "questions": [
+          {
+            "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "type": "single",
+            "title": "你的年龄段",
+            "required": true,
+            "options": [
+              {
+                "id": "a",
+                "label": "18-25"
+              },
+              {
+                "id": "b",
+                "label": "26-35"
+              }
+            ],
+            "validation": {},
+            "question_version": 1
+          }
+        ],
+        "rules": [],
+        "created_at": "2026-10-22T10:11:44.488000+00:00",
+        "updated_at": "2026-10-22T10:11:44.510000+00:00"
+      }
+    },
+    {
+      "step": "同事问卷 发布",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "id": "7ec18beb-cc73-4c33-839f-4458ab7cacc8",
+        "title": "同事问卷",
+        "description": "二阶段 HTTP 校验",
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "status": "published",
+        "revision": 2,
+        "version": 1,
+        "share_code": "TWaRQrUeUpOBsnrW",
+        "share_url": "/survey/TWaRQrUeUpOBsnrW",
+        "questions": [
+          {
+            "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "type": "single",
+            "title": "你的年龄段",
+            "required": true,
+            "options": [
+              {
+                "id": "a",
+                "label": "18-25"
+              },
+              {
+                "id": "b",
+                "label": "26-35"
+              }
+            ],
+            "validation": {},
+            "question_version": 1
+          }
+        ],
+        "rules": [],
+        "created_at": "2026-10-22T10:11:44.488000+00:00",
+        "updated_at": "2026-10-22T10:11:44.524000+00:00"
+      }
+    },
+    {
+      "step": "同事问卷 打开填写",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "title": "同事问卷",
+        "description": "二阶段 HTTP 校验",
+        "version": 1,
+        "allow_anonymous": true,
+        "allow_repeat": true,
+        "closes_at": null,
+        "questions": [
+          {
+            "id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "type": "single",
+            "title": "你的年龄段",
+            "required": true,
+            "options": [
+              {
+                "id": "a",
+                "label": "18-25"
+              },
+              {
+                "id": "b",
+                "label": "26-35"
+              }
+            ],
+            "validation": {},
+            "question_version": 1
+          }
+        ],
+        "rules": []
+      }
+    },
+    {
+      "step": "同事问卷 提交",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "id": "0e47097d-f285-4f07-a1fc-435f541f11f6",
+        "submitted_at": "2026-10-22T10:11:44.567000+00:00",
+        "replayed": false
+      }
+    },
+    {
+      "step": "题目使用情况",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+        "title": "你的年龄段",
+        "current_version": 3,
+        "usages": [
+          {
+            "survey_id": "e328cd5d-df08-4060-a799-5bafb3b6ffaa",
+            "title": "问卷一",
+            "status": "published",
+            "version": 1,
+            "question_version": 1,
+            "owner_is_self": true,
+            "editable": false
+          },
+          {
+            "survey_id": "b467e646-2823-4abe-ad16-269ee115def8",
+            "title": "问卷二",
+            "status": "published",
+            "version": 1,
+            "question_version": 2,
+            "owner_is_self": true,
+            "editable": false
+          },
+          {
+            "survey_id": "7ec18beb-cc73-4c33-839f-4458ab7cacc8",
+            "title": "同事问卷",
+            "status": "published",
+            "version": 1,
+            "question_version": 1,
+            "owner_is_self": false,
+            "editable": false
+          }
+        ],
+        "usage_count": 3
+      },
+      "published_usage_count": 3,
+      "versions_used": [
+        1,
+        2
+      ]
+    },
+    {
+      "step": "跨问卷统计（所有者）",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+        "title": "你的年龄段",
+        "current_version": 3,
+        "scope": "all surveys",
+        "total_answered": 3,
+        "survey_count": 3,
+        "aggregate": {
+          "answered": 3,
+          "by_type": {
+            "single": {
+              "answered": 3,
+              "options": [
+                {
+                  "id": "a",
+                  "label": "18-25",
+                  "count": 2
+                },
+                {
+                  "id": "b",
+                  "label": "26-35",
+                  "count": 1
+                }
+              ]
+            }
+          }
+        },
+        "by_question_version": {
+          "1": {
+            "answered": 2,
+            "by_type": {
+              "single": {
+                "answered": 2,
+                "options": [
+                  {
+                    "id": "a",
+                    "label": "18-25",
+                    "count": 2
+                  }
+                ]
+              }
+            }
+          },
+          "2": {
+            "answered": 1,
+            "by_type": {
+              "single": {
+                "answered": 1,
+                "options": [
+                  {
+                    "id": "b",
+                    "label": "26-35",
+                    "count": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "surveys": [
+          {
+            "survey_id": "7ec18beb-cc73-4c33-839f-4458ab7cacc8",
+            "title": "同事问卷",
+            "owner_is_self": false,
+            "survey_version": 1,
+            "question_version": 1,
+            "answered": 1
+          },
+          {
+            "survey_id": "e328cd5d-df08-4060-a799-5bafb3b6ffaa",
+            "title": "问卷一",
+            "owner_is_self": true,
+            "survey_version": 1,
+            "question_version": 1,
+            "answered": 1
+          },
+          {
+            "survey_id": "b467e646-2823-4abe-ad16-269ee115def8",
+            "title": "问卷二",
+            "owner_is_self": true,
+            "survey_version": 1,
+            "question_version": 2,
+            "answered": 1
+          }
+        ]
+      },
+      "survey_count": 3,
+      "total_answered": 3,
+      "by_question_version": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "step": "跨问卷统计（共享者仅自己问卷）",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+        "title": "你的年龄段",
+        "current_version": 3,
+        "scope": "own surveys only",
+        "total_answered": 1,
+        "survey_count": 1,
+        "aggregate": {
+          "answered": 1,
+          "by_type": {
+            "single": {
+              "answered": 1,
+              "options": [
+                {
+                  "id": "a",
+                  "label": "18-25",
+                  "count": 1
+                }
+              ]
+            }
+          }
+        },
+        "by_question_version": {
+          "1": {
+            "answered": 1,
+            "by_type": {
+              "single": {
+                "answered": 1,
+                "options": [
+                  {
+                    "id": "a",
+                    "label": "18-25",
+                    "count": 1
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "surveys": [
+          {
+            "survey_id": "7ec18beb-cc73-4c33-839f-4458ab7cacc8",
+            "title": "同事问卷",
+            "owner_is_self": true,
+            "survey_version": 1,
+            "question_version": 1,
+            "answered": 1
+          }
+        ]
+      },
+      "scope": "own surveys only",
+      "survey_count": 1
+    },
+    {
+      "step": "新建题库",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "2cd5d183-14fb-4c48-b7e3-2554afc0b1de",
+        "name": "常用题 bbe2874859",
+        "description": "",
+        "items": [],
+        "created_at": "2026-10-22T10:11:44.612000+00:00"
+      }
+    },
+    {
+      "step": "题目加入题库",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "2cd5d183-14fb-4c48-b7e3-2554afc0b1de",
+        "name": "常用题 bbe2874859",
+        "description": "",
+        "items": [
+          {
+            "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "question_version": 1,
+            "title": "你的年龄段",
+            "type": "single",
+            "current_version": 3,
+            "outdated": true,
+            "preview": "你的年龄段"
+          }
+        ],
+        "created_at": "2026-10-22T10:11:44.612000+00:00"
+      }
+    },
+    {
+      "step": "更新题库题目版本",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": {
+        "id": "2cd5d183-14fb-4c48-b7e3-2554afc0b1de",
+        "name": "常用题 bbe2874859",
+        "description": "",
+        "items": [
+          {
+            "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "question_version": 3,
+            "title": "你的年龄段",
+            "type": "single",
+            "current_version": 3,
+            "outdated": false,
+            "preview": "你的年龄段"
+          }
+        ],
+        "created_at": "2026-10-22T10:11:44.612000+00:00"
+      }
+    },
+    {
+      "step": "同事看不到我的题库",
+      "expected": 404,
+      "actual": 404,
+      "ok": true,
+      "body": {
+        "error": {
+          "code": "not_found",
+          "message": "题库不存在或无权访问"
+        }
+      }
+    },
+    {
+      "step": "同事另存为新题",
+      "expected": 201,
+      "actual": 201,
+      "ok": true,
+      "body": {
+        "id": "7cca0a8c-0088-426d-9789-8e33efaeeddb",
+        "owner_id": "08c2d726-5107-40b8-8544-b1d0b1e58061",
+        "type": "single",
+        "title": "同事改写的题",
+        "current_version": 1,
+        "status": "active",
+        "origin": "forked",
+        "created_at": "2026-10-22T10:11:44.752000+00:00",
+        "updated_at": "2026-10-22T10:11:44.752000+00:00",
+        "owned": true,
+        "shared_with_me": false,
+        "share_count": 0,
+        "bank_count": 0,
+        "current": {
+          "question_id": "7cca0a8c-0088-426d-9789-8e33efaeeddb",
+          "version": 1,
+          "type": "single",
+          "title": "同事改写的题",
+          "required": true,
+          "options": [
+            {
+              "id": "a",
+              "label": "甲"
+            },
+            {
+              "id": "b",
+              "label": "乙"
+            }
+          ],
+          "validation": {},
+          "note": "另存",
+          "derived_from": {
+            "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "version": 3
+          },
+          "supersedes": null,
+          "restored_from": null,
+          "created_at": "2026-10-22T10:11:44.752000+00:00"
+        },
+        "versions": [
+          {
+            "version": 1,
+            "note": "另存",
+            "created_at": "2026-10-22T10:11:44.752000+00:00",
+            "derived_from": {
+              "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+              "version": 3
+            },
+            "restored_from": null,
+            "supersedes": null
+          }
+        ],
+        "banks": [],
+        "shares": []
+      }
+    },
+    {
+      "step": "另存题目的版本血统",
+      "expected": 200,
+      "actual": 200,
+      "ok": true,
+      "body": [
+        {
+          "version": 1,
+          "note": "另存",
+          "created_at": "2026-10-22T10:11:44.752000+00:00",
+          "derived_from": {
+            "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+            "version": 3
+          },
+          "restored_from": null,
+          "supersedes": null
+        }
+      ],
+      "derived_from": {
+        "question_id": "4902a2f4-4c8c-45b6-9b31-a9370d485139",
+        "version": 3
+      }
+    }
+  ],
+  "passed": 34,
+  "failed": 0,
+  "status": "PASS"
+}

@@ -1,0 +1,15 @@
+{
+  "questions_found": 2,
+  "created": 0,
+  "skipped_existing": 2,
+  "skipped_non_uuid": [],
+  "content_variants": [
+    "1dd2156d-fc8d-4835-8417-1aa0d6e1cec7",
+    "4902a2f4-4c8c-45b6-9b31-a9370d485139"
+  ],
+  "content_variants_note": "同一题目在不同问卷中引用不同版本时内嵌内容本就不同，不是迁移冲突",
+  "invalid": [],
+  "applied": true,
+  "database_scope": "configured MONGODB_DATABASE only; no other database is read or written",
+  "finished_at": "2026-10-22T10:16:00.197236+00:00"
+}

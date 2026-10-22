@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "stage_folder": "Lab4-2",
+  "source": {
+    "file": "大作业一：需求变更.docx",
+    "sha256": "D9E5BDD8594810923570495CB22B0D8A992889FFF9B140E1607C700CB008DF1D"
+  },
+  "current_stage": "T7",
+  "stages": [
+    {
+      "id": "T0",
+      "title": "需求变更阅读与规划",
+      "status": "passed",
+      "gate_review": "results/stage2/gates-t0.md",
+      "evidence": [
+        {"kind": "planning_review", "path": "results/stage2/gates-t0.md"},
+        {"kind": "decision_review", "path": "docs/DECISIONS.md"}
+      ]
+    },
+    {
+      "id": "T1",
+      "title": "题目实体与版本数据模型",
+      "status": "passed",
+      "gate_review": "results/stage2/gates-t1.md",
+      "evidence": [
+        {"kind": "design_review", "path": "docs/DATABASE.md"},
+        {"kind": "real_mongodb", "path": "results/stage2/schema-check.json"}
+      ]
+    },
+    {
+      "id": "T2",
+      "title": "题目服务与 API",
+      "status": "passed",
+      "gate_review": "results/stage2/gates-t2.md",
+      "evidence": [
+        {"kind": "automated_test", "path": "results/stage2/pytest.json"},
+        {"kind": "documentation", "path": "docs/API.md"}
+      ]
+    },
+    {
+      "id": "T3",
+      "title": "题目库页面与流程",
+      "status": "passed",
+      "gate_review": "results/stage2/gates-t3.md",
+      "evidence": [
+        {"kind": "manual_test", "path": "results/stage2/gates-t3.md"},
+        {"kind": "http_check", "path": "results/stage2/http-e2e.json"}
+      ]
+    },
+    {
+      "id": "T4",
+      "title": "版本、共享、题库与统计测试",
+      "status": "passed",
+      "gate_review": "results/stage2/gates-t4.md",
+      "evidence": [
+        {"kind": "automated_test", "path": "results/stage2/pytest.json"},
+        {"kind": "real_mongodb", "path": "results/stage2/pytest.json"}
+      ]
+    },
+    {
+      "id": "T5",
+      "title": "一阶段数据迁移与兼容",
+      "status": "passed",
+      "gate_review": "results/stage2/gates-t5.md",
+      "evidence": [
+        {"kind": "migration_check", "path": "results/stage2/migration.json"},
+        {"kind": "automated_test", "path": "results/stage2/pytest.json"}
+      ]
+    },
+    {
+      "id": "T6",
+      "title": "端到端与真实 HTTP 验收",
+      "status": "passed",
+      "gate_review": "results/stage2/gates-t6.md",
+      "evidence": [
+        {"kind": "acceptance_test", "path": "results/stage2/http-e2e.json"},
+        {"kind": "automated_test", "path": "results/stage2/pytest.json"}
+      ]
+    },
+    {
+      "id": "T7",
+      "title": "报告、文档与交付",
+      "status": "passed",
+      "gate_review": "results/stage2/gates-t7.md",
+      "evidence": [
+        {"kind": "submission_review", "path": "results/stage2/submission-review.json"},
+        {"kind": "baseline_snapshot", "path": "results/stage2/manifest.json"}
+      ]
+    }
+  ]
+}
