@@ -108,7 +108,7 @@ flowchart LR
 
 ## 6. 配置、启动与迁移
 
-全部命令在 `Lab4-2/` 目录内执行（根目录 README 的“第二阶段”一节给出同样的顺序）。依赖用 conda 管理，不用 pip；权威文件是 [environment.yml](../environment.yml)（`lab4-survey`，Python 3.11.17、FastAPI 0.143.1、PyMongo 4.19.0、pytest 9.1.1）。已验证的环境证据见 [results/S1/environment.json](../results/S1/environment.json)：MongoDB 6.0.29、副本集 `lab4rs`、端口 27084、事务探针 PASS。
+全部命令在 `Lab4-2/` 目录内执行（根目录 README 的“第二阶段”一节给出同样的顺序）。依赖用 conda 管理，不用 pip；权威文件是 [environment.yml](../environment.yml)（`lab4-survey`，Python 3.11.17、FastAPI 0.143.1、PyMongo 4.19.0、pytest 9.1.1）。已验证的环境证据见 [results/stage2/environment.json](../results/stage2/environment.json)：MongoDB 6.0.29、副本集 `lab4rs`、端口 27084、事务探针 PASS。
 
 ```powershell
 cd Lab4-2
@@ -116,7 +116,7 @@ conda env create --file environment.yml --yes     # 已有同名环境时用 con
 conda activate lab4-survey
 python scripts/configure_env.py                   # 从 .env.example 生成 .env 与随机会话密钥，已有文件不覆盖
 .\scripts\start_mongo.ps1                         # 127.0.0.1:27084，副本集 lab4rs，数据目录 .runtime/mongo
-python scripts/init_mongo.py --output results/S1/environment.json
+python scripts/init_mongo.py --output results/stage2/environment.json
 python scripts/init_db.py                         # 建/同步 10 个集合、19 个索引与字段校验，不清库
 python -m uvicorn survey_app.main:app --host 127.0.0.1 --port 8004
 ```

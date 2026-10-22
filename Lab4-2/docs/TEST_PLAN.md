@@ -6,7 +6,7 @@
 
 ## 通用前置与执行分层
 
-- 环境：conda `lab4-survey`（Python 3.11.17）、MongoDB 6.0.29 单节点副本集 `lab4rs`（127.0.0.1:27084），证据 [results/S1/environment.json](../results/S1/environment.json)。全部自动化测试运行在真实副本集上的 `lab4_test_api_<uuid>` 库，会话结束删除该精确库。
+- 环境：conda `lab4-survey`（Python 3.11.17）、MongoDB 6.0.29 单节点副本集 `lab4rs`（127.0.0.1:27084），证据 [results/stage2/environment.json](../results/stage2/environment.json)。全部自动化测试运行在真实副本集上的 `lab4_test_api_<uuid>` 库，会话结束删除该精确库。
 - 账号：每次运行由 `tests/conftest.py` 生成随机用户名（`u_` + uuid 片段），密码为合成密码；不读取或复用任何真实账号。
 - 数据：题目、问卷、答卷全部由用例现场构造；一阶段迁移用例另造一份“遗留问卷”，题号用 UUID。
 - 分层：T4 执行接口/服务自动化测试（`tests/test_library.py`），T5 执行迁移测试（`tests/test_migration.py`），T6 用独立进程与真实 HTTP 走端到端脚本（`.runtime/stage2/e2e_http.py`，输出 `results/stage2/http-e2e.json`）。

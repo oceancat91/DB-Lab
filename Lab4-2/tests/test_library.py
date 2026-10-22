@@ -408,3 +408,54 @@ def test_share_pairs_and_bank_items_are_unique(client, db):
             "_id": str(uuid4()), "bank_id": bank_id, "question_id": question["id"],
             "question_version": 1, "added_by": question["owner_id"], "added_at": now,
             "schema_version": 1})
+
+
+def test_usage_scope_hides_other_owners_surveys(client, client_factory):
+    """A share grants reuse, not visibility into someone else's survey titles."""
+    question = create_question(client)
+    mine = create_survey(client, "我的问卷")
+    import_question(client, mine, question["id"])
+    publish(client, mine)
+    with client_factory() as colleague:
+        colleague_user = register_login(colleague)
+        client.post(f"/api/questions/{question['id']}/shares",
+                    json={"username": colleague_user["username"]})
+        theirs = create_survey(colleague, "同事的问卷")
+        import_question(colleague, theirs, question["id"])
+        publish(client=colleague, survey=theirs)
+
+        owner_view = client.get(f"/api/questions/{question['id']}/usage").json()
+        assert owner_view["scope"] == "all surveys" and owner_view["usage_count"] == 2
+
+        grantee_view = colleague.get(f"/api/questions/{question['id']}/usage").json()
+        assert grantee_view["scope"] == "own surveys only"
+        assert grantee_view["usage_count"] == 1
+        assert grantee_view["other_surveys"] == 1
+        assert [row["title"] for row in grantee_view["usages"]] == ["同事的问卷"]
+
+
+def test_concurrent_new_versions_keep_a_contiguous_history(client, client_factory):
+    """Simultaneous edits may conflict (409) or queue up, but must never gap or duplicate a version.
+
+    TestClient requests can be serialised, so the assertion is the invariant rather than a fixed
+    number of conflicts: versions stay 1..n, current_version equals the largest, and every
+    outcome is either a creation or a clean conflict.
+    """
+    from concurrent.futures import ThreadPoolExecutor
+
+    question = create_question(client)
+    payload = question_payload(title="并发改题")
+    with client_factory() as other:
+        for cookie in client.cookies.jar:
+            other.cookies.set(cookie.name, cookie.value)
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            futures = [pool.submit(lambda inst=instance: inst.post(
+                f"/api/questions/{question['id']}/versions", json=payload))
+                for instance in (client, other)]
+            codes = sorted(future.result().status_code for future in futures)
+    assert set(codes) <= {201, 409}, f"unexpected outcomes: {codes}"
+    assert 201 in codes, "at least one edit must succeed"
+    detail = client.get(f"/api/questions/{question['id']}").json()
+    versions = [row["version"] for row in detail["versions"]]
+    assert versions == list(range(1, len(versions) + 1)), f"version history has a gap: {versions}"
+    assert detail["current_version"] == max(versions)

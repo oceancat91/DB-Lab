@@ -88,3 +88,16 @@ def test_migration_backfills_legacy_questions_without_rewriting_surveys(client, 
     assert updated.status_code == 201, updated.text
     stored = client.get(f"/api/surveys/{survey['id']}").json()
     assert stored["questions"][0]["title"] == "你的年龄段"
+
+    local_survey = client.post("/api/surveys", json={"title": "非 UUID 题目问卷", "description": "",
+                                                     "allow_anonymous": True, "allow_repeat": True,
+                                                     "closes_at": None}).json()
+    saved = client.put(f"/api/surveys/{local_survey['id']}", json={
+        "title": local_survey["title"], "description": "", "allow_anonymous": True,
+        "allow_repeat": True, "closes_at": None, "revision": local_survey["revision"],
+        "questions": [{"id": "q_local", "type": "text", "title": "非 UUID 题", "required": False,
+                       "options": [], "validation": {"min_length": 0, "max_length": 50}}],
+        "rules": []})
+    assert saved.status_code == 200, saved.text
+    skipped = migrate_question_library.migrate(db, apply=False)
+    assert "q_local" in skipped["skipped_non_uuid"], "非 UUID 题目应被列出并跳过"

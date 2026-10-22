@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_at": "2026-10-22T18:36:44.280127+08:00",
+  "created_at": "2026-10-22T19:25:40.682278+08:00",
   "layout": "shared governance documents at archive root; second stage under Lab4-2/",
   "scope": "Exact submitted bytes for the second stage; first stage ships separately.",
   "self_exclusions": [
@@ -57,8 +57,8 @@
     },
     {
       "path": "Lab4-2/docs/EXPERIMENT_LOG.md",
-      "bytes": 17200,
-      "sha256": "1b30191c13fb46d6877ba418ba64af3a587e2616c17d588983f23b64351be964"
+      "bytes": 20169,
+      "sha256": "88c852c5419022b198fbb55630c5efb693d649213557e9b87088f773b7daac4d"
     },
     {
       "path": "Lab4-2/docs/LOGIC.md",
@@ -77,18 +77,18 @@
     },
     {
       "path": "Lab4-2/docs/SYSTEM.md",
-      "bytes": 12871,
-      "sha256": "2990b6bd7ef2b529aef901e20a232ff5c8386f70c1a820da6824f10cac14936c"
+      "bytes": 13045,
+      "sha256": "cc81b1d6b54eb5c9c4d0216cebbf91f93673ef34433eeb6129bc8eb9e5762f7d"
     },
     {
       "path": "Lab4-2/docs/TEST_PLAN.md",
-      "bytes": 13740,
-      "sha256": "a268fc9af0c1d41e3befb151806c0eafd7ceda702745eceb97e416eaf81a9585"
+      "bytes": 13922,
+      "sha256": "ce63dc59ed78f752ddcfe6f7a580d93e8dc421e96557bfb0010798e4936ad189"
     },
     {
       "path": "Lab4-2/docs/TEST_REPORT.md",
-      "bytes": 13520,
-      "sha256": "e481fdc4bc0ee700ef3058aaeb4886364a6c3973b124c399b23dd014c356d3ce"
+      "bytes": 13646,
+      "sha256": "6d5a1c0f3303abc9bc1965c795968d7e009f27d394e423738c3e822cc2ad06a5"
     },
     {
       "path": "Lab4-2/environment.yml",
@@ -111,14 +111,14 @@
       "sha256": "9ab02e4adccaef0f57cff764532b10a35f5a5d34f90037625e8a5ec17f09ab45"
     },
     {
-      "path": "Lab4-2/results/S1/environment.json",
-      "bytes": 642,
-      "sha256": "5fb446bc0472b32f07320d419958773ec59f4ccdb332cb7f992420ec9c996c68"
-    },
-    {
       "path": "Lab4-2/results/stage2/browser/library-anonymous.png",
       "bytes": 17921,
       "sha256": "4cb471f8068d4be841d23bea32393e18ae9daabf285b07dbd542325b9cfbc50d"
+    },
+    {
+      "path": "Lab4-2/results/stage2/environment.json",
+      "bytes": 642,
+      "sha256": "5fb446bc0472b32f07320d419958773ec59f4ccdb332cb7f992420ec9c996c68"
     },
     {
       "path": "Lab4-2/results/stage2/gates-t0.md",
@@ -181,9 +181,19 @@
       "sha256": "26fdd044b150192ff0e5cf6fd81c2c33fe0b0fae6a0712e96207c7903543fef9"
     },
     {
-      "path": "Lab4-2/results/stage2/pytest.json",
+      "path": "Lab4-2/results/stage2/pytest-20261022T192421705180.json",
       "bytes": 246638,
       "sha256": "b116c9516a3504168b91a89f6680757a337935f74daf7e9604774af8e382a96b"
+    },
+    {
+      "path": "Lab4-2/results/stage2/pytest-20261022T192521553579.json",
+      "bytes": 247928,
+      "sha256": "84ed00b3e2060405c97a7e283def368d4e2fdfe863545dd28838b4fb87c0176b"
+    },
+    {
+      "path": "Lab4-2/results/stage2/pytest.json",
+      "bytes": 247898,
+      "sha256": "6df0014b860c56f13a20ec941bdc0abfaf061ed8f074c8ee8263fc45ec29070d"
     },
     {
       "path": "Lab4-2/results/stage2/schema-check.json",
@@ -227,8 +237,8 @@
     },
     {
       "path": "Lab4-2/scripts/init_mongo.py",
-      "bytes": 3190,
-      "sha256": "ff224f1505bf145c570fd4396f38d28fdf4b335e4ca3dbeda91196abb2ded7fe"
+      "bytes": 3194,
+      "sha256": "7a0d7a76819956a1de050b8ac0379a12b0962b2c951e07ecf094604cf157feae"
     },
     {
       "path": "Lab4-2/scripts/migrate_question_library.py",
@@ -267,8 +277,8 @@
     },
     {
       "path": "Lab4-2/survey_app/library.py",
-      "bytes": 32003,
-      "sha256": "0f73d3fb3b97c84e17c87e12b3ade9d6256dc93fb5d3f75ddaef37d8d0b6fe18"
+      "bytes": 33341,
+      "sha256": "e856818302b6b4150da491c2b73c11a53ed14f4e4f1b0ec871248e38f56eb6c9"
     },
     {
       "path": "Lab4-2/survey_app/main.py",
@@ -347,13 +357,13 @@
     },
     {
       "path": "Lab4-2/tests/test_library.py",
-      "bytes": 20625,
-      "sha256": "f9c7888c9e8571b10c886d5ac9991be0845f32a2be1bc7075ccb3da8204d706d"
+      "bytes": 23292,
+      "sha256": "5fdedeb2a06da332b8740eacb74e6a8f60bff3492d3b702a0401dc6ec9b6bef4"
     },
     {
       "path": "Lab4-2/tests/test_migration.py",
-      "bytes": 4375,
-      "sha256": "d18401d33f7d608fd04ae8be61f1c55a33530846f3292b97e5ff05934ceba86d"
+      "bytes": 5319,
+      "sha256": "e108f553aa4eac19b0245457b07c5cde7c8f26754ba9e69acaaa3db889124fc6"
     },
     {
       "path": "Lab4-2/tests/test_rules.py",

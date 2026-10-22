@@ -18,7 +18,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=27084)
     parser.add_argument('--replica-set', default='lab4rs')
-    parser.add_argument('--output', default='results/S1/environment.json')
+    parser.add_argument('--output', default='results/stage2/environment.json')
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     direct = MongoClient(f'mongodb://127.0.0.1:{args.port}/?directConnection=true', serverSelectionTimeoutMS=15000)

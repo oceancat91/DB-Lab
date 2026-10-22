@@ -24,7 +24,7 @@
 - 改动范围：[db.py](../survey_app/db.py)（5 个新集合的 `$jsonSchema`、10 个新索引定义）、[DATABASE.md](DATABASE.md)。
 - 命令：`python scripts/init_db.py`（建/同步集合与索引，不清库）；`python scripts/check_schema.py --output results/stage2/schema-check.json`。
 - 实际结果：10 个集合、19 个非 `_id_` 索引全部存在；58 项检查 PASS、退出码 0；非法文档被拒、唯一约束触发 11000、重复初始化不丢文档；检查库 `lab4_test_schema_a2259475ccde4d10b805d64bd2ca3084` 用后删除。Schema 版本仍为 1——新字段 `question_version` 落在 Schema 不深入约束的对象数组里，新集合本身是新增而不是改造。
-- 证据路径：[schema-check.json](../results/stage2/schema-check.json)、[gates-t1.md](../results/stage2/gates-t1.md)、[DATABASE.md](DATABASE.md)、[results/S1/environment.json](../results/S1/environment.json)。
+- 证据路径：[schema-check.json](../results/stage2/schema-check.json)、[gates-t1.md](../results/stage2/gates-t1.md)、[DATABASE.md](DATABASE.md)、[results/stage2/environment.json](../results/stage2/environment.json)。
 - 未验证项：没有对任何查询跑 `explain`，`ix_questions_owner_title` 能否被未锚定正则利用未确认；`questions.status` 的 `archived` 枚举值没有写入路径；导入/修订路径不复查整卷 1 MiB 上限（只有 `PUT /api/surveys/{id}` 复查）。
 - 【本次复核】：读取 `db.py` 的 `SCHEMAS`/`INDEXES`，与 `schema-check.json` 的 10 个集合、19 个索引逐项对齐。
 
@@ -108,3 +108,24 @@ T7 不是独立工作包，而是本次文档整理：补齐 [SYSTEM.md](SYSTEM.
 有效证据：改用 Chrome 无头模式抓取未登录视图，得到 results/stage2/browser/library-anonymous.png（1280x900）。该截图显示顶栏“问卷工作台 / 我的问卷 / 题目库（当前）”、面板“登录后管理题目库”与“去登录”按钮——说明页面 HTML 与 CSS 正常加载，library.js 也已执行：登录面板正是脚本在 /api/auth/me 返回 401 后切换出来的，说明 fetch 与路由可用。
 
 未验证（与 EXP-103 一致，不因本次尝试而改变）：登录后的题目列表、新建表单提交、版本/共享/统计面板等交互行为仍无浏览器证据，只有 HTTP 与自动化测试证据。工具限制已记录：agent-browser 在该 Windows 环境下的输出管道会挂起，后续同类验证应改用其他方式（例如自带 Playwright 或 Chrome CDP 直连）。
+
+## 修复轮（2026-10-22 Asia/Shanghai）：按不足清单逐项修复
+
+本轮按“风险从高到低”的清单处理了五项，其余项见文末“仍未处理”。
+
+1. **usage 权限口径（安全）**：原实现只校验“所有者或被共享者”就返回所有使用该题的问卷行，被共享者能看到他人问卷标题与状态；cross_survey_statistics 却做了范围限制。已统一为同一口径：被共享者只看到自己问卷的行，另有 other_surveys 计数与 scope 字段说明范围。测试 	est_usage_scope_hides_other_owners_surveys 实测：所有者 usage_count=2、被共享者 usage_count=1 且 other_surveys=1，行内不出现他人标题。
+2. **二阶段包混入一阶段编号目录**：init_mongo.py 默认输出仍是 
+esults/S1/environment.json，导致 Lab4-2/results/S1/ 被打进二阶段包。默认路径改为 
+esults/stage2/environment.json，旧文件已移动、
+esults/S1 已删除；重打包后二阶段包不再含该目录。
+3. **版本并发**：
+ew_version/
+estore_version 改为**先抢占 current_version 指针再插入版本**（唯一索引仍作第二道防线），抢占失败直接 409，避免事务重试产生重复版本。测试 	est_concurrent_new_versions_keep_a_contiguous_history 用两个已登录客户端并发提交，断言结果只可能是 201/409、至少一次成功、版本序列必须为 1..n 且 current_version 等于最大值。**说明**：TestClient 可能串行化请求，因此该测试断的是不变量而非“必然一次冲突”，这一点已在测试 docstring 写明。
+4. **迁移的 non-UUID 题目**：	est_migration… 增加断言，含 q_local 这类非 UUID 题目时迁移报告必须把它列进 skipped_non_uuid，而不是静默失败（此前的失败正是数据库校验错误 121 暴露的）。
+5. **保存草稿的 N+1 查询**：
+ormalize_question_refs 原来在列表推导里逐题查 question_shares，已改为一次 $in 查询取“我拥有的题”与“共享给我的题”两个集合，题目数量增加时不再线性增加往返。
+6. **统计上限**：cross_survey_statistics 增加 survey_limit=200 与 	runcated 标志，超过上限时如实标注，不再无界扫描。
+
+实测：全量 python -m pytest tests --evidence results/stage2/pytest.json -q 得 **262 passed**（245 一阶段 + 17 二阶段），exit 0；其中二阶段新增 	est_usage_scope_hides_other_owners_surveys 与 	est_concurrent_new_versions_keep_a_contiguous_history 两项。
+
+仍未处理（下一轮）：题库条目 pin 与“加入问卷”默认版本仍未打通；题目删除/归档、分享链接、CI 均未做；二阶段报告尚无 PDF/Word；README.md 正文叙事仍以一阶段为主（链接已修）；一阶段旧提交中的本人姓名未重写（待本人决定）。

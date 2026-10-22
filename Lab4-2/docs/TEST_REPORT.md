@@ -115,4 +115,4 @@
 | [http-e2e.json](../results/stage2/http-e2e.json) | 34 步真实 HTTP 链路 |
 | [migration.json](../results/stage2/migration.json) | 迁移幂等结果 |
 | [gates-t0.md](../results/stage2/gates-t0.md) – [gates-t7.md](../results/stage2/gates-t7.md) | 逐门禁记录 |
-| [results/S1/environment.json](../results/S1/environment.json) | 环境基线（MongoDB 6.0.29、`lab4rs`、27084、事务探针 PASS） |
+| [results/stage2/environment.json](../results/stage2/environment.json) | 环境基线（MongoDB 6.0.29、`lab4rs`、27084、事务探针 PASS） |

@@ -104,9 +104,11 @@ class LibraryService:
         if not candidates:
             return questions
         identifiers = sorted({question["id"] for question in candidates if isinstance(question.get("id"), str)})
-        accessible = {doc["_id"] for doc in self.db.questions.find({"_id": {"$in": identifiers}})
-                      if doc["owner_id"] == user_id
-                      or self.db.question_shares.find_one({"question_id": doc["_id"], "grantee_id": user_id})}
+        owned = {doc["_id"] for doc in self.db.questions.find(
+            {"_id": {"$in": identifiers}, "owner_id": user_id})}
+        shared = {doc["question_id"] for doc in self.db.question_shares.find(
+            {"grantee_id": user_id, "question_id": {"$in": identifiers}})}
+        accessible = owned | shared
         stored = {(doc["question_id"], doc["version"]): doc
                   for doc in self.db.question_versions.find({"question_id": {"$in": identifiers}})}
         for question in questions:
@@ -218,22 +220,31 @@ class LibraryService:
         ] if doc["owner_id"] == user_id else []
         return payload
 
+    def _claim_next_version(self, question_id: str, expected: int, content: dict,
+                            session) -> None:
+        """Move the current_version pointer first so concurrent writers cannot both win.
+
+        The unique index on (question_id, version) stays as a second guard; claiming first turns
+        a lost race into a clean 409 instead of a retried duplicate version.
+        """
+        claimed = self.db.questions.update_one(
+            {"_id": question_id, "current_version": expected},
+            {"$set": {"current_version": expected + 1, "title": content["title"],
+                      "type": content["type"], "updated_at": now_utc()}}, session=session)
+        if claimed.modified_count != 1:
+            raise DomainError(409, "revision", "题目已被他人修改，请刷新后重试")
+
     def new_version(self, question_id: str, user_id: str, payload: dict) -> dict:
         doc = self._accessible(question_id, user_id, owner_only=True)
         content = _content(payload, question_id)
         current = doc["current_version"]
-        next_version = current + 1
 
         def operation(session):
-            self._insert_version(question_id, content, next_version, user_id=user_id,
+            self._claim_next_version(question_id, current, content, session)
+            self._insert_version(question_id, content, current + 1, user_id=user_id,
                                  note=payload.get("note", ""),
                                  derived_from={"question_id": question_id, "version": current},
                                  supersedes=current, restored_from=None, session=session)
-            self.db.questions.update_one(
-                {"_id": question_id, "current_version": current},
-                {"$set": {"current_version": next_version, "title": content["title"],
-                          "type": content["type"], "updated_at": now_utc()}},
-                session=session)
 
         try:
             self.transaction(operation)
@@ -246,18 +257,13 @@ class LibraryService:
         source = self._version(question_id, source_version)
         content = _content(_content_of(source), question_id)
         current = doc["current_version"]
-        next_version = current + 1
 
         def operation(session):
-            self._insert_version(question_id, content, next_version, user_id=user_id,
+            self._claim_next_version(question_id, current, content, session)
+            self._insert_version(question_id, content, current + 1, user_id=user_id,
                                  note=f"恢复自 v{source_version}",
                                  derived_from={"question_id": question_id, "version": source_version},
                                  supersedes=current, restored_from=source_version, session=session)
-            self.db.questions.update_one(
-                {"_id": question_id, "current_version": current},
-                {"$set": {"current_version": next_version, "title": content["title"],
-                          "type": content["type"], "updated_at": now_utc()}},
-                session=session)
 
         self.transaction(operation)
         return self.detail(question_id, user_id)
@@ -389,16 +395,32 @@ class LibraryService:
 
     # ---------------------------------------------------------------- usage
     def usage(self, question_id: str, user_id: str) -> dict:
+        """Which surveys use this question.
+
+        A grantee only learns about their own surveys plus a count of other usages: listing the
+        titles and states of someone else's surveys would leak information the share never
+        granted (the cross-survey statistics follow the same scope rule).
+        """
         entity = self._accessible(question_id, user_id)
+        is_owner = entity["owner_id"] == user_id
         rows: list[dict] = []
+        others = 0
+
+        def collect(survey_id: str, title: str, owner_id: str, *, status: str,
+                    version, question_version, editable: bool) -> None:
+            nonlocal others
+            if not is_owner and owner_id != user_id:
+                others += 1
+                return
+            rows.append({"survey_id": survey_id, "title": title, "status": status,
+                         "version": version, "question_version": question_version,
+                         "owner_is_self": owner_id == user_id, "editable": editable})
+
         for doc in self.db.surveys.find({"draft.questions.id": question_id},
                                         {"title": 1, "owner_id": 1, "status": 1, "draft.questions": 1}):
             used = [q for q in doc.get("draft", {}).get("questions", []) if q.get("id") == question_id]
-            rows.append({"survey_id": doc["_id"], "title": doc["title"], "status": doc["status"],
-                         "version": None, "question_version": (used[0].get("question_version")
-                                                               if used else None),
-                         "owner_is_self": doc["owner_id"] == user_id,
-                         "editable": True})
+            collect(doc["_id"], doc["title"], doc["owner_id"], status=doc["status"], version=None,
+                    question_version=(used[0].get("question_version") if used else None), editable=True)
         versions = list(self.db.survey_versions.find({"questions.id": question_id},
                                                      {"survey_id": 1, "version": 1, "questions": 1}))
         survey_ids = [item["survey_id"] for item in versions]
@@ -409,19 +431,24 @@ class LibraryService:
             if survey is None:
                 continue
             used = [q for q in item["questions"] if q.get("id") == question_id]
-            rows.append({"survey_id": item["survey_id"], "title": survey["title"],
-                         "status": "published", "version": item["version"],
-                         "question_version": (used[0].get("question_version") if used else None),
-                         "owner_is_self": survey["owner_id"] == user_id, "editable": False})
-        return {"question_id": entity["_id"], "title": entity["title"], "current_version":
-                entity["current_version"], "usages": rows, "usage_count": len(rows)}
+            collect(item["survey_id"], survey["title"], survey["owner_id"], status="published",
+                    version=item["version"],
+                    question_version=(used[0].get("question_version") if used else None), editable=False)
+        return {"question_id": entity["_id"], "title": entity["title"],
+                "current_version": entity["current_version"], "usages": rows,
+                "usage_count": len(rows), "other_surveys": others,
+                "scope": "all surveys" if is_owner else "own surveys only"}
 
     # ---------------------------------------------------------------- statistics
     def cross_survey_statistics(self, question_id: str, user_id: str) -> dict:
         entity = self._accessible(question_id, user_id)
         is_owner = entity["owner_id"] == user_id
+        survey_limit = 200
         versions = list(self.db.survey_versions.find({"questions.id": question_id},
-                                                     {"survey_id": 1, "version": 1, "questions": 1}))
+                                                     {"survey_id": 1, "version": 1, "questions": 1})
+                        .limit(survey_limit + 1))
+        truncated = len(versions) > survey_limit
+        versions = versions[:survey_limit]
         surveys = {doc["_id"]: doc for doc in self.db.surveys.find(
             {"_id": {"$in": [item["survey_id"] for item in versions]}},
             {"title": 1, "owner_id": 1})}
@@ -459,6 +486,7 @@ class LibraryService:
             "question_id": entity["_id"], "title": entity["title"],
             "current_version": entity["current_version"],
             "scope": "all surveys" if is_owner else "own surveys only",
+            "survey_limit": survey_limit, "truncated": truncated,
             "total_answered": sum(row["answered"] for row in per_survey),
             "survey_count": len(per_survey),
             "aggregate": _summary(buckets),
