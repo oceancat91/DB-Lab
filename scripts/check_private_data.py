@@ -28,8 +28,8 @@ PATTERNS = {
     "导出文件名前缀": re.compile(r"2026_ECNU_"),
     "Office 锁文件": re.compile(r"~\$[^/\\\s]+"),
 }
-# Ignore rules quote these patterns on purpose; they are not evidence of a leak.
-SKIP_NAMES = {".gitignore", ".gitattributes", ".private-names"}
+# Ignore rules quote these patterns on purpose, and this scanner defines them; neither is a leak.
+SKIP_NAMES = {".gitignore", ".gitattributes", ".private-names", "check_private_data.py"}
 
 
 def tracked_files() -> list[Path]:
