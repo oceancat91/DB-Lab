@@ -169,3 +169,12 @@ ormalize_question_refs 原来在列表推导里逐题查 question_shares，已�
 
 实测：全量 `pytest` **265 passed**（245 一阶段 + 20 二阶段）；Schema/索引检查 **61 项 PASS**；`check_all.ps1`
 四个步骤（隐私扫描、两阶段检查器）全部 exit 0；二阶段报告 PDF/DOCX 已按新内容重新生成。
+
+## 修复轮（2026-10-22 第四轮）：把四项“未覆盖”全部处理
+
+1. **浏览器覆盖扩到全部交互**：`browser_e2e.mjs` 增加准备步骤（生成第二版、建题库并钉 v1、建草稿问卷、注册第二个账号），再依次点击“恢复此版本”“共享”“题库更新版本”“加入问卷”。结果 **12/12 步通过、0 未捕获异常**，截图 7 张（`01-library`、`02-detail`、`03-statistics`、`04-restored`、`05-shared`、`06-bank-updated`、`07-added-to-survey`）。
+2. **分享链接过期与次数**：`expires_in_seconds`（1–2592000）、`max_uses`（1–10000）；过期 410、次数用完 410、吊销/归档 404；`uses` 只在首次授权时递增，重复领取不消耗。测试 `test_share_link_expiry_and_claim_limit` 覆盖次数用尽（第二个账号 410）与过期（直接改库里的 `expires_at` 到过去）。
+3. **题库归档联动**：题库条目返回 `archived`，归档题目拒绝新加入（409）；测试 `test_bank_marks_archived_questions_and_refuses_new_ones`。级联删除被有意排除：题目仍在、统计仍需可查，删除条目会丢管理信息。
+4. **统计上限可调**：`?limit=N`（默认 200、上限 500），`truncated` 如实标注；测试 `test_statistics_limit_parameter` 用 3 份问卷验证 `limit=2` 时 `survey_count=2`、`truncated=true`。
+
+实测：全量 `pytest` **268 passed**（245 一阶段 + 23 二阶段）；浏览器 12/12；报告 PDF/DOCX 已重新生成。

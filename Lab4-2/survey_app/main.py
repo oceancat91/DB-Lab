@@ -15,7 +15,8 @@ from .errors import DomainError
 from .library import LibraryService
 from .models import (BankInput, BankItemInput, BankPatch, BankVersionInput, Credentials, DeadlineInput,
                      DraftInput, ImportQuestionInput, Metadata, PublishInput, QuestionInput,
-                     QuestionStatusInput, NextInput, RevisionInput, ShareInput, SubmitInput)
+                     QuestionStatusInput, NextInput, RevisionInput, ShareInput, ShareLinkInput,
+                     SubmitInput)
 from .security import COOKIE_NAME, new_session, public_user, session_user, token_digest
 from .service import SurveyService
 
@@ -230,8 +231,10 @@ def create_app(settings: Settings | None = None):
         return library(request).set_status(question_id, user(request)['_id'], body.status)
 
     @app.post('/api/questions/{question_id}/share-links', status_code=201)
-    def question_share_link_create(question_id: str, request: Request):
-        return library(request).create_share_link(question_id, user(request)['_id'])
+    def question_share_link_create(question_id: str, request: Request, body: ShareLinkInput | None = None):
+        return library(request).create_share_link(
+            question_id, user(request)['_id'],
+            body.expires_in_seconds if body else None, body.max_uses if body else None)
 
     @app.get('/api/questions/{question_id}/share-links')
     def question_share_link_list(question_id: str, request: Request):
@@ -255,8 +258,8 @@ def create_app(settings: Settings | None = None):
         return library(request).usage(question_id, user(request)['_id'])
 
     @app.get('/api/questions/{question_id}/statistics')
-    def question_usage_statistics(question_id: str, request: Request):
-        return library(request).cross_survey_statistics(question_id, user(request)['_id'])
+    def question_usage_statistics(question_id: str, request: Request, limit: int = 200):
+        return library(request).cross_survey_statistics(question_id, user(request)['_id'], limit)
 
     @app.get('/api/questions/{question_id}/shares')
     def question_shares(question_id: str, request: Request):

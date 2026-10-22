@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from uuid import uuid4
 
 import pytest
@@ -530,3 +530,58 @@ def test_share_link_preview_claim_and_revoke(client, client_factory):
     assert revoked.status_code == 200
     assert client.get(f"/api/share-links/{link['token']}").status_code == 404
     assert client.get(f"/api/questions/{question['id']}/share-links").json()[0]["revoked"] is True
+
+
+def test_share_link_expiry_and_claim_limit(client, client_factory, db):
+    question = create_question(client)
+    limited = client.post(f"/api/questions/{question['id']}/share-links",
+                          json={"max_uses": 1}).json()
+    with client_factory() as first, client_factory() as second:
+        register_login(first)
+        register_login(second)
+        assert first.post(f"/api/share-links/{limited['token']}/claim").status_code == 201
+        exhausted = second.post(f"/api/share-links/{limited['token']}/claim")
+        assert exhausted.status_code == 410, exhausted.text
+        assert first.get(f"/api/share-links/{limited['token']}").status_code == 410
+
+    expiring = client.post(f"/api/questions/{question['id']}/share-links",
+                           json={"expires_in_seconds": 3600}).json()
+    assert expiring["expires_at"]
+    db.question_share_links.update_one(
+        {"_id": expiring["id"]},
+        {"$set": {"expires_at": datetime.now(timezone.utc) - timedelta(minutes=1)}})
+    assert client.get(f"/api/share-links/{expiring['token']}").status_code == 410
+    rows = client.get(f"/api/questions/{question['id']}/share-links").json()
+    assert next(row for row in rows if row["id"] == expiring["id"])["uses"] == 0
+
+
+def test_bank_marks_archived_questions_and_refuses_new_ones(client):
+    question = create_question(client)
+    bank_id = client.post("/api/banks", json={"name": "归档题库"}).json()["id"]
+    added = client.post(f"/api/banks/{bank_id}/items", json={"question_id": question["id"]})
+    assert added.json()["items"][0]["archived"] is False
+
+    other = create_question(client, title="之后归档的题")
+    client.patch(f"/api/questions/{other['id']}", json={"status": "archived"})
+    refused = client.post(f"/api/banks/{bank_id}/items", json={"question_id": other["id"]})
+    assert refused.status_code == 409
+
+    client.patch(f"/api/questions/{question['id']}", json={"status": "archived"})
+    view = client.get(f"/api/banks/{bank_id}").json()
+    assert view["items"][0]["archived"] is True
+
+
+def test_statistics_limit_parameter(client):
+    question = create_question(client)
+    for index in range(3):
+        survey = create_survey(client, f"限量问卷{index}")
+        import_question(client, survey, question["id"])
+        publish(client, survey)
+        submit_answer(client, survey, {question["id"]: "a"}, request_id=f"req-limit-{index}")
+    wide = client.get(f"/api/questions/{question['id']}/statistics").json()
+    assert wide["survey_count"] == 3 and wide["truncated"] is False
+    narrow = client.get(f"/api/questions/{question['id']}/statistics",
+                        params={"limit": 2}).json()
+    assert narrow["survey_count"] == 2
+    assert narrow["truncated"] is True
+    assert narrow["total_answered"] == 2

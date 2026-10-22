@@ -14,7 +14,7 @@
 | 真实 HTTP | **34/34 步通过**（两名用户、三份问卷、版本/恢复/共享/题库/fork/统计） | [http-e2e.json](../results/stage2/http-e2e.json) |
 | 一阶段数据迁移 | 问卷文档逐字节不变；对已含实体的库重复执行 `created=0`、`skipped_existing=2` | [migration.json](../results/stage2/migration.json)、`tests/test_migration.py` |
 | 失败记录 | 两次运行各 1 项失败（同一迁移用例），原始结果保留，修复后重跑通过 | [存档 1](../results/stage2/pytest-20261022T181406663390.json)、[存档 2](../results/stage2/pytest-20261022T181551828673.json) |
-| 页面 | 真实 Chrome（CDP）跑通登录、新建题目、列表、详情与版本历史、跨问卷统计，7/7 步通过并留 3 张截图 | [browser/report.json](../results/stage2/browser/report.json)、[详情截图](../results/stage2/browser/02-detail.png) |
+| 页面 | 真实 Chrome（CDP）跑通登录、新建题目、列表、详情与版本历史、跨问卷统计、恢复旧版本、提交共享、题库更新版本、加入草稿问卷，12/12 步通过并留 7 张截图 | [browser/report.json](../results/stage2/browser/report.json)、[详情截图](../results/stage2/browser/02-detail.png) |
 | 结构检查 | 文档、链接、需求/用例追踪通过；剩余 3 项 ERROR 在文档范围外（交付清单、T6 门禁、进度状态） | 本报告第 9 节 |
 
 ## 1. 项目目标与需求变更
@@ -182,7 +182,7 @@ Schema 校验沿用 strict/error 的 `$jsonSchema`，`additionalProperties:false
 
 只读核验（[gates-t3.md](../results/stage2/gates-t3.md) 与本次文档整理的复验）：`/library` 返回 200（4,880 字节 HTML），`/static/library.js` 200（23,051 字节）、`/static/library.css` 200（3,644 字节）、`/static/app.css` 200（32,802 字节）、`/health` 200（`{"status":"ok","database":"connected"}`），`node --check survey_app/static/library.js` 退出码 0。页面复用一阶段的 `app.css` 设计令牌，没有引入前端框架，也没有改动 `app.js`。
 
-**浏览器验证已完成**：用 Chrome DevTools Protocol 驱动真实 Chrome，在页面内完成注册与登录，打开 `/library`，填写并提交“新建题目”表单（由页面脚本自己的提交处理），列表出现该题，点击打开详情与版本历史，打开跨问卷统计面板；7/7 步通过、无未捕获脚本异常，见 [browser/report.json](../results/stage2/browser/report.json) 与三张截图。仍未在浏览器里点击的部分：恢复旧版本按钮、共享表单提交、题库“更新版本”按钮、加入问卷的下拉选择。
+**浏览器验证已完成**：用 Chrome DevTools Protocol 驱动真实 Chrome，在页面内完成注册与登录，打开 `/library`，填写并提交“新建题目”表单（由页面脚本自己的提交处理），列表出现该题，点击打开详情与版本历史，打开跨问卷统计面板；12/12 步通过、无未捕获脚本异常，见 [browser/report.json](../results/stage2/browser/report.json) 与七张截图（含恢复、共享、题库更新、加入问卷四步）。浏览器未覆盖的只剩“删除题目”这类本就不存在的功能。
 
 ## 8. 测试设计与真实结果
 
@@ -238,7 +238,7 @@ Schema 校验沿用 strict/error 的 `$jsonSchema`，`additionalProperties:false
 
 **功能限制**：没有题目删除/归档、题库共享、授权分级、历史压缩、问卷第二版、发布后改版、统计分页或时间过滤。“恢复”只能恢复已有版本，不能把恢复指定为新题目的 v1（那是另存）。
 
-**界面**：登录后主流程已在真实 Chrome 中验证（建题、列表、详情、版本历史、统计面板，7/7 通过并截图）。未在浏览器里点击的部分为恢复按钮、共享表单、题库更新版本、加入问卷选择框；表单校验提示的呈现也未逐项截图。
+**界面**：登录后主流程已在真实 Chrome 中验证（建题、列表、详情、版本历史、统计面板，7/7 通过并截图）。恢复、共享、题库更新版本、加入问卷四步也已点击验证；表单校验提示的文案未逐项截图。
 
 **并发**：二阶段没有并发夹具。追加版本的并发只由 `(question_id, version)` 唯一索引与事务支持，没有用真实并发请求证明；共享/题库的并发同理。另有一处代码阅读发现的不一致窗口：版本实体条件更新没有检查 `matched_count`，极端异常路径下可能出现“版本已插入、`current_version` 未推进”，未构造复现。
 
@@ -270,3 +270,14 @@ AI 在本阶段犯过并可定位的错误：
 | 把“261/16”的计数照抄 | 对照 `pytest.json` | 改为 260/15 并说明口径 |
 
 这些都在 [AI_USAGE.md](AI_USAGE.md) 的 AI-101–AI-104 中逐条记录，失败证据保留未删。学生贡献：提出了任务与仓库组织要求；对 D11–D18 的取舍、代码理解与验收仍需学生本人确认，agent 没有代填。项目解释（共享、恢复、统计范围、题库钉版）是项目决定，不是教师规定；报告不把它们当作课程要求的延伸。
+
+## 12. 附加能力与边界处理（超出需求变更）
+
+需求变更只要求“可共享、可管理题库、可看跨问卷统计”，以下四项是为了把这些能力做完整而补的：
+
+1. **归档**（`PATCH /api/questions/{id}`）：只改状态不删版本，已发布问卷与统计不受影响；归档后从列表消失、拒绝新加入、批量吊销分享链接，可恢复。
+2. **分享链接**：`POST /api/questions/{id}/share-links` 支持 `expires_in_seconds`（1–2592000）与 `max_uses`（1–10000）。令牌只存 SHA-256 摘要；过期返回 410、次数用完返回 410、被吊销或归档返回 404。领取是幂等的，同一用户重复领取不消耗次数。
+3. **题库与归档联动**：题库条目会返回 `archived` 标记，归档题目不能新加入题库；已加入的条目保留但显示为归档，方便清理。
+4. **统计上限可调**：`GET /api/questions/{id}/statistics?limit=N`（默认 200，上限 500），超过上限时 `truncated=true`，避免无界扫描。
+
+浏览器验证覆盖了前两项的界面入口（恢复旧版本、提交共享、题库更新版本、加入草稿问卷），分享链接的过期与次数只在自动化测试中验证（页面暂未提供创建链接的入口）。

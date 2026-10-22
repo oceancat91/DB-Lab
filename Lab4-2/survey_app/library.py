@@ -17,6 +17,7 @@ import math
 import re
 import secrets
 from copy import deepcopy
+from datetime import timedelta
 from uuid import uuid4
 
 from pymongo import ReadPreference, ReturnDocument
@@ -206,24 +207,35 @@ class LibraryService:
                 {"$set": {"revoked_at": now_utc()}})
         return self.detail(question_id, user_id)
 
-    def create_share_link(self, question_id: str, user_id: str) -> dict:
+    def create_share_link(self, question_id: str, user_id: str,
+                          expires_in_seconds: int | None = None,
+                          max_uses: int | None = None) -> dict:
         entity = self._accessible(question_id, user_id, owner_only=True)
         if entity["status"] != "active":
             raise DomainError(409, "archived", "已归档的题目不能创建分享链接")
         token = secrets.token_urlsafe(24)
+        now = now_utc()
         link = {"_id": str(uuid4()), "token_hash": hashlib.sha256(token.encode()).hexdigest(),
-                "question_id": question_id, "owner_id": user_id, "created_at": now_utc(),
-                "revoked_at": None, "schema_version": 1}
+                "question_id": question_id, "owner_id": user_id, "created_at": now,
+                "revoked_at": None,
+                "expires_at": (now + timedelta(seconds=expires_in_seconds)
+                               if expires_in_seconds else None),
+                "max_uses": max_uses, "uses": 0, "schema_version": 1}
         self.db.question_share_links.insert_one(link)
         return {"id": link["_id"], "token": token, "path": f"/api/share-links/{token}",
-                "question_id": question_id}
+                "question_id": question_id,
+                "expires_at": link["expires_at"].isoformat() if link["expires_at"] else None,
+                "max_uses": max_uses, "uses": 0}
 
     def share_links(self, question_id: str, user_id: str) -> list[dict]:
         self._accessible(question_id, user_id, owner_only=True)
         rows = []
         for link in self.db.question_share_links.find({"question_id": question_id}).sort("created_at", -1):
             rows.append({"id": link["_id"], "created_at": link["created_at"].isoformat(),
-                         "revoked": link.get("revoked_at") is not None})
+                         "revoked": link.get("revoked_at") is not None,
+                         "expires_at": (link["expires_at"].isoformat()
+                                        if link.get("expires_at") else None),
+                         "max_uses": link.get("max_uses"), "uses": link.get("uses", 0)})
         return rows
 
     def revoke_share_link(self, question_id: str, user_id: str, link_id: str) -> dict:
@@ -240,6 +252,12 @@ class LibraryService:
         link = self.db.question_share_links.find_one({"token_hash": digest})
         if link is None or link.get("revoked_at") is not None:
             raise DomainError(404, "not_found", "分享链接不存在或已失效")
+        expires_at = link.get("expires_at")
+        if expires_at is not None and expires_at <= now_utc():
+            raise DomainError(410, "expired", "分享链接已过期")
+        max_uses = link.get("max_uses")
+        if max_uses is not None and link.get("uses", 0) >= max_uses:
+            raise DomainError(410, "exhausted", "分享链接的可领取次数已用完")
         return link
 
     def share_link_preview(self, token: str) -> dict:
@@ -259,12 +277,16 @@ class LibraryService:
             raise DomainError(409, "archived", "该题已归档")
         if entity["owner_id"] == user_id:
             return self.detail(entity["_id"], user_id)
+        inserted = False
         try:
             self.db.question_shares.insert_one({
                 "_id": str(uuid4()), "question_id": entity["_id"], "owner_id": entity["owner_id"],
                 "grantee_id": user_id, "created_at": now_utc(), "schema_version": 1})
+            inserted = True
         except DuplicateKeyError:
-            pass  # claiming an already claimed link is idempotent
+            pass  # claiming an already claimed link is idempotent and does not consume a use
+        if inserted:
+            self.db.question_share_links.update_one({"_id": link["_id"]}, {"$inc": {"uses": 1}})
         return self.detail(entity["_id"], user_id)
 
     def shared_with_me(self, user_id: str) -> list[dict]:
@@ -421,6 +443,7 @@ class LibraryService:
                 "title": entity["title"], "type": entity["type"],
                 "current_version": entity["current_version"],
                 "outdated": item["question_version"] != entity["current_version"],
+                "archived": entity["status"] != "active",
                 "preview": (version or {}).get("title", ""),
             })
         return {"id": bank["_id"], "name": bank["name"], "description": bank["description"],
@@ -445,6 +468,8 @@ class LibraryService:
                       version: int | None = None) -> dict:
         self._bank(bank_id, user_id)
         entity = self._accessible(question_id, user_id)
+        if entity["status"] != "active":
+            raise DomainError(409, "archived", "已归档的题目不能加入题库")
         pinned = version or entity["current_version"]
         self._version(question_id, pinned)
         try:
@@ -523,10 +548,11 @@ class LibraryService:
                 "scope": "all surveys" if is_owner else "own surveys only"}
 
     # ---------------------------------------------------------------- statistics
-    def cross_survey_statistics(self, question_id: str, user_id: str) -> dict:
+    def cross_survey_statistics(self, question_id: str, user_id: str,
+                                limit: int = 200) -> dict:
         entity = self._accessible(question_id, user_id)
         is_owner = entity["owner_id"] == user_id
-        survey_limit = 200
+        survey_limit = max(1, min(int(limit), 500))
         versions = list(self.db.survey_versions.find({"questions.id": question_id},
                                                      {"survey_id": 1, "version": 1, "questions": 1})
                         .limit(survey_limit + 1))

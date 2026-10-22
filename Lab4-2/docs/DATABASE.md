@@ -188,3 +188,7 @@
 | `revoked_at` | date/null | 吊销时间；归档时批量写入 |
 
 索引：`uq_share_links_token`（唯一，按摘要查链接）、`ix_share_links_question`（按题目列链接）。归档通过 `update_many` 一次性吊销，因此“链接可用”等价于 `revoked_at == null`。
+
+### 补充（2026-10-22 第四轮）：question_share_links 的时效字段
+
+新增 `expires_at`（date/null）、`max_uses`（int/null，≥1）、`uses`（int，默认 0）。`uses` 只在首次写入共享授权时递增，重复领取不计数；过期判断在应用层用服务端时间比较，未使用 TTL 索引（过期链接仍需可查，用于列表与审计）。

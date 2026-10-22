@@ -103,6 +103,9 @@ SCHEMAS = {
     "question_share_links": _schema({
         "_id": UUID, "token_hash": HASH, "question_id": UUID, "owner_id": UUID,
         "created_at": DATE, "revoked_at": {"bsonType": ["date", "null"]},
+        "expires_at": {"bsonType": ["date", "null"]},
+        "max_uses": {"bsonType": ["int", "long", "null"], "minimum": 1},
+        "uses": {**INTEGER, "minimum": 0},
         "schema_version": SCHEMA_VERSION,
     }),
 }

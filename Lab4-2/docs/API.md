@@ -342,3 +342,8 @@
 | POST | `/api/share-links/{token}/claim` | 任意登录用户 | 领取共享授权，重复领取幂等；令牌失效或题目归档返回 404/409 |
 
 令牌只以 SHA-256 摘要存库，明文只在创建响应里出现一次；归档题目不能再被分享或加入问卷，但已加入的草稿与已发布快照不受影响。
+
+### 补充（2026-10-22 第四轮）：链接时效与统计上限
+
+- `POST /api/questions/{id}/share-links` 请求体可选 `{"expires_in_seconds": 3600, "max_uses": 3}`；响应新增 `expires_at`、`max_uses`、`uses`。过期或次数用完时，预览与领取都返回 410。
+- `GET /api/questions/{id}/statistics` 新增查询参数 `limit`（默认 200，最大 500）；响应的 `survey_limit` 反映实际取值，`truncated=true` 表示被截断。

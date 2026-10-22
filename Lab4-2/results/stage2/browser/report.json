@@ -1,17 +1,21 @@
 {
-  "generated_at": "2026-10-22T11:42:05.504Z",
+  "generated_at": "2026-10-22T11:59:00.333Z",
   "base": "http://127.0.0.1:8012",
   "chrome": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
   "screenshots": [
     "01-library.png",
     "02-detail.png",
-    "03-statistics.png"
+    "03-statistics.png",
+    "04-restored.png",
+    "05-shared.png",
+    "06-bank-updated.png",
+    "07-added-to-survey.png"
   ],
   "steps": [
     {
-      "step": "页面内注册与登录",
+      "step": "页面内注册两个账号并登录",
       "ok": true,
-      "detail": "{\"created\":201,\"logged\":200}"
+      "detail": "{\"owner\":201,\"mate\":201,\"login\":200}"
     },
     {
       "step": "登录后进入题目库",
@@ -33,16 +37,35 @@
     },
     {
       "step": "跨问卷统计面板可打开",
+      "ok": true
+    },
+    {
+      "step": "准备第二版、题库与草稿问卷",
       "ok": true,
-      "detail": "OK"
+      "detail": "{\"question\":\"8144b510-ec9a-4a7c-8134-262a025f4950\",\"version2\":2,\"bank\":\"1fd95bfc-3aae-43fd-8a7f-0936e594ad39\",\"survey\":\"75c1da2f-43b5-47e2-8a4b-68773c4bcbc3\"}"
+    },
+    {
+      "step": "点击“恢复此版本”",
+      "ok": true
+    },
+    {
+      "step": "提交共享表单",
+      "ok": true
+    },
+    {
+      "step": "题库“更新版本”",
+      "ok": true
+    },
+    {
+      "step": "从题库/题目加入草稿问卷",
+      "ok": true
     },
     {
       "step": "页面脚本无未捕获异常",
-      "ok": true,
-      "detail": "0"
+      "ok": true
     }
   ],
-  "passed": 7,
+  "passed": 12,
   "failed": 0,
   "status": "PASS"
 }

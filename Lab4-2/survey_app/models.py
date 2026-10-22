@@ -133,3 +133,8 @@ class RevisionInput(InputModel):
 
 class QuestionStatusInput(InputModel):
     status: str = Field(min_length=1, max_length=16, pattern=r'^(active|archived)$', strict=True)
+
+
+class ShareLinkInput(InputModel):
+    expires_in_seconds: StrictInt | None = Field(default=None, ge=1, le=2592000)
+    max_uses: StrictInt | None = Field(default=None, ge=1, le=10000)
