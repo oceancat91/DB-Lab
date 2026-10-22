@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_at": "2026-10-22T20:01:35.807957+08:00",
+  "created_at": "2026-10-22T22:42:14.671415+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "layout": "shared governance documents at archive root; first stage under Lab4-1/",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
@@ -79,8 +79,8 @@
     },
     {
       "path": "Lab4-1/docs/REPORT_STAGE1.md",
-      "bytes": 25554,
-      "sha256": "a8b198459f355333bf81e19805df36571bd1174968c6223e1d943471385ca674"
+      "bytes": 25522,
+      "sha256": "d92d39e5796ae8ee58a2f592e10ec2fe633512fabe95d383d977505ee8ddeb0d"
     },
     {
       "path": "Lab4-1/docs/REQUIREMENTS.md",
