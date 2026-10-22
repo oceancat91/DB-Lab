@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_at": "2026-10-22T18:04:00.349439+08:00",
+  "created_at": "2026-10-22T18:36:43.733940+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "layout": "shared governance documents at archive root; first stage under Lab4-1/",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
@@ -19,8 +19,8 @@
   "files": [
     {
       "path": "AGENTS.md",
-      "bytes": 6311,
-      "sha256": "a786a01adb3aaf81e5a3a37eda8b3019753a52b358393d3a79730cb530bb8042"
+      "bytes": 6613,
+      "sha256": "e5c52d134db4b891b94076c32d5004d4a6b7eda1f6e5fcabbee3c2549aaa7817"
     },
     {
       "path": "Lab4-1/.env.example",
@@ -1124,13 +1124,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 9959,
-      "sha256": "e45a6704b3a7d5531de3d6f6dff535f7ae0357f7a6706503cf88675622d1de4d"
+      "bytes": 12870,
+      "sha256": "276914f17068e797d8e77d4e1c62d029529fa207de0be0c6e5306fdf4f6ca08e"
     },
     {
       "path": "WORKFLOW.md",
-      "bytes": 13588,
-      "sha256": "8d1144ee834f320f8b38e4465804010320a8ea627db21cede360257dd2e635ea"
+      "bytes": 15327,
+      "sha256": "2c6fe0e955ba1c314715c493d096ac277d1c44483d955977998608370eee59a3"
     }
   ]
 }

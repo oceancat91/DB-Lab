@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_at": "2026-10-22T18:22:34.269415+08:00",
+  "created_at": "2026-10-22T18:36:44.280127+08:00",
   "layout": "shared governance documents at archive root; second stage under Lab4-2/",
   "scope": "Exact submitted bytes for the second stage; first stage ships separately.",
   "self_exclusions": [
@@ -17,8 +17,8 @@
   "files": [
     {
       "path": "AGENTS.md",
-      "bytes": 6606,
-      "sha256": "ec83e01ce60e9a0aee6da0dafd9e733e4fb76cbb84ec4d1676f75e85ae1eed1c"
+      "bytes": 6613,
+      "sha256": "e5c52d134db4b891b94076c32d5004d4a6b7eda1f6e5fcabbee3c2549aaa7817"
     },
     {
       "path": "Lab4-2/.env.example",
@@ -37,8 +37,8 @@
     },
     {
       "path": "Lab4-2/docs/AI_USAGE.md",
-      "bytes": 12608,
-      "sha256": "a6095bf72e2f9f1639030bb70280364418627e5db2f6d5fa11f3a8e6ec20397d"
+      "bytes": 13736,
+      "sha256": "d4e45a18fb52408305c6af560e6b3c223b4ab43fcb3794d2076f0967f5449eaf"
     },
     {
       "path": "Lab4-2/docs/API.md",
@@ -57,8 +57,8 @@
     },
     {
       "path": "Lab4-2/docs/EXPERIMENT_LOG.md",
-      "bytes": 15411,
-      "sha256": "e1b18b1abb0d63b9f079acbcc988850e7fa7c28051830d347fe1807ff155feb0"
+      "bytes": 17200,
+      "sha256": "1b30191c13fb46d6877ba418ba64af3a587e2616c17d588983f23b64351be964"
     },
     {
       "path": "Lab4-2/docs/LOGIC.md",
@@ -114,6 +114,11 @@
       "path": "Lab4-2/results/S1/environment.json",
       "bytes": 642,
       "sha256": "5fb446bc0472b32f07320d419958773ec59f4ccdb332cb7f992420ec9c996c68"
+    },
+    {
+      "path": "Lab4-2/results/stage2/browser/library-anonymous.png",
+      "bytes": 17921,
+      "sha256": "4cb471f8068d4be841d23bea32393e18ae9daabf285b07dbd542325b9cfbc50d"
     },
     {
       "path": "Lab4-2/results/stage2/gates-t0.md",
@@ -372,13 +377,13 @@
     },
     {
       "path": "README.md",
-      "bytes": 12632,
-      "sha256": "c6539bbf00552c880bf8ffadb08b917afd2f05f3354ee3025436784290878bf5"
+      "bytes": 12870,
+      "sha256": "276914f17068e797d8e77d4e1c62d029529fa207de0be0c6e5306fdf4f6ca08e"
     },
     {
       "path": "WORKFLOW.md",
-      "bytes": 15257,
-      "sha256": "31b9c79226c4bceed2c097bb20cfca6976ba394944af62701fed2e4b61825646"
+      "bytes": 15327,
+      "sha256": "2c6fe0e955ba1c314715c493d096ac277d1c44483d955977998608370eee59a3"
     }
   ]
 }
