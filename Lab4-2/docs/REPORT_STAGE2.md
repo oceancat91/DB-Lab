@@ -18,6 +18,19 @@
 
 在一阶段的问卷系统上增加“可复用题目库”：题目独立于问卷存在、可多版本、可共享、可归档、可组题库，并能查看单题跨问卷统计。范围仅需求变更的八项，不改一阶段的填写与统计行为。
 
+八项变更逐条对照：
+
+| 变更 | 实现 | 证据 |
+| --- | --- | --- |
+| 一 保存常用题目并在新问卷中复用 | `/library` 建题入库；建草稿问卷时从“我的题目 / 共享给我的”选择加入 | R15，`test_import_from_bank_uses_the_pinned_version` |
+| 二 把题目共享给别人使用 | 按用户名共享写入 `question_shares`，被共享者可 import/fork，原题仍可继续使用 | R16，`test_sharing_allows_reuse_but_not_modification` |
+| 三 修改题目不影响已发布问卷 | 发布后冻结快照；编辑生成新版本，旧问卷引用旧版本 | R17，`test_published_question_snapshot_survives_new_versions` |
+| 四 修改历史与恢复 | 版本只追加并记录 `derived_from`/`restored_from`，恢复生成新版本 | R18，`test_versions_are_append_only_and_restorable` |
+| 五 同一题目不同版本共存 | 每份问卷各自钉住 `question_version`，`usage` 按版本分组 | R19，`test_two_surveys_can_pin_different_versions_and_usage_lists_both` |
+| 六 查看题目被哪些问卷使用 | `usage` 报表列出问卷与版本；修改时可选“只改草稿 / 生成新版本 / fork 成新题” | R20，`test_revision_modes_change_only_what_they_should` |
+| 七 建立题目库 | `question_banks` + 条目钉版，可手动更新到当前版本 | R21，`test_bank_items_pin_versions_and_can_be_updated` |
+| 八 跨问卷的单题统计 | 单选占比、数字均值、文本样本，支持 `limit` 与 `truncated` | R22，`test_cross_survey_statistics_aggregate_one_question` |
+
 ## 2. 数据模型
 
 | 集合 | 作用 | 要点 |
