@@ -41,7 +41,19 @@
 | `question_banks` / `question_bank_items` | 题库 | 条目钉住版本，可“更新版本” |
 | `question_share_links` | 分享链接 | 只存 `sha256(token)`，可设过期与领取次数 |
 
-版本号只在题目内自增；问卷保存题目快照（含 `question_version`），发布后内容冻结。使用情况不建关联表，由 `ix_surveys_draft_question` 与 `ix_survey_versions_question` 两个多键索引反查。
+版本号只在题目内自增；问卷保存题目快照（含 `question_version`），发布后内容冻结。使用情况不建关联表，由 `ix_surveys_draft_question` 与 `ix_survey_versions_question` 两个多键索引反查。索引方面新增 `question_versions` 的 `(question_id, version)` 唯一索引、`question_shares` 的 `(question_id, grantee_id)` 唯一索引与 `question_share_links.token_hash` 唯一索引，保证重复共享、重复领取与版本号冲突都被数据库拒绝。
+
+## 2.1 系统设计
+
+服务端仍是 FastAPI + PyMongo 的单体应用：`survey_app/library.py` 承载题目库的领域逻辑（版本、共享、题库、链接），`main.py` 只做路由与鉴权，`db.py` 负责集合校验器与索引，前端是 `/library` 一个原生页面加 `library.js`。一阶段的问卷、填写、发布与统计服务保持不变，题目库只通过 `import_into_survey` 与 `revise_in_survey` 两个入口与问卷交互。
+
+## 2.2 跳转设计
+
+二阶段不改跳转模型：规则仍以题目 id 作键，存放在问卷数据里，发布后随快照冻结。唯一相关的处理是 **fork 时重写规则引用**——复制题目生成新 id 后，把规则里的 `source`/`target` 从旧 id 映射到新 id，避免副本指向原题；该行为有 `test_fork_with_rules_rewrites_the_reference` 覆盖。
+
+## 2.3 校验设计
+
+校验分三层：请求模型（`models.py`）校验字段类型、长度与枚举；领域层校验业务不变量（版本归属、权限、归档状态、题库钉版、链接时效、重复共享），失败返回带错误码的 404/409/410；数据库层用集合校验器与唯一索引兜底。前端只做输入提示，不作为判定依据，因此直接调用 API 也无法绕过规则。题目自身的 `validation`（必答、数值范围等）随版本保存，问卷填写时按快照里的规则执行。
 
 ## 3. 版本与冻结语义
 

@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_at": "2026-10-28T21:36:46.999036+08:00",
+  "created_at": "2026-10-28T21:39:32.770090+08:00",
   "layout": "shared governance documents at archive root; second stage under Lab4-2/",
   "scope": "Exact submitted bytes for the second stage; first stage ships separately.",
   "self_exclusions": [
@@ -67,8 +67,8 @@
     },
     {
       "path": "Lab4-2/docs/REPORT_STAGE2.md",
-      "bytes": 8805,
-      "sha256": "ae24656fa852c15b202dc8d75dee61a2635e1e2b7c977b4f33369812d82d25a1"
+      "bytes": 10472,
+      "sha256": "c56b933e6d1430dc259f34ae39d448b704d375c7c0af6bd0c64d8afdad71fa3f"
     },
     {
       "path": "Lab4-2/docs/REQUIREMENTS.md",
