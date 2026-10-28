@@ -52,9 +52,9 @@ pre { background: #f6f8f6; border: 0.5pt solid #dde3de; border-radius: 1mm; padd
       font-size: 8.5pt; line-height: 1.45; white-space: pre-wrap; break-inside: avoid; }
 table { width: 100%; border-collapse: collapse; margin: 1.5mm 0 3mm; font-size: 8.8pt; break-inside: auto; }
 th, td { border: 0.5pt solid #cfd6d0; padding: 1mm 1.6mm; vertical-align: top; text-align: left;
-         line-height: 1.5; overflow-wrap: anywhere; word-break: break-word; }
+         line-height: 1.5; }
 th { background: #eef2ef; font-weight: 600; }
-th:first-child, td:first-child { width: 1%; }
+th:first-child, td:first-child { width: 1%; white-space: nowrap; }
 blockquote { margin: 1.5mm 0; padding: 0.8mm 0 0.8mm 3mm; border-left: 1pt solid #b9cec8; color: #56615e; }
 hr { border: 0; border-top: 0.5pt solid #cfd6d0; margin: 4mm 0; }
 a { color: #14514a; text-decoration: none; }

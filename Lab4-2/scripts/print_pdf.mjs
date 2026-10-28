@@ -91,13 +91,29 @@ try {
   // 让布局视口等于 A4（96dpi 下 794×1123px），否则 Chrome 会按窗口高度分页
   await cdp.send("Emulation.setDeviceMetricsOverride",
                  { width: 794, height: 1123, deviceScaleFactor: 1, mobile: false });
-  const loaded = new Promise((done) => setTimeout(done, 1500));
+  const loaded = new Promise((done) => setTimeout(done, 1200));
   await cdp.send("Page.navigate", { url: pathToFileURL(HTML).href });
   await loaded;
+  // 等字体与两次渲染帧稳定后再打印，否则 Chrome 可能按未完成的布局分页
+  await cdp.send("Runtime.evaluate", {
+    expression: `(async () => {
+      if (document.fonts && document.fonts.ready) await document.fonts.ready;
+      await new Promise((done) => requestAnimationFrame(() => requestAnimationFrame(done)));
+      return document.documentElement.scrollHeight;
+    })()`,
+    awaitPromise: true, returnByValue: true,
+  });
+  await new Promise((done) => setTimeout(done, 800));
   const printed = await cdp.send("Page.printToPDF", {
     printBackground: true,
-    preferCSSPageSize: true,
+    preferCSSPageSize: false,
     scale: 1,
+    paperWidth: 8.2677,
+    paperHeight: 11.6929,
+    marginTop: 0.7087,
+    marginBottom: 0.7087,
+    marginLeft: 0.6693,
+    marginRight: 0.6693,
   });
   writeFileSync(OUTPUT, Buffer.from(printed.data, "base64"));
   cdp.close();

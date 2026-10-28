@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_at": "2026-10-28T21:12:15.113520+08:00",
+  "created_at": "2026-10-28T21:26:23.009881+08:00",
   "layout": "shared governance documents at archive root; second stage under Lab4-2/",
   "scope": "Exact submitted bytes for the second stage; first stage ships separately.",
   "self_exclusions": [
@@ -67,8 +67,8 @@
     },
     {
       "path": "Lab4-2/docs/REPORT_STAGE2.md",
-      "bytes": 30137,
-      "sha256": "46bf14938d6636762d25db8f5d4444e4f815aad8ccc64f55fc5870c242e25d23"
+      "bytes": 30288,
+      "sha256": "b1a6a60c4601ac3da6b363552834ad24680e651e5ccb09bfb5aa7602584e1d7b"
     },
     {
       "path": "Lab4-2/docs/REQUIREMENTS.md",
@@ -292,13 +292,13 @@
     },
     {
       "path": "Lab4-2/scripts/build_report_docx.py",
-      "bytes": 13632,
-      "sha256": "b291f1337a7ee002bc0922975a436d7a75cfaa177318adb7436270d6d8cdbe23"
+      "bytes": 13865,
+      "sha256": "0931bc993ff309d4f154b5c592a7f524a60ec1e60ee3d98f137840c422cce828"
     },
     {
       "path": "Lab4-2/scripts/build_report_pdf.py",
-      "bytes": 12397,
-      "sha256": "3115dd548cb6310499aa9ebd8ac1aee8f3317f7d49c5c03e6fe8e082d4830a44"
+      "bytes": 12369,
+      "sha256": "9bbd0220316b50a19e380f0ac993d2d5f9ff8d72eafd5c66a2fa24e81779d308"
     },
     {
       "path": "Lab4-2/scripts/build_report_pdf_from_docx.py",
@@ -342,8 +342,8 @@
     },
     {
       "path": "Lab4-2/scripts/print_pdf.mjs",
-      "bytes": 4243,
-      "sha256": "336830dfe8aec24ba7e268d575adc461c661c8324de64bb271d97f24f363d26c"
+      "bytes": 5027,
+      "sha256": "cb8bceb0b882e8031f0643c1b8fb4cee1caee8d555d542eb130457aef875f026"
     },
     {
       "path": "Lab4-2/scripts/start_mongo.ps1",

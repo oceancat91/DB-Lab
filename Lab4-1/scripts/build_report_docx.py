@@ -174,13 +174,13 @@ def build(markdown: str, name: str, student_id: str) -> Document:
     document = Document()
     section = document.sections[0]
     section.page_width, section.page_height = Cm(21), Cm(29.7)
-    for attr, value in (("top_margin", 2.2), ("bottom_margin", 2.2), ("left_margin", 2.0), ("right_margin", 2.0)):
+    for attr, value in (("top_margin", 1.8), ("bottom_margin", 1.8), ("left_margin", 1.7), ("right_margin", 1.7)):
         setattr(section, attr, Cm(value))
 
     normal = document.styles["Normal"]
-    set_style_font(normal, 10.5)
+    set_style_font(normal, 10)
     normal.paragraph_format.space_after = Pt(4)
-    normal.paragraph_format.line_spacing = 1.3
+    normal.paragraph_format.line_spacing = 1.6
     grid = section._sectPr.find(qn("w:docGrid"))
     if grid is not None:  # the default template's line grid forces 18pt lines on CJK text
         grid.set(qn("w:type"), "none")
@@ -192,27 +192,34 @@ def build(markdown: str, name: str, student_id: str) -> Document:
         style.paragraph_format.space_before = Pt(10 if level == 1 else 8)
         style.paragraph_format.space_after = Pt(4)
 
-    footer = section.footer.paragraphs[0]
-    footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    footer.add_run("MongoDB 在线问卷系统 · 第一阶段项目完成报告  ·  第 ")
-    add_field(footer, "PAGE")
-    footer.add_run(" 页")
-    for run in footer.runs:
-        run.font.size = Pt(8)
-        run.font.color.rgb = MUTED
+    # 与参考 PDF 一致：不放页脚页码
+    section.footer.paragraphs[0].text = ""
 
     # cover
     title = document.add_paragraph()
-    title.paragraph_format.space_before = Pt(120)
+    title.paragraph_format.space_before = Pt(150)
     run = title.add_run("MongoDB 在线问卷系统")
-    run.font.size = Pt(26)
+    run.font.size = Pt(25)
     run.bold = True
     subtitle = document.add_paragraph()
     run = subtitle.add_run("第一阶段项目完成报告")
-    run.font.size = Pt(26)
+    run.font.size = Pt(25)
     run.bold = True
+    # 封面装饰线：用段落底边框模拟参考 PDF 里的绿色短线
+    rule = document.add_paragraph()
+    rule.paragraph_format.space_before = Pt(14)
+    rule.paragraph_format.space_after = Pt(16)
+    rule.paragraph_format.right_indent = Cm(14.2)
+    borders = OxmlElement("w:pBdr")
+    bottom = OxmlElement("w:bottom")
+    bottom.set(qn("w:val"), "single")
+    bottom.set(qn("w:sz"), "27")
+    bottom.set(qn("w:space"), "1")
+    bottom.set(qn("w:color"), "1D6B5E")
+    borders.append(bottom)
+    rule._p.get_or_add_pPr().append(borders)
     meta = document.add_paragraph()
-    meta.paragraph_format.space_before = Pt(30)
+    meta.paragraph_format.space_before = Pt(10)
     for label, value in (("课程：", "数据库管理系统"), ("项目：", "基于 MongoDB 的问卷系统开发（第一阶段）"),
                          ("仓库：", "https://github.com/oceancat91/DB-Lab.git"),
                          ("姓名：", name or "＿＿＿＿＿＿＿＿"), ("学号：", student_id or "＿＿＿＿＿＿＿＿"),
