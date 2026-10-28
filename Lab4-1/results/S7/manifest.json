@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_at": "2026-10-28T21:26:22.450635+08:00",
+  "created_at": "2026-10-28T21:33:54.794234+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "layout": "shared governance documents at archive root; first stage under Lab4-1/",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
@@ -979,8 +979,8 @@
     },
     {
       "path": "Lab4-1/scripts/build_report_docx.py",
-      "bytes": 13928,
-      "sha256": "b8cfcc9c1bf4734924188a398f5b87faf57ad99d8d76691ebea8d7c3464aeed8"
+      "bytes": 14763,
+      "sha256": "bcadb36679fc2bbfd6514b509cbdbfce9d1488c32296fb24f4b5b7264d00d6cc"
     },
     {
       "path": "Lab4-1/scripts/build_report_pdf.py",

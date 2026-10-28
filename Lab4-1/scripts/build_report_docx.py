@@ -130,6 +130,26 @@ def parse(markdown: str) -> list[dict]:
 
 # ---------------------------------------------------------------- docx helpers
 
+def add_hyperlink(paragraph, url: str) -> None:
+    """封面仓库地址做成可点击链接。"""
+    from docx.opc.constants import RELATIONSHIP_TYPE as RT
+    part = paragraph.part
+    r_id = part.relate_to(url, RT.HYPERLINK, is_external=True)
+    hyperlink = OxmlElement("w:hyperlink")
+    hyperlink.set(qn("r:id"), r_id)
+    run = OxmlElement("w:r")
+    properties = OxmlElement("w:rPr")
+    color = OxmlElement("w:color")
+    color.set(qn("w:val"), "14514A")
+    properties.append(color)
+    run.append(properties)
+    text = OxmlElement("w:t")
+    text.text = url
+    run.append(text)
+    hyperlink.append(run)
+    paragraph._p.append(hyperlink)
+
+
 def set_style_font(style, size: float, bold: bool = False, mono: bool = False) -> None:
     style.font.name = MONO if mono else FONT
     style.font.size = Pt(size)
@@ -179,8 +199,8 @@ def build(markdown: str, name: str, student_id: str) -> Document:
 
     normal = document.styles["Normal"]
     set_style_font(normal, 10)
-    normal.paragraph_format.space_after = Pt(4)
-    normal.paragraph_format.line_spacing = 1.6
+    normal.paragraph_format.space_after = Pt(2)
+    normal.paragraph_format.line_spacing = 1.32
     grid = section._sectPr.find(qn("w:docGrid"))
     if grid is not None:  # the default template's line grid forces 18pt lines on CJK text
         grid.set(qn("w:type"), "none")
@@ -192,8 +212,9 @@ def build(markdown: str, name: str, student_id: str) -> Document:
         style.paragraph_format.space_before = Pt(10 if level == 1 else 8)
         style.paragraph_format.space_after = Pt(4)
 
-    # 与参考 PDF 一致：不放页脚页码
-    section.footer.paragraphs[0].text = ""
+    # 与参考 PDF 一致：不放页脚页码（清空所有页脚段落）
+    for paragraph in section.footer.paragraphs:
+        paragraph.text = ""
 
     # cover
     title = document.add_paragraph()
@@ -229,7 +250,10 @@ def build(markdown: str, name: str, student_id: str) -> Document:
         head = line.add_run(label)
         head.bold = True
         head.font.color.rgb = MUTED
-        line.add_run(value)
+        if label == "仓库：":
+            add_hyperlink(line, value)
+        else:
+            line.add_run(value)
     document.add_paragraph().add_run().add_break(WD_BREAK.PAGE)
 
     blocks = parse(markdown)
