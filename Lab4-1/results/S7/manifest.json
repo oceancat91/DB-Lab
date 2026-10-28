@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_at": "2026-10-22T22:42:14.671415+08:00",
+  "created_at": "2026-10-28T21:12:14.550568+08:00",
   "application_baseline_commit": "e7255c3332b3492691eff27a0a5ce7e395127422",
   "layout": "shared governance documents at archive root; first stage under Lab4-1/",
   "scope": "Exact submitted bytes; metadata may be newer than the tested application commit.",
@@ -984,8 +984,13 @@
     },
     {
       "path": "Lab4-1/scripts/build_report_pdf.py",
-      "bytes": 11173,
-      "sha256": "66a5355cab4c0ba84b0e6e4eeb2681bfd5af0a07847ccbf8f14318a95053332a"
+      "bytes": 12381,
+      "sha256": "53984d66475af31d0c2e422e72359df0b51858d21efd87a87d301f84da092f56"
+    },
+    {
+      "path": "Lab4-1/scripts/build_report_pdf_from_docx.py",
+      "bytes": 2787,
+      "sha256": "06ca7671090c23dcfe751053d50fff38445d903ffe376f11c02284e910fc11a7"
     },
     {
       "path": "Lab4-1/scripts/check_schema.py",
@@ -1016,6 +1021,11 @@
       "path": "Lab4-1/scripts/package_stage1.py",
       "bytes": 7877,
       "sha256": "412cf126d5b48e714b9a2e28a9baa8a37cff0e00a9f1cfb887842f89006d8ac3"
+    },
+    {
+      "path": "Lab4-1/scripts/print_pdf.mjs",
+      "bytes": 4177,
+      "sha256": "590cbee49a76f2cfd4384e84c8b82ec67b8eb0433993d0b5ad537edee7e64e66"
     },
     {
       "path": "Lab4-1/scripts/start_mongo.ps1",

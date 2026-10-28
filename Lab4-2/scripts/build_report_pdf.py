@@ -16,7 +16,9 @@ from __future__ import annotations
 
 import argparse
 import html
+import os
 import re
+import shutil
 import shutil
 import subprocess
 import sys
@@ -48,11 +50,11 @@ code { font-family: Consolas, "Courier New", monospace; font-size: 9pt;
        background: #f2f4f2; padding: 0.2mm 0.7mm; border-radius: 1mm; }
 pre { background: #f6f8f6; border: 0.5pt solid #dde3de; border-radius: 1mm; padding: 2mm;
       font-size: 8.5pt; line-height: 1.45; white-space: pre-wrap; break-inside: avoid; }
-table { width: 100%; border-collapse: collapse; margin: 1.5mm 0 3mm; font-size: 8.8pt; break-inside: avoid; }
+table { width: 100%; border-collapse: collapse; margin: 1.5mm 0 3mm; font-size: 8.8pt; break-inside: auto; }
 th, td { border: 0.5pt solid #cfd6d0; padding: 1mm 1.6mm; vertical-align: top; text-align: left;
-         line-height: 1.5; }
+         line-height: 1.5; overflow-wrap: anywhere; word-break: break-word; }
 th { background: #eef2ef; font-weight: 600; }
-th:first-child, td:first-child { width: 1%; white-space: nowrap; }
+th:first-child, td:first-child { width: 1%; }
 blockquote { margin: 1.5mm 0; padding: 0.8mm 0 0.8mm 3mm; border-left: 1pt solid #b9cec8; color: #56615e; }
 hr { border: 0; border-top: 0.5pt solid #cfd6d0; margin: 4mm 0; }
 a { color: #14514a; text-decoration: none; }
@@ -211,6 +213,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", default=str(SOURCE))
     parser.add_argument("--output", default=str(DEFAULT_OUTPUT))
+    parser.add_argument("--node", default="", help="Node 可执行文件；用于 CDP 打印（scale=1）")
     parser.add_argument("--name", default="", help="封面姓名；留空则打印空白填写行（不写入仓库）")
     parser.add_argument("--student-id", default="", help="封面学号；留空则打印空白填写行（不写入仓库）")
     arguments = parser.parse_args()
@@ -229,14 +232,25 @@ def main() -> int:
     page.write_text(convert(source.read_text(encoding="utf-8"), arguments.name, arguments.student_id),
                     encoding="utf-8")
     output.parent.mkdir(parents=True, exist_ok=True)
-    command = [str(binary), "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
-               "--virtual-time-budget=4000", "--run-all-compositor-stages-before-draw",
-               f"--print-to-pdf={output}", page.resolve().as_uri()]
-    completed = subprocess.run(command, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    node = arguments.node or os.environ.get("NODE_EXE") or shutil.which("node")
+    printer = ROOT / "scripts" / "print_pdf.mjs"
+    completed = None
+    if node and printer.is_file():
+        completed = subprocess.run([node, str(printer), "--html", str(page.resolve()),
+                                    "--output", str(output), "--chrome", str(binary)],
+                                   capture_output=True, text=True, encoding="utf-8", errors="replace")
+    else:
+        print("提示：未找到 node 或 scripts/print_pdf.mjs，退回 Chrome 命令行打印；"
+              "该方式可能把内容缩放到非 100%，正式交付请用 --node 指定 Node。", file=sys.stderr)
+        command = [str(binary), "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
+                   "--virtual-time-budget=4000", "--run-all-compositor-stages-before-draw",
+                   f"--print-to-pdf={output}", page.resolve().as_uri()]
+        completed = subprocess.run(command, capture_output=True, text=True, encoding="utf-8",
+                                   errors="replace")
     if not output.is_file() or output.stat().st_size == 0:
-        print("PDF 生成失败；Chrome 输出：")
-        print((completed.stdout or "")[-800:])
-        print((completed.stderr or "")[-800:])
+        print("PDF 生成失败；打印器输出：")
+        print((completed.stdout or "")[-800:] if completed else "")
+        print((completed.stderr or "")[-800:] if completed else "")
         return 1
     print(f"源：{source}")
     print(f"HTML：{page}")

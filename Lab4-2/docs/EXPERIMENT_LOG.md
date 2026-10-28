@@ -178,3 +178,11 @@ ormalize_question_refs 原来在列表推导里逐题查 question_shares，已�
 4. **统计上限可调**：`?limit=N`（默认 200、上限 500），`truncated` 如实标注；测试 `test_statistics_limit_parameter` 用 3 份问卷验证 `limit=2` 时 `survey_count=2`、`truncated=true`。
 
 实测：全量 `pytest` **268 passed**（245 一阶段 + 23 二阶段）；浏览器 12/12；报告 PDF/DOCX 已重新生成。
+
+## PDF 管线修复（2026-10-28）：两阶段报告改由 DOCX 转 PDF
+
+问题：二阶段报告 PDF 比一阶段“小一圈”。测量发现固定 34mm 的封面装饰线在一阶段 PDF 里是 135px、二阶段只有 90px，即整页被缩放到 2/3；改用 CDP 显式 scale=1 后缩放消失，但分页变成 18/36 页（同一份 HTML 在 Chrome CLI 下是 10/8 页），说明 Chrome 打印管线对这两份内容的行为不稳定，继续调参不可控。
+
+处理：新增 `scripts/build_report_pdf_from_docx.py`，先用 `build_report_docx.py` 生成 DOCX，再用捆绑的 LibreOffice Kit 把 DOCX 转成 PDF。两阶段的页面尺寸、页边距、字号、封面与页脚页码全部由同一份 DOCX 生成器决定，因此格式必然一致，而且 PDF 与交付的 Word 同源。实测：一阶段 11 页 / 665156 字节、二阶段 14 页 / 695534 字节，均 A4（595.3×841.9pt）；两版封面墨迹范围完全相同（x 79..556，y 272..1117）。
+
+旧的 HTML 打印脚本保留但不再是交付路径；`build_report_pdf.py` 里的表格断行与首列宽度调整仍保留，便于将来回到 HTML 管线时少踩坑。

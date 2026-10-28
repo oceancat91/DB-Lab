@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "created_at": "2026-10-22T22:42:15.230362+08:00",
+  "created_at": "2026-10-28T21:12:15.113520+08:00",
   "layout": "shared governance documents at archive root; second stage under Lab4-2/",
   "scope": "Exact submitted bytes for the second stage; first stage ships separately.",
   "self_exclusions": [
@@ -37,8 +37,8 @@
     },
     {
       "path": "Lab4-2/docs/AI_USAGE.md",
-      "bytes": 18169,
-      "sha256": "98d4bc9ad42a49da34332ef7061107308f1164e1f534a3f959fc1fdaf6a3051f"
+      "bytes": 19622,
+      "sha256": "53ef8af2d31aef2c5529d90358404637cd4f2200a1fa826ddf52edba34491c9b"
     },
     {
       "path": "Lab4-2/docs/API.md",
@@ -57,8 +57,8 @@
     },
     {
       "path": "Lab4-2/docs/EXPERIMENT_LOG.md",
-      "bytes": 25875,
-      "sha256": "4364b7f81eb32a6943dc4c81cc5554aa7732ae7880d11d64bbef284bc5b5bf9f"
+      "bytes": 27035,
+      "sha256": "785845966a4b59fcef24adeab324ca1d52250ed8b0f7c278aebb8b62fa0b1e3d"
     },
     {
       "path": "Lab4-2/docs/LOGIC.md",
@@ -158,7 +158,7 @@
     {
       "path": "Lab4-2/results/stage2/environment.json",
       "bytes": 642,
-      "sha256": "5fb446bc0472b32f07320d419958773ec59f4ccdb332cb7f992420ec9c996c68"
+      "sha256": "5513b5e468be34ce96e2e3562a07b604ef291076e7e747b0e8a502137c2ae492"
     },
     {
       "path": "Lab4-2/results/stage2/gates-t0.md",
@@ -297,8 +297,13 @@
     },
     {
       "path": "Lab4-2/scripts/build_report_pdf.py",
-      "bytes": 11437,
-      "sha256": "73038de164b085e73262bfb929d917f42864286560bdef8a1fb6d67ad7e10c4f"
+      "bytes": 12397,
+      "sha256": "3115dd548cb6310499aa9ebd8ac1aee8f3317f7d49c5c03e6fe8e082d4830a44"
+    },
+    {
+      "path": "Lab4-2/scripts/build_report_pdf_from_docx.py",
+      "bytes": 2787,
+      "sha256": "06ca7671090c23dcfe751053d50fff38445d903ffe376f11c02284e910fc11a7"
     },
     {
       "path": "Lab4-2/scripts/check_schema.py",
@@ -334,6 +339,11 @@
       "path": "Lab4-2/scripts/package_stage2.py",
       "bytes": 7591,
       "sha256": "7df75fc893a3a40a5f0631e960f588a07c9bbe8002c0d5c58a344a7b1f097745"
+    },
+    {
+      "path": "Lab4-2/scripts/print_pdf.mjs",
+      "bytes": 4243,
+      "sha256": "336830dfe8aec24ba7e268d575adc461c661c8324de64bb271d97f24f363d26c"
     },
     {
       "path": "Lab4-2/scripts/start_mongo.ps1",
